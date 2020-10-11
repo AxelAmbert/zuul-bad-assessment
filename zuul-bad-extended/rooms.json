@@ -1,0 +1,70 @@
+{ "rooms" : [
+  {
+    "startRoom" : true,
+    "roomName": "outside",
+    "description" : "outside the main entrance of the university",
+    "relatedRooms": [
+      {
+        "direction": "east",
+        "roomName": "theatre"
+      },
+      {
+        "direction": "south",
+        "roomName": "lab"
+      },
+      {
+        "direction": "west",
+        "roomName": "pub"
+      }
+    ]
+  },
+  {
+    "startRoom" : false,
+    "roomName": "theatre",
+    "description" : "in a lecture theatre",
+    "relatedRooms": [
+      {
+        "direction": "west",
+        "roomName": "outside"
+      }
+    ]
+  },
+  {
+    "startRoom" : false,
+    "roomName": "pub",
+    "description" : "in the campus pub",
+    "relatedRooms": [
+      {
+        "direction": "east",
+        "roomName": "outside"
+      }
+    ]
+  },
+  {
+    "startRoom" : false,
+    "roomName": "lab",
+    "description" : "in a computing lab",
+    "relatedRooms": [
+      {
+        "direction": "north",
+        "roomName": "outside"
+      },
+      {
+        "direction": "east",
+        "roomName": "office"
+      }
+    ]
+  },
+  {
+    "startRoom" : false,
+    "roomName": "office",
+    "description" : "in the computing admin office",
+    "relatedRooms": [
+      {
+        "direction": "west",
+        "roomName": "lab"
+      }
+    ]
+  }
+]
+}
