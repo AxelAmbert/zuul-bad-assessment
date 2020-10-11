@@ -1,3 +1,8 @@
+package functionalities;
+import main.Game;
+import main.Command;
+import main.Room;
+
 public class Go implements Functionality {
     public Go() {
         super();

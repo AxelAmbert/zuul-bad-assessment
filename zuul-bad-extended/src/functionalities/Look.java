@@ -1,3 +1,8 @@
+package functionalities;
+import main.Game;
+import main.Command;
+import main.Room;
+
 public class Look implements Functionality {
     @Override
     public void run(Game game, Command command) {

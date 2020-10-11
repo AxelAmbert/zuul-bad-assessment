@@ -1,19 +1,12 @@
-import netscape.javascript.JSObject;
+package main;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.function.Consumer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import static java.lang.System.exit;
 
 public class RoomParser {
     private HashMap<String, Room> rooms;
@@ -38,10 +31,11 @@ public class RoomParser {
 
         try {
             file = Files.readString(Path.of(filePath));
+            System.out.println("The file ? " + file);
             object = new JSONObject(file);
             array = object.getJSONArray("rooms");
         } catch (IOException exception) {
-            System.out.println("Error while parsing rooms");
+            System.out.println("Error while parsing rooms " + exception.toString());
         }
         return (array);
     }

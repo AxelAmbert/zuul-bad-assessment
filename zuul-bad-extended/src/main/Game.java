@@ -1,3 +1,6 @@
+package main;
+
+import functionalities.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,7 +66,7 @@ public class Game {
     private void getAvailableCommands() {
         this.availableCommands = new ArrayList<>();
         try {
-            Scanner scanner = new Scanner(new File("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-extended\\availableCommands"));
+            Scanner scanner = new Scanner(new File("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\rooms.json"));
 
             while (scanner.hasNextLine()) {
                 this.availableCommands.add(scanner.nextLine());
@@ -77,14 +80,14 @@ public class Game {
 
     public void interpretFunctionality(Command command) {
         try {
-            Class cls = Class.forName(command.getCommandWord());
-            Constructor ct = Go.class.getConstructor();
+            Class cls = Class.forName("functionalities." + command.getCommandWord());
+            Constructor ct = cls.getConstructor();
             Functionality fun = (Functionality) ct.newInstance();
 
             fun.run(this, command);
         }
         catch (Throwable e) {
-            System.err.println(command.getCommandWord() + " is not a valid command");
+            System.err.println(command.getCommandWord() + " is not a valid command " + e.toString());
         }
     }
 
@@ -94,7 +97,7 @@ public class Game {
     private void createRooms() {
         RoomParser roomParser = new RoomParser();
 
-        this.currentRoom = roomParser.update("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-extended\\rooms.json");
+        this.currentRoom = roomParser.update("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\rooms.json");
         this.showARoomExits(this.currentRoom);
     }
 

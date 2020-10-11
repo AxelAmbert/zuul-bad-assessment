@@ -1,7 +1,12 @@
+package functionalities;
+import main.Game;
+import main.Command;
+import main.Room;
+
 public class Drop implements Functionality {
     @Override
     public void run(Game game, Command command) {
-        if (!command.hasSecondWord()) {
+      /*  if (!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("Drop what?");
             return;
@@ -16,6 +21,6 @@ public class Drop implements Functionality {
         items.remove(i);
         int w = (Integer) weights.remove(i);
         currentRoom.addItem(item, w);
-        totalWeight -= w;
+        totalWeight -= w;*/
     }
 }

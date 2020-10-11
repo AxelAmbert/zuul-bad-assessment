@@ -1,4 +1,9 @@
-public class Take implements Functionality{
+package functionalities;
+import main.Game;
+import main.Command;
+import main.Room;
+
+public class Take implements Functionality {
 
     @Override
     public void run(Game game, Command command) {
@@ -24,8 +29,9 @@ public class Take implements Functionality{
         }
         // OK we can pick it up
         currentRoom.removeItem(item);
-        items.add(item);
+        // TODO change this
+        /*items.add(item);
         weights.add(w);
-        totalWeight += w;
+        totalWeight += w;*/
     }
 }
