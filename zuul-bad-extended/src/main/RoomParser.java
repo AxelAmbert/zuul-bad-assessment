@@ -8,6 +8,8 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import static java.lang.System.exit;
+
 public class RoomParser {
     private HashMap<String, Room> rooms;
     private Room startRoom;
@@ -31,7 +33,6 @@ public class RoomParser {
 
         try {
             file = Files.readString(Path.of(filePath));
-            System.out.println("The file ? " + file);
             object = new JSONObject(file);
             array = object.getJSONArray("rooms");
         } catch (IOException exception) {

@@ -1,13 +1,13 @@
 package functionalities;
-import main.Game;
 import main.Command;
 import main.Room;
+import player.Player;
 
 public class Give implements Functionality {
 
     @Override
-    public void run(Game game, Command command) {
-        Room currentRoom = game.getCurrentRoom();
+    public void run(Player player, Command command) {
+        Room currentRoom = player.getCurrentRoom();
 
         if (!command.hasSecondWord()) {
             // if there is no second word, we don't know what to give...

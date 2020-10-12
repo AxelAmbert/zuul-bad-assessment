@@ -48,6 +48,7 @@ public class Parser
 
         // Find up to two words on the line.
         Scanner tokenizer = new Scanner(inputLine);
+
         if(tokenizer.hasNext()) {
             word1 = tokenizer.next();      // get first word
             if(tokenizer.hasNext()) {

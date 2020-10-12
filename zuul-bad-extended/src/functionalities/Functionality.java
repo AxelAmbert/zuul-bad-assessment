@@ -1,10 +1,11 @@
 package functionalities;
 
 import java.util.ArrayList;
-import main.Game;
+
 import main.Command;
+import player.Player;
 
 public interface Functionality {
     public static ArrayList<String> functionalities = new ArrayList<>();
-    public void run(Game game, Command command);
+    public void run(Player player, Command command);
 }
