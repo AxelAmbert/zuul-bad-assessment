@@ -18,7 +18,7 @@ public class UserCommunication
         this.communication = communication;
     }
 
-    public UserCommunication getInstance()
+    public static UserCommunication getInstance()
     {
         if (instance == null)
             instance = new UserCommunication();

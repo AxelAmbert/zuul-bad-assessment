@@ -17,6 +17,7 @@ public class HumanPlayer extends Player
     }
 
     @Override public Command play()
+
     {
         return (this.parser.getCommand());
     }

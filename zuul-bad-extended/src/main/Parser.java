@@ -1,5 +1,7 @@
 package main;
 
+import communication.UserCommunication;
+
 import java.util.Scanner;
 
 /**
@@ -44,8 +46,10 @@ public class Parser
 
         System.out.print("> ");     // print prompt
 
-        inputLine = reader.nextLine();
+        inputLine = UserCommunication.getInstance().getCommunication().askUser();
 
+        if (inputLine == null)
+            return (new Command(null, null, null));
         // Find up to two words on the line.
         Scanner tokenizer = new Scanner(inputLine);
 

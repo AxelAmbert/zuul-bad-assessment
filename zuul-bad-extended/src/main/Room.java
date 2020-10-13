@@ -52,28 +52,6 @@ public class Room
         this.inventory = new Inventory(-1);
     }
 
-    /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     *
-     * @param newRelatedRooms The new room name.
-     */
-    @SafeVarargs
-    public final void setRelatedRoom(HashMap.SimpleEntry<String, Room>... newRelatedRooms)
-    {
-        int i = 0;
-
-        for (var pair : newRelatedRooms) {
-            try {
-                this.linkedRooms.put(pair.getKey(), pair.getValue());
-            } catch (NullPointerException exception) {
-                System.out.println("Room number " + i + " went wrong.");
-            } finally {
-                i++;
-            }
-        }
-    }
-
     public final void linkARoom(String direction, Room roomToLink)
     {
         this.linkedRooms.put(direction, roomToLink);
@@ -92,50 +70,6 @@ public class Room
         return description;
     }
 
-    /**
-     * Add an item to the Room
-     *
-     * @param description The description of the item
-     * @param weight      The item's weight
-     */
-    public void addItem(String description, int weight)
-    {
-        itemDescription = description;
-        itemWeight = weight;
-    }
-
-    public void addItem(Item item)
-    {
-
-    }
-
-    /**
-     * Does the room contain an item
-     *
-     * @param description the item
-     * @ return the item's weight or 0 if none
-     */
-    public int containsItem(String description)
-    {
-        if (itemDescription.equals(description))
-            return itemWeight;
-        else return 0;
-    }
-
-    /**
-     * Remove an item from the Room
-     */
-    public String removeItem(String description)
-    {
-        if (itemDescription.equals(description)) {
-            String tmp = itemDescription;
-            itemDescription = null;
-            return tmp;
-        } else {
-            System.out.println("This room does not contain" + description);
-            return null;
-        }
-    }
 
     public String getFullDescription()
     {
@@ -155,11 +89,6 @@ public class Room
     public Set<String> getExits()
     {
         return (this.linkedRooms.keySet());
-    }
-
-    public boolean hasItem(String itemName)
-    {
-        return (this.inventory.hasItem(itemName));
     }
 
     public Inventory getInventory()

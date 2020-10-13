@@ -7,7 +7,9 @@ public class CommandLineInterface implements Communication
     private Scanner reader;
 
     public CommandLineInterface()
-    { }
+    {
+        this.reader = new Scanner(System.in);
+    }
 
     public void showMessage(String toShow)
     {

@@ -1,5 +1,7 @@
 package main;
 
+import communication.CommandLineInterface;
+import communication.UserCommunication;
 import functionalities.*;
 
 import java.io.File;
@@ -40,6 +42,7 @@ public class Game
      */
     public Game()
     {
+        UserCommunication.getInstance().setCommunication(new CommandLineInterface());
         this.getAvailableCommands();
         this.createRooms();
         this.addPlayers();

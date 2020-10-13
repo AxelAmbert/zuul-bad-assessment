@@ -1,4 +1,5 @@
 package functionalities;
+import communication.UserCommunication;
 import main.Command;
 import main.Room;
 import player.Player;
@@ -21,7 +22,7 @@ public class Go implements Functionality {
         Room nextRoom = player.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            UserCommunication.getInstance().getCommunication().showMessage("There is no door!");
         } else {
             player.setCurrentRoom(nextRoom);
             System.out.println(player.getCurrentRoom().getFullDescription());
