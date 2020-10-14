@@ -27,14 +27,6 @@ public class Room
     public HashMap<String, Room> linkedRooms;
     private Inventory inventory;
     // An item in the room
-
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public String itemDescription;
-    public int itemWeight;
-
     // Characters in the room
     public String character;
 

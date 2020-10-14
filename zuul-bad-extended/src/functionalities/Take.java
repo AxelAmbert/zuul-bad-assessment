@@ -2,12 +2,11 @@ package functionalities;
 import main.Command;
 import main.Room;
 import misc.Item;
-import player.Player;
 
 public class Take implements Functionality {
 
     @Override
-    public void run(Player player, Command command) {
+    public void run(Command command) {
         Room currentRoom = player.getCurrentRoom();
 
         if (!command.hasSecondWord()) {

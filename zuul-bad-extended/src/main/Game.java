@@ -36,11 +36,12 @@ public class Game
     private Room startRoom;
     private ArrayList<Player> playerList;
     private ArrayList<String> availableCommands;
+    static Game gameInstance;
 
     /**
      * Create the game and initialise its internal map.
      */
-    public Game()
+    private Game()
     {
         UserCommunication.getInstance().setCommunication(new CommandLineInterface());
         this.getAvailableCommands();
@@ -71,18 +72,6 @@ public class Game
         System.out.println(availableCommands);
     }
 
-    public void interpretFunctionality(Player player, Command command)
-    {
-        try {
-            Class<?> cls = Class.forName("functionalities." + command.getCommandWord());
-            Constructor ct = cls.getConstructor();
-            Functionality fun = (Functionality) ct.newInstance();
-
-            fun.run(player, command);
-        } catch (Throwable e) {
-            System.err.println(command.getCommandWord() + " is not a valid command " + e.toString());
-        }
-    }
 
     /**
      * Create all the rooms and link their exits together.
@@ -125,7 +114,7 @@ public class Game
     /**
      * Print out the opening message for the player.
      */
-    private void printWelcome()
+    public void printWelcome()
     {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
@@ -251,5 +240,24 @@ public class Game
         var exits = room.getExits();
 
         exits.forEach(System.out::print);
+    }
+
+    public void printOK()
+    {
+        for (Player ok : this.playerList) {
+            System.out.println(ok.getCurrentRoom().getFullDescription());
+        }
+    }
+
+    public static Game getGameInstance()
+    {
+        if (gameInstance == null)
+            gameInstance = new Game();
+        return (gameInstance);
+    }
+
+    public ArrayList<Player> getPlayerList()
+    {
+        return playerList;
     }
 }

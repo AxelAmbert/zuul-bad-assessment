@@ -5,7 +5,7 @@ public class UserCommunication
     private static UserCommunication instance;
     private Communication communication;
 
-    public UserCommunication()
+    private UserCommunication()
     { }
 
     public Communication getCommunication()
@@ -17,6 +17,15 @@ public class UserCommunication
     {
         this.communication = communication;
     }
+
+    public void showMessage(String toShow) { this.communication.showMessage(toShow); }
+
+    public void showError(String toShow)
+    {
+        this.communication.showError(toShow);
+    }
+
+    public String askUser() { return (this.communication.askUser()); }
 
     public static UserCommunication getInstance()
     {

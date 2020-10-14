@@ -1,13 +1,11 @@
 package functionalities;
 
 import main.Command;
-import misc.Item;
-import player.Player;
 
 public class Drop implements Functionality
 {
     @Override
-    public void run(Player player, Command command)
+    public void run(Command command)
     {
         String item;
 
