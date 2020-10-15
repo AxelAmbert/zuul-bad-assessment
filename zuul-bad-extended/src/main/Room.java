@@ -2,6 +2,7 @@ package main;
 
 import misc.Inventory;
 import misc.Item;
+import player.Player;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -26,9 +27,7 @@ public class Room
     public String description;
     public HashMap<String, Room> linkedRooms;
     private Inventory inventory;
-    // An item in the room
-    // Characters in the room
-    public String character;
+    private LinkedList<Player> playersInRoom;
 
     /**
      * Create a room described "description". Initially, it has
@@ -42,6 +41,7 @@ public class Room
         this.linkedRooms = new HashMap<String, Room>();
         this.description = description;
         this.inventory = new Inventory(-1);
+        this.playersInRoom = new LinkedList<>();
     }
 
     public final void linkARoom(String direction, Room roomToLink)
@@ -68,9 +68,9 @@ public class Room
         StringBuilder longDescription = new StringBuilder("You are " + getDescription() + System.lineSeparator());
 
         longDescription.append("Exits: ");
-        for (String exit : this.linkedRooms.keySet()) {
-            longDescription.append(exit).append(" ");
-        }
+        longDescription.append(this.getExitsDescription());
+        longDescription.append(System.lineSeparator());
+        longDescription.append("Items : ");
         for (Item item : this.inventory.getItems()) {
             longDescription.append(item.getItemName()).append("(").append(item.getItemWeight()).append(")");
         }
@@ -86,5 +86,33 @@ public class Room
     public Inventory getInventory()
     {
         return (this.inventory);
+    }
+
+    public Player searchForPlayer(String name)
+    {
+        for (Player player : this.playersInRoom) {
+            if (player.getPlayerName().equals(name))
+                return (player);
+        }
+        return (null);
+    }
+
+    public void removeAPlayer(Player player)
+    {
+        this.playersInRoom.remove(player);
+    }
+
+    public void addAPlayer(Player player)
+    {
+        this.playersInRoom.add(player);
+    }
+    public String getExitsDescription()
+    {
+        StringBuilder exits = new StringBuilder();
+
+        for (String exit : this.linkedRooms.keySet()) {
+            exits.append(exit).append(" ");
+        }
+        return (exits.toString());
     }
 }

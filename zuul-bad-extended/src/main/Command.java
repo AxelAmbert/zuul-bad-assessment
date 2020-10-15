@@ -1,5 +1,6 @@
 package main;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -29,15 +30,19 @@ public class Command
 
     public Command(String[] command)
     {
-        if (command == null)
+        if (command == null) {
             return;
+        }
         this.fullCommand = Arrays.copyOf(command, command.length);
-        if (command.length == 0)
+        if (command.length == 0) {
             return;
+        }
         this.commandName = command[0];
-        if (command.length > 1)
+        if (command.length < 2) {
             return;
+        }
         this.args = Arrays.copyOfRange(command, 1, command.length);
+
     }
 
     public String getCommandName()
@@ -53,6 +58,20 @@ public class Command
     public String[] getFullCommand()
     {
         return this.fullCommand;
+    }
+
+    public int getNumberOfArgs()
+    {
+        if (this.args == null)
+            return (0);
+        return (this.args.length);
+    }
+
+    public String getArgAt(int argNb)
+    {
+        if (this.args == null || this.args.length < argNb)
+            return ("");
+        return (this.args[argNb - 1]);
     }
 }
 

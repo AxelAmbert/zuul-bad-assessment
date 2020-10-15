@@ -1,12 +1,7 @@
 package main;
 
-import communication.CommandLineInterface;
-import communication.UserCommunication;
-import functionalities.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Constructor;
 import java.util.*;
 
 import player.HumanPlayer;
@@ -32,10 +27,11 @@ import player.Player;
 public class Game
 {
 
-    private Parser parser;
+    private Player actualPlayer;
     private Room startRoom;
     private ArrayList<Player> playerList;
     private ArrayList<String> availableCommands;
+    private ListIterator<Player> actualPlayerIterator;
     static Game gameInstance;
 
     /**
@@ -43,17 +39,22 @@ public class Game
      */
     private Game()
     {
-        UserCommunication.getInstance().setCommunication(new CommandLineInterface());
         this.getAvailableCommands();
         this.createRooms();
         this.addPlayers();
-        parser = new Parser();
+        this.actualPlayerIterator = this.playerList.listIterator();
+        this.actualPlayer = this.actualPlayerIterator.next();
     }
 
     private void addPlayers()
     {
         this.playerList = new ArrayList<>();
-        this.playerList.add(new HumanPlayer(this.startRoom));
+        this.playerList.add(new HumanPlayer(this.startRoom, "1"));
+        this.playerList.add(new HumanPlayer(this.startRoom, "2"));
+        this.playerList.add(new HumanPlayer(this.startRoom, "3"));
+        this.playerList.add(new HumanPlayer(this.startRoom, "4"));
+        this.playerList.add(new HumanPlayer(this.startRoom, "5"));
+
     }
 
     private void getAvailableCommands()
@@ -80,36 +81,9 @@ public class Game
     {
         RoomParser roomParser = new RoomParser();
 
-        this.startRoom = roomParser.update("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\rooms.json");
+        this.startRoom = roomParser.update(System.getProperty("user.dir") +  "\\rooms.json");
     }
 
-    /**
-     * Main play routine. Loops until end of play.
-     */
-    public void play()
-    {
-        printWelcome();
-
-        // Enter the main command loop.  Here we repeatedly read commands and
-        // execute them until the game is over.
-
-        boolean finished = false;
-        //TODO: put the right condition
-        //while (!finished) {
-        while (true) {
-            this.playerList.forEach(this::handlePlayerTurn);
-        }
-        // System.out.println("Thank you for playing.  Good bye.");
-    }
-
-    public void handlePlayerTurn(Player player)
-    {
-
-        Command command = player.play();
-
-        this.processCommand(player, command);
-        player.interpretGameAnswer();
-    }
 
     /**
      * Print out the opening message for the player.
@@ -121,46 +95,9 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + startRoom.getDescription());
-        System.out.print("Exits: ");
-        this.showARoomExits(this.startRoom);
+        System.out.println(this.actualPlayer.getCurrentRoom().getFullDescription());
     }
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     *
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Player player, Command command)
-    {
-        boolean wantToQuit = false;
-
-        System.out.println(command.getCommandWord());
-        if (command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
-            return false;
-        }
-
-        this.interpretFunctionality(player, command);
-        /*
-        if (commandWord.equals("help")) {
-            printHelp();
-        } else if (commandWord.equals("go")) {
-            goRoom(command);
-        } else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        } else if (commandWord.equals("look")) {
-            look();
-        } else if (commandWord.equals("take")) {
-            take(command);
-        } else if (commandWord.equals("drop")) {
-            drop(command);
-        } else if (commandWord.equals("give")) {
-            give(command);
-        }*/
-        return wantToQuit;
-    }
 
 // implementations of user commands:
 
@@ -175,71 +112,6 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
-    }
-
-    /**
-     * Try to go to one direction. If there is an exit, enter the new room,
-     * otherwise print an error message.
-     */
-    private void goRoom(Command command)
-    {
-
-    }
-
-    /**
-     * "Look" was entered. Report what the player can see in the room
-     */
-    private void look()
-    {
-
-    }
-
-    /**
-     * Try to take an item from the current room, otherwise print an error
-     * message.
-     */
-    private void take(Command command)
-    {
-
-    }
-
-    /**
-     * Try to drop an item, otherwise print an error message.
-     */
-    private void drop(Command command)
-    {
-
-    }
-
-    /**
-     * Try to drop an item, otherwise print an error message.
-     */
-    private void give(Command command)
-    {
-
-    }
-
-    /**
-     * "Quit" was entered. Check the rest of the command to see whether we
-     * really quit the game.
-     *
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command)
-    {
-        if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        } else {
-            return true;  // signal that we want to quit
-        }
-    }
-
-    public void showARoomExits(Room room)
-    {
-        var exits = room.getExits();
-
-        exits.forEach(System.out::print);
     }
 
     public void printOK()
@@ -259,5 +131,41 @@ public class Game
     public ArrayList<Player> getPlayerList()
     {
         return playerList;
+    }
+
+    public void onPlayerQuit()
+    {
+        System.out.println("md");
+            this.actualPlayer.exitFromRoom();
+            this.actualPlayerIterator.remove();
+            /*if (this.actualPlayerIterator.hasPrevious()) {
+                this.actualPlayerIterator.previous();
+                this.actualPlayerIterator.remove();
+            } else {
+                this.actualPlayerIterator = this.playerList.listIterator(this.playerList.size() - 1);
+                this.actualPlayerIterator.remove();
+                if (this.playerList.isEmpty() == false) {
+                    this.actualPlayerIterator = this.playerList.listIterator(0);
+                }
+            }*/
+            this.onPlayerTurnEnd();
+    }
+
+    public void onPlayerTurnEnd()
+    {
+        if (this.actualPlayerIterator.hasNext() == false) {
+            this.actualPlayerIterator = this.playerList.listIterator();
+        }
+        this.actualPlayer = this.actualPlayerIterator.next();
+    }
+
+    public int getNumberOfPlayers()
+    {
+        return (this.playerList.size());
+    }
+
+    public Player getActualPlayer()
+    {
+        return (this.actualPlayer);
     }
 }

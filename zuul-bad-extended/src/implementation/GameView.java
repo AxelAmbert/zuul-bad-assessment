@@ -2,7 +2,7 @@ package implementation;
 
 import main.Game;
 
-public interface GameImplementation
+public interface GameView
 {
     public void runGame(Game game);
 }

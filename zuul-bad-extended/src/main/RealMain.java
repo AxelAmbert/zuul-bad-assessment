@@ -29,6 +29,5 @@ public class RealMain
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        Game.getGameInstance().play();
     }
 }

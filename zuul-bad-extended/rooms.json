@@ -3,6 +3,12 @@
     "startRoom" : true,
     "roomName": "outside",
     "description" : "outside the main entrance of the university",
+    "items" : [
+      {
+        "name" : "notebook",
+        "weight" : 2
+      }
+    ],
     "relatedRooms": [
       {
         "direction": "east",

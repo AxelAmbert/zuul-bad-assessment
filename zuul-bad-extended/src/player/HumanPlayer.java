@@ -1,24 +1,24 @@
 package player;
 
-import main.Command;
-import main.Parser;
+import communication.Controller;
 import main.Room;
 
 public class HumanPlayer extends Player
 {
-    private Parser parser;
     private final int MAX_WEIGHT = 10;
 
-    public HumanPlayer(Room currentRoom)
+    public HumanPlayer(Room currentRoom, String playerName)
     {
         super(currentRoom);
-        this.parser = new Parser();
         this.inventory.setMaxWeight(this.MAX_WEIGHT);
+        this.playerName = playerName;
     }
 
-    @Override public Command play()
+    @Override public String play()
 
     {
-        return (this.parser.getCommand());
+        Controller controller = Controller.getInstance();
+
+        return (controller.askUser());
     }
 }

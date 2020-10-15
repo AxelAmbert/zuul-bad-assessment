@@ -3,8 +3,8 @@ package main;/*
  * and open the template in the editor.
  */
 
-import implementation.CommandLineInterfaceImplementation;
-import implementation.GameImplementation;
+import implementation.CommandLineInterfaceView;
+import implementation.GameView;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Game game = Game.getGameInstance();
-        GameImplementation implementation = new CommandLineInterfaceImplementation();
+        GameView implementation = new CommandLineInterfaceView();
 
         implementation.runGame(game);
     }

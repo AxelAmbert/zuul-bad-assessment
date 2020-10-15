@@ -24,7 +24,7 @@ public class CommandInvoker
 
             fun.run(command);
         } catch (Throwable e) {
-            System.err.println(command.getCommandName() + " is not a valid command " + e.toString());
+            System.err.println(commandName + " is not a valid command " + e.toString());
         }
     }
 
@@ -32,8 +32,8 @@ public class CommandInvoker
     {
         StringBuilder builder = new StringBuilder(command);
 
-        if (builder.charAt(0) >= 65 && builder.charAt(0) <= 90) {
-            builder.setCharAt(0, (char) (builder.charAt(0) + 32));
+        if (builder.charAt(0) >= 97 && builder.charAt(0) <= 122) {
+            builder.setCharAt(0, (char) (builder.charAt(0) - 32));
         }
         return (builder.toString());
     }

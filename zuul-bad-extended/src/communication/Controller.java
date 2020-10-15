@@ -1,11 +1,11 @@
 package communication;
 
-public class UserCommunication
+public class Controller
 {
-    private static UserCommunication instance;
+    private static Controller instance;
     private Communication communication;
 
-    private UserCommunication()
+    private Controller()
     { }
 
     public Communication getCommunication()
@@ -27,10 +27,10 @@ public class UserCommunication
 
     public String askUser() { return (this.communication.askUser()); }
 
-    public static UserCommunication getInstance()
+    public static Controller getInstance()
     {
         if (instance == null)
-            instance = new UserCommunication();
+            instance = new Controller();
         return (instance);
     }
 }
