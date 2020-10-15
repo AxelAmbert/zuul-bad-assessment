@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import communication.Controller;
 import player.HumanPlayer;
 import player.Player;
 
@@ -90,12 +91,15 @@ public class Game
      */
     public void printWelcome()
     {
-        System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
-        System.out.println();
-        System.out.println(this.actualPlayer.getCurrentRoom().getFullDescription());
+        StringBuilder welcomeString = new StringBuilder();
+
+        welcomeString.append(System.lineSeparator());
+        welcomeString.append("Welcome to the World of Zuul!").append(System.lineSeparator());
+        welcomeString.append("World of Zuul is a new, incredibly boring adventure game.").append(System.lineSeparator());
+        welcomeString.append("Type 'help' if you need help.").append(System.lineSeparator());
+        welcomeString.append(System.lineSeparator()).append(System.lineSeparator());
+        welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription()).append(System.lineSeparator());
+        Controller.getInstance().showMessage(welcomeString);
     }
 
 

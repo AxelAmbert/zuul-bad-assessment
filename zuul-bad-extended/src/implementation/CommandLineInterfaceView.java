@@ -21,7 +21,7 @@ public class CommandLineInterfaceView implements GameView
     @Override
     public void runGame(Game game)
     {
-        this.controller.setCommunication(new CommandLineInterface());
+        Controller.getInstance().setCommunication(new CommandLineInterface());
         game.printWelcome();
         do {
             this.playerTurn(game);

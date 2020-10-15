@@ -18,11 +18,15 @@ public class Controller
         this.communication = communication;
     }
 
-    public void showMessage(String toShow) { this.communication.showMessage(toShow); }
-
-    public void showError(String toShow)
+    public <T> void showMessage(T toShow)
     {
-        this.communication.showError(toShow);
+        this.communication.showMessage(toShow.toString());
+    }
+
+    public <T> void showError(T toShow)
+    {
+        Object ok;
+        this.communication.showError(toShow.toString());
     }
 
     public String askUser() { return (this.communication.askUser()); }
