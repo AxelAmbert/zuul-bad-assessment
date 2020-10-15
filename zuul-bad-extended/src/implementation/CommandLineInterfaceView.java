@@ -21,7 +21,7 @@ public class CommandLineInterfaceView implements GameView
     @Override
     public void runGame(Game game)
     {
-        controller.setCommunication(new CommandLineInterface());
+        this.controller.setCommunication(new CommandLineInterface());
         game.printWelcome();
         do {
             this.playerTurn(game);
@@ -35,7 +35,7 @@ public class CommandLineInterfaceView implements GameView
         Command userCommand = parser.parse(actualPlayer.play(), " ");
 
         this.nbOfPlayer = game.getNumberOfPlayers();
-        invoker.invoke(userCommand);
+        this.invoker.invoke(userCommand);
         if (game.getNumberOfPlayers() == this.nbOfPlayer) {
             game.onPlayerTurnEnd();
         }
