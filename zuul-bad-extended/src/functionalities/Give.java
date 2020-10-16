@@ -1,7 +1,9 @@
 package functionalities;
+import communication.Controller;
 import main.Command;
 import main.Game;
 import main.Room;
+import misc.LocalizedText;
 import player.Player;
 
 public class Give implements Functionality {
@@ -14,12 +16,12 @@ public class Give implements Functionality {
 
         if (command.getNumberOfArgs() < 1) {
             // if there is no second word, we don't know what to give...
-            System.out.println("Give what?");
+            Controller.getInstance().showMessage(LocalizedText.getText("give_what"));
             return;
         }
         if (command.getNumberOfArgs() < 2) {
             // if there is no third word, we don't to whom to give it...
-            System.out.println("Give it to who?");
+            Controller.getInstance().showMessage(LocalizedText.getText("give_who"));
             return;
         }
 
@@ -29,11 +31,11 @@ public class Give implements Functionality {
 
         if (playerToGive == null) {
             // cannot give it if the chacter is not here
-            System.out.println(whom + " is not in the room");
+            Controller.getInstance().showMessage(LocalizedText.getText("not_in_room", whom));
             return;
         }
         else if (actualPlayer.getInventory().hasItem(item) == false) {
-            System.out.println("You don't have the " + item);
+            Controller.getInstance().showMessage(LocalizedText.getText("give_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(playerToGive.getInventory(), item);

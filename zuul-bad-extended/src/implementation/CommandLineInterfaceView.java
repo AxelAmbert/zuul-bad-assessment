@@ -6,6 +6,7 @@ import main.Command;
 import main.CommandInvoker;
 import main.CommandParser;
 import main.Game;
+import misc.LocalizedText;
 import player.Player;
 
 public class CommandLineInterfaceView implements GameView
@@ -21,10 +22,13 @@ public class CommandLineInterfaceView implements GameView
     @Override
     public void runGame(Game game)
     {
+        LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
+        System.out.println(LocalizedText.getText("drop_arg_<1", "mdr", "lol", "hihi"));
         Controller.getInstance().setCommunication(new CommandLineInterface());
         game.printWelcome();
         do {
             this.playerTurn(game);
+            System.out.println("ALORS ? " + game.getNumberOfPlayers());
         } while (game.getNumberOfPlayers() > 0);
     }
 

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 import communication.Controller;
+import misc.LocalizedText;
 import player.HumanPlayer;
 import player.Player;
 
@@ -55,7 +56,6 @@ public class Game
         this.playerList.add(new HumanPlayer(this.startRoom, "3"));
         this.playerList.add(new HumanPlayer(this.startRoom, "4"));
         this.playerList.add(new HumanPlayer(this.startRoom, "5"));
-
     }
 
     private void getAvailableCommands()
@@ -82,7 +82,7 @@ public class Game
     {
         RoomParser roomParser = new RoomParser();
 
-        this.startRoom = roomParser.update(System.getProperty("user.dir") +  "\\rooms.json");
+        this.startRoom = roomParser.update(System.getProperty("user.dir") + "\\rooms.json");
     }
 
 
@@ -94,28 +94,10 @@ public class Game
         StringBuilder welcomeString = new StringBuilder();
 
         welcomeString.append(System.lineSeparator());
-        welcomeString.append("Welcome to the World of Zuul!").append(System.lineSeparator());
-        welcomeString.append("World of Zuul is a new, incredibly boring adventure game.").append(System.lineSeparator());
-        welcomeString.append("Type 'help' if you need help.").append(System.lineSeparator());
+        welcomeString.append(LocalizedText.getText("welcome_zuul"));
         welcomeString.append(System.lineSeparator()).append(System.lineSeparator());
         welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription()).append(System.lineSeparator());
         Controller.getInstance().showMessage(welcomeString);
-    }
-
-
-// implementations of user commands:
-
-    /**
-     * Print out some help information. Here we print some stupid, cryptic
-     * message and a list of the command words.
-     */
-    private void printHelp()
-    {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
-        System.out.println("   go quit help");
     }
 
     public void printOK()
@@ -139,24 +121,15 @@ public class Game
 
     public void onPlayerQuit()
     {
-        System.out.println("md");
-            this.actualPlayer.exitFromRoom();
-            this.actualPlayerIterator.remove();
-            /*if (this.actualPlayerIterator.hasPrevious()) {
-                this.actualPlayerIterator.previous();
-                this.actualPlayerIterator.remove();
-            } else {
-                this.actualPlayerIterator = this.playerList.listIterator(this.playerList.size() - 1);
-                this.actualPlayerIterator.remove();
-                if (this.playerList.isEmpty() == false) {
-                    this.actualPlayerIterator = this.playerList.listIterator(0);
-                }
-            }*/
-            this.onPlayerTurnEnd();
+        this.actualPlayer.exitFromRoom();
+        this.actualPlayerIterator.remove();
+        this.onPlayerTurnEnd();
     }
 
     public void onPlayerTurnEnd()
     {
+        if (this.getNumberOfPlayers() == 0)
+            return;
         if (this.actualPlayerIterator.hasNext() == false) {
             this.actualPlayerIterator = this.playerList.listIterator();
         }

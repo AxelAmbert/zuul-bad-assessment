@@ -2,6 +2,7 @@ package main;
 
 import misc.Inventory;
 import misc.Item;
+import misc.LocalizedText;
 import player.Player;
 
 import java.util.HashMap;
@@ -62,20 +63,14 @@ public class Room
         return description;
     }
 
-
     public String getFullDescription()
     {
-        StringBuilder longDescription = new StringBuilder("You are " + getDescription() + System.lineSeparator());
+        StringBuilder items = new StringBuilder();
 
-        longDescription.append("Exits: ");
-        longDescription.append(this.getExitsDescription());
-        longDescription.append(System.lineSeparator());
-        longDescription.append("Items : ");
         for (Item item : this.inventory.getItems()) {
-            longDescription.append(item.getItemName()).append("(").append(item.getItemWeight()).append(")");
+            items.append(item.getItemName()).append("(").append(item.getItemWeight()).append(")");
         }
-        longDescription.append(System.lineSeparator());
-        return (longDescription.toString());
+        return (LocalizedText.getText("room_long_desc", getDescription(), this.getExitsDescription(), items));
     }
 
     public Set<String> getExits()

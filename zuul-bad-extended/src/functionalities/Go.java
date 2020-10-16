@@ -16,7 +16,7 @@ public class Go implements Functionality {
 
         if (command.getNumberOfArgs() < 1) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
+            Controller.getInstance().showMessage("Go where?" + System.lineSeparator());
             return;
         }
 
@@ -29,7 +29,7 @@ public class Go implements Functionality {
             Controller.getInstance().getCommunication().showMessage("There is no door!");
         } else {
             actualPlayer.setCurrentRoom(nextRoom);
-            System.out.println(actualPlayer.getCurrentRoom().getFullDescription());
+            Controller.getInstance().getCommunication().showMessage(actualPlayer.getCurrentRoom().getFullDescription() + System.lineSeparator());
         }
     }
 }

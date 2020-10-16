@@ -1,0 +1,76 @@
+{
+  "texts" : [
+    {
+      "key" : "drop_arg_<1",
+      "text_en" : "Drop what %s %s %s?\n\r"
+    },
+    {
+      "key" : "drop_no_item",
+      "text_en" : "You don't have the %s\n\r"
+    },
+    {
+      "key" : "give_wat",
+      "text_en" : "Give what?\n\r"
+    },
+    {
+      "key" : "give_who",
+      "text_en" : "Give it who?\n\r"
+    },
+    {
+      "key" : "not_in_room",
+      "text_en" : "%s is not in the room\n\r"
+    },
+    {
+      "key" : "give_no_item",
+      "text_en" : "You don't have the %s\n\r"
+    },
+    {
+      "key" : "go_where",
+      "text_en" : "Go where?\n\r"
+    },
+    {
+      "key" : "no_door",
+      "text_en" : "There is no door!\n\r"
+    },
+    {
+      "key" : "lost",
+      "text_en" : "You are lost. You are alone. You wander\n\r"
+    },
+    {
+      "key" : "lost2",
+      "text_en" : "around at the university.\n\r"
+    },
+    {
+      "key" : "lost3",
+      "text_en" : "Your command words are:\n\r"
+    },
+    {
+      "key" : "lost4",
+      "text_en" : "   %s\n\r"
+    },
+    {
+      "key" : "quit_what",
+      "text_en" : "Quit what?\n\r"
+    },
+    {
+      "key" : "take_what",
+      "text_en" : "Take what?\n\r"
+    },
+    {
+      "key" : "no_item_in_room",
+      "text_en" : "No %s in the room\n\r"
+    },
+    {
+      "key" : "too_heavy",
+      "text_en" : "%s is too heavy\n\r"
+    },
+    {
+      "key" : "welcome_zuul",
+      "text_en" : "Welcome to the World of Zuul!\n\rWorld of Zuul is a new, incredibly boring adventure game.\n\rType 'help' if you need help.\n\r"
+    },
+    {
+      "key" : "room_long_desc",
+      "text_en" : "You are %s\n\rExits: %s\n\rItems : %s\n\r"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package functionalities;
 
 import communication.Controller;
 import main.Command;
+import misc.LocalizedText;
 
 public class Help implements Functionality
 {
@@ -10,11 +11,12 @@ public class Help implements Functionality
     {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("You are lost. You are alone. You wander").append(System.lineSeparator());
-        builder.append("around at the university.").append(System.lineSeparator());
+        builder.append(LocalizedText.getText("lost"));
+        builder.append(LocalizedText.getText("lost2"));
         builder.append(System.lineSeparator());
-        builder.append("Your command words are:").append(System.lineSeparator());
-        builder.append("   go quit help").append(System.lineSeparator());
+        builder.append(LocalizedText.getText("lost3"));
+        //TODO change this
+        builder.append(LocalizedText.getText("lost4", "FILL"));
         Controller.getInstance().showMessage(builder);
     }
 }

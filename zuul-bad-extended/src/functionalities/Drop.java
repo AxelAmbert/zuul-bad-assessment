@@ -1,7 +1,9 @@
 package functionalities;
 
+import communication.Controller;
 import main.Command;
 import main.Game;
+import misc.LocalizedText;
 import player.Player;
 
 public class Drop implements Functionality
@@ -15,12 +17,12 @@ public class Drop implements Functionality
 
         if (command.getNumberOfArgs() < 1) {
             // if there is no second word, we don't know what to drop...
-            System.out.println("Drop what?");
+            Controller.getInstance().showMessage(LocalizedText.getText("drop_arg_<1"));
             return;
         }
         item = command.getArgAt(1);
         if (actualPlayer.getInventory().hasItem(item) == false) {
-            System.out.println("You don't have the " + item);
+            Controller.getInstance().showMessage(LocalizedText.getText("drop_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(actualPlayer.getCurrentRoom().getInventory(), item);

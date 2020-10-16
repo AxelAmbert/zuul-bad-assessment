@@ -1,8 +1,9 @@
 package functionalities;
 
+import communication.Controller;
 import main.Command;
 import main.Game;
-import player.Player;
+import misc.LocalizedText;
 
 public class Quit implements Functionality
 {
@@ -10,10 +11,9 @@ public class Quit implements Functionality
     public void run(Command command)
     {
         Game game = Game.getGameInstance();
-        Player player = game.getActualPlayer();
 
         if (command.getNumberOfArgs() < 1) {
-            System.out.println("Quit what?");
+            Controller.getInstance().showMessage(LocalizedText.getText("quit_what"));
         } else {
             game.onPlayerQuit();
         }

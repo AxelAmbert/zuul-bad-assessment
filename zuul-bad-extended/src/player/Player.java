@@ -8,7 +8,7 @@ import misc.Item;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player
+public abstract class Player
 {
     private final int MAX_WEIGHT = 5;
     protected Inventory inventory;

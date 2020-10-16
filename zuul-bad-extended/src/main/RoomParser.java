@@ -21,7 +21,6 @@ public class RoomParser
 
     public Room update(String filePath)
     {
-
         JSONArray roomsArray = this.getRoomArray(filePath);
 
         this.rooms = new HashMap<>();
