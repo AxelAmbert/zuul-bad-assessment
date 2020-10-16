@@ -6,11 +6,9 @@ import java.lang.reflect.Constructor;
 
 public class CommandInvoker
 {
-    CommandWords availableCommands;
 
     public CommandInvoker()
     {
-        this.availableCommands = new CommandWords();
     }
 
     public void invoke(Command command)

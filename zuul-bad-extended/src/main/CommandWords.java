@@ -1,5 +1,11 @@
 package main;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -14,18 +20,27 @@ package main;
 public class CommandWords
 {
     // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-        "go", "quit", "help", "look", "take", "drop", "give"
-    };
+    private String[] validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
-    public CommandWords()
+    public CommandWords(String path)
     {
-        // nothing to do at the moment...
+        this.loadCommands(path);
     }
 
+    public void loadCommands(String path)
+    {
+        String commands = "";
+
+        try {
+            commands = Files.readString(Path.of(path));
+            this.validCommands = commands.split(";");
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
     /**
      * Check whether a given String is a valid command word. 
      * @return true if a given string is a valid command,
@@ -33,12 +48,25 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        return (true);
-      /*  for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
+
+        for (String validCommand : validCommands) {
+            if (validCommand.equals(aString))
                 return true;
         }
         // if we get here, the string was not found in the commands
-        return false;*/
+        return false;
+    }
+
+    public String getCommandString()
+    {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < this.validCommands.length; i++) {
+            builder.append(this.validCommands[i]);
+            if (i + 1 < this.validCommands.length) {
+                builder.append(" ");
+            }
+        }
+        return (builder.toString());
     }
 }

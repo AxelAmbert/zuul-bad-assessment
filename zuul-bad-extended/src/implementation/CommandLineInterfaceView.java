@@ -2,21 +2,25 @@ package implementation;
 
 import communication.CommandLineInterface;
 import communication.Controller;
-import main.Command;
-import main.CommandInvoker;
-import main.CommandParser;
-import main.Game;
+import main.*;
 import misc.LocalizedText;
 import player.Player;
 
 public class CommandLineInterfaceView implements GameView
 {
 
-    private CommandParser parser = new CommandParser();
-    private CommandInvoker invoker = new CommandInvoker();
-    private int nbOfPlayer = 0;
+    private CommandParser parser;
+    private CommandInvoker invoker;
+    private int nbOfPlayer;
+    private CommandWords commandWords;
 
-    public CommandLineInterfaceView() { }
+    public CommandLineInterfaceView()
+    {
+        this.parser = new CommandParser();
+        this.invoker = new CommandInvoker();
+        this.nbOfPlayer = 0;
+        this.commandWords = new CommandWords(System.getProperty("user.dir") + "\\availableCommands");
+    }
 
     @Override
     public void runGame(Game game)
@@ -36,7 +40,11 @@ public class CommandLineInterfaceView implements GameView
         Command userCommand = parser.parse(actualPlayer.play(), " ");
 
         this.nbOfPlayer = game.getNumberOfPlayers();
-        this.invoker.invoke(userCommand);
+        if (this.commandWords.isCommand(userCommand.getCommandName())) {
+            this.invoker.invoke(userCommand);
+        } else {
+            Controller.showMessage(LocalizedText.getText("unknown_command"));
+        }
         if (game.getNumberOfPlayers() == this.nbOfPlayer) {
             game.onPlayerTurnEnd();
         }

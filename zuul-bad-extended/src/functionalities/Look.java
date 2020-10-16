@@ -1,4 +1,5 @@
 package functionalities;
+import communication.Controller;
 import main.Command;
 import main.Game;
 import main.Room;
@@ -11,6 +12,6 @@ public class Look extends Functionality {
         Player actualPlayer = game.getActualPlayer();
         Room currentRoom = actualPlayer.getCurrentRoom();
 
-        System.out.println(currentRoom.getFullDescription());
+        Controller.showMessage(currentRoom.getFullDescription());
     }
 }

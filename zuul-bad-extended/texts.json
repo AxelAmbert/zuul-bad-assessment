@@ -2,7 +2,7 @@
   "texts" : [
     {
       "key" : "drop_arg_<1",
-      "text_en" : "Drop what %s %s %s?\n\r"
+      "text_en" : "Drop what?\n\r"
     },
     {
       "key" : "drop_no_item",
@@ -71,6 +71,10 @@
     {
       "key" : "room_long_desc",
       "text_en" : "You are %s\n\rExits: %s\n\rItems: %s\n\r"
+    },
+    {
+      "key": "unknown_command",
+      "text_en" : "I don't know what you mean...\n\r"
     }
   ]
 }

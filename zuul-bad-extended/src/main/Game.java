@@ -52,10 +52,6 @@ public class Game
     {
         this.playerList = new ArrayList<>();
         this.playerList.add(new HumanPlayer(this.startRoom, "1"));
-        this.playerList.add(new HumanPlayer(this.startRoom, "2"));
-        this.playerList.add(new HumanPlayer(this.startRoom, "3"));
-        this.playerList.add(new HumanPlayer(this.startRoom, "4"));
-        this.playerList.add(new HumanPlayer(this.startRoom, "5"));
     }
 
     private void getAvailableCommands()
