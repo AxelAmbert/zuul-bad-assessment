@@ -9,7 +9,7 @@
       "text_en" : "You don't have the %s\n\r"
     },
     {
-      "key" : "give_wat",
+      "key" : "give_what",
       "text_en" : "Give what?\n\r"
     },
     {
@@ -66,11 +66,11 @@
     },
     {
       "key" : "welcome_zuul",
-      "text_en" : "Welcome to the World of Zuul!\n\rWorld of Zuul is a new, incredibly boring adventure game.\n\rType 'help' if you need help.\n\r"
+      "text_en" : "Welcome to the World of Zuul!\n\rWorld of Zuul is a new, incredibly boring adventure game.\n\rType 'help' if you need help.\n\r\n\r"
     },
     {
       "key" : "room_long_desc",
-      "text_en" : "You are %s\n\rExits: %s\n\rItems : %s\n\r"
+      "text_en" : "You are %s\n\rExits: %s\n\rItems: %s\n\r"
     }
   ]
 }

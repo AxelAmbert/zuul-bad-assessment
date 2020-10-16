@@ -12,7 +12,6 @@ import player.Player;
 public class CommandLineInterfaceView implements GameView
 {
 
-    private Controller controller = Controller.getInstance();
     private CommandParser parser = new CommandParser();
     private CommandInvoker invoker = new CommandInvoker();
     private int nbOfPlayer = 0;
@@ -23,19 +22,17 @@ public class CommandLineInterfaceView implements GameView
     public void runGame(Game game)
     {
         LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
-        System.out.println(LocalizedText.getText("drop_arg_<1", "mdr", "lol", "hihi"));
-        Controller.getInstance().setCommunication(new CommandLineInterface());
+        Controller.setCommunication(new CommandLineInterface());
         game.printWelcome();
         do {
+            Controller.showMessage("> ");
             this.playerTurn(game);
-            System.out.println("ALORS ? " + game.getNumberOfPlayers());
         } while (game.getNumberOfPlayers() > 0);
     }
 
     public void playerTurn(Game game)
     {
         Player actualPlayer = game.getActualPlayer();
-        System.out.println("A toi de jouer " + actualPlayer.getPlayerName());
         Command userCommand = parser.parse(actualPlayer.play(), " ");
 
         this.nbOfPlayer = game.getNumberOfPlayers();

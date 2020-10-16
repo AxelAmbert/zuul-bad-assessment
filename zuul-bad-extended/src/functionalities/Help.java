@@ -4,7 +4,7 @@ import communication.Controller;
 import main.Command;
 import misc.LocalizedText;
 
-public class Help implements Functionality
+public class Help extends Functionality
 {
     @Override
     public void run(Command command)
@@ -17,6 +17,6 @@ public class Help implements Functionality
         builder.append(LocalizedText.getText("lost3"));
         //TODO change this
         builder.append(LocalizedText.getText("lost4", "FILL"));
-        Controller.getInstance().showMessage(builder);
+        Controller.showMessage(builder);
     }
 }

@@ -71,7 +71,6 @@ public class Game
         } catch (FileNotFoundException ex) {
             System.err.println("Something went wrong while reading the command file");
         }
-        System.out.println(availableCommands);
     }
 
 
@@ -95,9 +94,8 @@ public class Game
 
         welcomeString.append(System.lineSeparator());
         welcomeString.append(LocalizedText.getText("welcome_zuul"));
-        welcomeString.append(System.lineSeparator()).append(System.lineSeparator());
-        welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription()).append(System.lineSeparator());
-        Controller.getInstance().showMessage(welcomeString);
+        welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription());
+        Controller.showMessage(welcomeString);
     }
 
     public void printOK()

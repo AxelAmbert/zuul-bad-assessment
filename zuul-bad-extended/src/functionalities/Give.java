@@ -6,7 +6,7 @@ import main.Room;
 import misc.LocalizedText;
 import player.Player;
 
-public class Give implements Functionality {
+public class Give extends Functionality {
 
     @Override
     public void run(Command command) {
@@ -14,14 +14,10 @@ public class Give implements Functionality {
         Player actualPlayer = game.getActualPlayer();
         Room currentRoom = actualPlayer.getCurrentRoom();
 
-        if (command.getNumberOfArgs() < 1) {
-            // if there is no second word, we don't know what to give...
-            Controller.getInstance().showMessage(LocalizedText.getText("give_what"));
+        if (this.evaluateArgs(command, 1, "give_what") == false) {
             return;
         }
-        if (command.getNumberOfArgs() < 2) {
-            // if there is no third word, we don't to whom to give it...
-            Controller.getInstance().showMessage(LocalizedText.getText("give_who"));
+        else if (this.evaluateArgs(command, 2, "give_who") == false) {
             return;
         }
 
@@ -31,11 +27,11 @@ public class Give implements Functionality {
 
         if (playerToGive == null) {
             // cannot give it if the chacter is not here
-            Controller.getInstance().showMessage(LocalizedText.getText("not_in_room", whom));
+            Controller.showMessage(LocalizedText.getText("not_in_room", whom));
             return;
         }
         else if (actualPlayer.getInventory().hasItem(item) == false) {
-            Controller.getInstance().showMessage(LocalizedText.getText("give_no_item", item));
+            Controller.showMessage(LocalizedText.getText("give_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(playerToGive.getInventory(), item);

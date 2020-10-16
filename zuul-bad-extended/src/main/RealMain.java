@@ -10,7 +10,6 @@ public class RealMain
     private JButton mdrButton;
     public RealMain()
     {
-        System.out.println("hihi");
         mdrButton.addActionListener(new ActionListener()
         {
             @Override

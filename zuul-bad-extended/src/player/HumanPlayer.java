@@ -17,8 +17,6 @@ public class HumanPlayer extends Player
     @Override public String play()
 
     {
-        Controller controller = Controller.getInstance();
-
-        return (controller.askUser());
+        return (Controller.askUser());
     }
 }

@@ -13,12 +13,12 @@ public class CommandLineInterface implements Communication
 
     public void showMessage(String toShow)
     {
-        System.out.println(toShow);
+        System.out.print(toShow);
     }
 
     public void showError(String toShow)
     {
-        System.err.println(toShow);
+        System.err.print(toShow);
     }
 
     public String askUser()

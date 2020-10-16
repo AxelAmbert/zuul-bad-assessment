@@ -6,7 +6,7 @@ import main.Game;
 import misc.LocalizedText;
 import player.Player;
 
-public class Drop implements Functionality
+public class Drop extends Functionality
 {
     @Override
     public void run(Command command)
@@ -15,14 +15,12 @@ public class Drop implements Functionality
         Game game = Game.getGameInstance();
         Player actualPlayer = game.getActualPlayer();
 
-        if (command.getNumberOfArgs() < 1) {
-            // if there is no second word, we don't know what to drop...
-            Controller.getInstance().showMessage(LocalizedText.getText("drop_arg_<1"));
+        if (this.evaluateArgs(command, 1, "drop_arg_<1") == false) {
             return;
         }
         item = command.getArgAt(1);
         if (actualPlayer.getInventory().hasItem(item) == false) {
-            Controller.getInstance().showMessage(LocalizedText.getText("drop_no_item", item));
+            Controller.showMessage(LocalizedText.getText("drop_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(actualPlayer.getCurrentRoom().getInventory(), item);

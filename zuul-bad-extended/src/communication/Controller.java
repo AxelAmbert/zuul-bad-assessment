@@ -1,40 +1,34 @@
 package communication;
 
+import javax.naming.ldap.Control;
+
 public class Controller
 {
-    private static Controller instance;
-    private Communication communication;
+    public static Communication communication;
 
     private Controller()
     { }
 
-    public Communication getCommunication()
+    public static Communication getCommunication()
     {
-        return (this.communication);
+        return (Controller.communication);
     }
 
-    public void setCommunication(Communication communication)
+    public static void setCommunication(Communication communication)
     {
-        this.communication = communication;
+        Controller.communication = communication;
     }
 
-    public <T> void showMessage(T toShow)
+    public static <T> void showMessage(T toShow)
     {
-        this.communication.showMessage(toShow.toString());
+        Controller.communication.showMessage(toShow.toString());
     }
 
-    public <T> void showError(T toShow)
+    public static <T> void showError(T toShow)
     {
-        Object ok;
-        this.communication.showError(toShow.toString());
+        Controller.communication.showError(toShow.toString());
     }
 
-    public String askUser() { return (this.communication.askUser()); }
+    public static String askUser() { return (Controller.communication.askUser()); }
 
-    public static Controller getInstance()
-    {
-        if (instance == null)
-            instance = new Controller();
-        return (instance);
-    }
 }

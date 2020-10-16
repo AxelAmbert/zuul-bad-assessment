@@ -7,7 +7,7 @@ import misc.Item;
 import misc.LocalizedText;
 import player.Player;
 
-public class Take implements Functionality {
+public class Take extends Functionality {
 
     @Override
     public void run(Command command) {
@@ -15,23 +15,21 @@ public class Take implements Functionality {
         Player actualPlayer = game.getActualPlayer();
         Room currentRoom = actualPlayer.getCurrentRoom();
 
-        if (command.getNumberOfArgs() < 1) {
-            // if there is no second word, we don't know what to take...
-            Controller.getInstance().showMessage(LocalizedText.getText("take_what"));
+        if (this.evaluateArgs(command, 1, "take_what") == false) {
             return;
         }
 
         String itemDescription = command.getArgAt(1);
         if (currentRoom.getInventory().hasItem(itemDescription) == false) {
             // The item is not in the room
-            Controller.getInstance().showMessage(LocalizedText.getText("no_item_in_room", itemDescription));
+            Controller.showMessage(LocalizedText.getText("no_item_in_room", itemDescription));
             return;
         }
         Item item = currentRoom.getInventory().takeItem(itemDescription);
         if (actualPlayer.getInventory().getInventoryWeight() + item.getItemWeight() >= actualPlayer.getInventory().getMaxWeight()) {
             // The player is carrying too much
             currentRoom.getInventory().insertItem(item);
-            Controller.getInstance().showMessage(LocalizedText.getText("too_heavy", itemDescription));
+            Controller.showMessage(LocalizedText.getText("too_heavy", itemDescription));
             return;
         }
         // OK we can pick it up

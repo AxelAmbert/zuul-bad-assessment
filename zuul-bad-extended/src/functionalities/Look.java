@@ -4,7 +4,7 @@ import main.Game;
 import main.Room;
 import player.Player;
 
-public class Look implements Functionality {
+public class Look extends Functionality {
     @Override
     public void run(Command command) {
         Game game = Game.getGameInstance();

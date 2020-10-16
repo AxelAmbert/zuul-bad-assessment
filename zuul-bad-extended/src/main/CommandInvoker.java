@@ -24,6 +24,11 @@ public class CommandInvoker
 
             fun.run(command);
         } catch (Throwable e) {
+            var s = e.getStackTrace();
+
+            for (var ss : s) {
+                System.out.println(ss);
+            }
             System.err.println(commandName + " is not a valid command " + e.toString());
         }
     }

@@ -3,9 +3,10 @@ import communication.Controller;
 import main.Command;
 import main.Game;
 import main.Room;
+import misc.LocalizedText;
 import player.Player;
 
-public class Go implements Functionality {
+public class Go extends Functionality {
     public Go() {
         super();
     }
@@ -14,9 +15,8 @@ public class Go implements Functionality {
         Game game = Game.getGameInstance();
         Player actualPlayer = game.getActualPlayer();
 
-        if (command.getNumberOfArgs() < 1) {
-            // if there is no second word, we don't know where to go...
-            Controller.getInstance().showMessage("Go where?" + System.lineSeparator());
+
+        if (this.evaluateArgs(command, 1, "go_where") == false) {
             return;
         }
 
@@ -26,10 +26,10 @@ public class Go implements Functionality {
         Room nextRoom = actualPlayer.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
-            Controller.getInstance().getCommunication().showMessage("There is no door!");
+            Controller.getCommunication().showMessage(LocalizedText.getText("no_door"));
         } else {
             actualPlayer.setCurrentRoom(nextRoom);
-            Controller.getInstance().getCommunication().showMessage(actualPlayer.getCurrentRoom().getFullDescription() + System.lineSeparator());
+            Controller.getCommunication().showMessage(actualPlayer.getCurrentRoom().getFullDescription());
         }
     }
 }
