@@ -1,30 +1,89 @@
 package main;
 
+import communication.CommandLineInterface;
+import communication.Controller;
+import communication.GUIInterface;
+import implementation.GameView;
+import misc.LocalizedText;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RealMain
+public class RealMain implements GameView
 {
+    private JFrame frame;
     private JPanel rootPanel;
-    private JButton mdrButton;
+    private JButton goEast;
+    private JButton goWest;
+    private JButton goNorth;
+    private JButton goSouth;
+    private JButton talk;
+    private CommandInvoker invoker;
     public RealMain()
     {
-        mdrButton.addActionListener(new ActionListener()
+        Controller.setCommunication(new GUIInterface());
+        LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
+        this.invoker = new CommandInvoker();
+        goEast.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Game.getGameInstance().printOK();
+                Command command = new Command(new String[]{"go", "east"});
+
+                invoker.invoke(command);
+
+            }
+        });
+
+        goWest.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Command command = new Command(new String[]{"go", "west"});
+
+                invoker.invoke(command);
+            }
+        });
+
+        goNorth.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Command command = new Command(new String[]{"go", "north"});
+
+                invoker.invoke(command);
+            }
+        });
+
+        goSouth.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Command command = new Command(new String[]{"go", "south"});
+
+                invoker.invoke(command);
+            }
+        });
+        talk.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Controller.showMessage("You said: " + Controller.askUser());
             }
         });
     }
 
-    public static void main(String[] args)
+    @Override
+    public void runGame(Game game)
     {
-        JFrame frame = new JFrame("HelloWorld");
+        this.frame = new JFrame("HelloWorld");
         frame.setContentPane(new RealMain().rootPanel);
-        System.out.println("oo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

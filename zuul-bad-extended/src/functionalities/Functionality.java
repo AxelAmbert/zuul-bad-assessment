@@ -13,7 +13,7 @@ public abstract class Functionality {
     public boolean evaluateArgs(Command command, int wantedArgs, String key)
     {
         if (command.getNumberOfArgs() < wantedArgs) {
-            Controller.showMessage(LocalizedText.getText(key));
+            Controller.showMessageAndLog(LocalizedText.getText(key));
             return (false);
         }
         return (true);

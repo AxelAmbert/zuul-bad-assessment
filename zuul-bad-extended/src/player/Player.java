@@ -11,7 +11,7 @@ import java.util.Random;
 public abstract class Player
 {
     private final int MAX_WEIGHT = 5;
-    protected Inventory inventory;
+    protected final Inventory inventory;
     protected Room currentRoom;
     protected String playerName;
 
@@ -49,6 +49,11 @@ public abstract class Player
     public Inventory getInventory()
     {
         return inventory;
+    }
+
+    public boolean canTake(Item item)
+    {
+        return (this.inventory.getInventoryWeight() +  item.getItemWeight() >= this.inventory.getMaxWeight());
     }
 
     private void generateRandomPlayerName()

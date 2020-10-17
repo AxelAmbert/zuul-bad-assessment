@@ -25,10 +25,10 @@ import java.util.Set;
  */
 public class Room
 {
-    public String description;
+    public final String description;
     public HashMap<String, Room> linkedRooms;
-    private Inventory inventory;
-    private LinkedList<Player> playersInRoom;
+    private final Inventory inventory;
+    private final LinkedList<Player> playersInRoom;
 
     /**
      * Create a room described "description". Initially, it has

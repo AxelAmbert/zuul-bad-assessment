@@ -8,10 +8,10 @@ import player.Player;
 public class Look extends Functionality {
     @Override
     public void run(Command command) {
-        Game game = Game.getGameInstance();
-        Player actualPlayer = game.getActualPlayer();
-        Room currentRoom = actualPlayer.getCurrentRoom();
+        final Game game = Game.getGameInstance();
+        final Player actualPlayer = game.getActualPlayer();
+        final Room currentRoom = actualPlayer.getCurrentRoom();
 
-        Controller.showMessage(currentRoom.getFullDescription());
+        Controller.showMessageAndLog(currentRoom.getFullDescription());
     }
 }

@@ -12,24 +12,24 @@ public class Go extends Functionality {
     }
 
     public void run(Command command) {
-        Game game = Game.getGameInstance();
-        Player actualPlayer = game.getActualPlayer();
+        final Game game = Game.getGameInstance();
+        final Player actualPlayer = game.getActualPlayer();
 
 
         if (this.evaluateArgs(command, 1, "go_where") == false) {
             return;
         }
 
-        String direction = command.getArgAt(1);
+        final String direction = command.getArgAt(1);
 
         // Try to leave current room.
-        Room nextRoom = actualPlayer.getCurrentRoom().getExit(direction);
+        final Room nextRoom = actualPlayer.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
-            Controller.getCommunication().showMessage(LocalizedText.getText("no_door"));
+            Controller.showMessageAndLog(LocalizedText.getText("no_door"));
         } else {
             actualPlayer.setCurrentRoom(nextRoom);
-            Controller.getCommunication().showMessage(actualPlayer.getCurrentRoom().getFullDescription());
+            Controller.showMessageAndLog(actualPlayer.getCurrentRoom().getFullDescription());
         }
     }
 }

@@ -10,10 +10,10 @@ public class Quit extends Functionality
     @Override
     public void run(Command command)
     {
-        Game game = Game.getGameInstance();
+        final Game game = Game.getGameInstance();
 
         if (command.getNumberOfArgs() < 1) {
-            Controller.showMessage(LocalizedText.getText("quit_what"));
+            Controller.showMessageAndLog(LocalizedText.getText("quit_what"));
         } else {
             game.onPlayerQuit();
         }

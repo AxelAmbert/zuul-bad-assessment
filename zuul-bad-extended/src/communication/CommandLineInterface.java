@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CommandLineInterface implements Communication
 {
-    private Scanner reader;
+    private final Scanner reader;
 
     public CommandLineInterface()
     {

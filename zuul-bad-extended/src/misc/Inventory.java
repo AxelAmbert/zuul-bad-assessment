@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class Inventory
 {
-    private LinkedList<Item> items;
+    private final LinkedList<Item> items;
     private int inventoryWeight;
     private int maxWeight;
 

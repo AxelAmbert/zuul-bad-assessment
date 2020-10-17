@@ -10,9 +10,9 @@ public class Give extends Functionality {
 
     @Override
     public void run(Command command) {
-        Game game = Game.getGameInstance();
-        Player actualPlayer = game.getActualPlayer();
-        Room currentRoom = actualPlayer.getCurrentRoom();
+        final Game game = Game.getGameInstance();
+        final Player actualPlayer = game.getActualPlayer();
+        final Room currentRoom = actualPlayer.getCurrentRoom();
 
         if (this.evaluateArgs(command, 1, "give_what") == false) {
             return;
@@ -21,9 +21,9 @@ public class Give extends Functionality {
             return;
         }
 
-        String item = command.getArgAt(1);
-        String whom = command.getArgAt(2);
-        Player playerToGive = currentRoom.searchForPlayer(whom);
+        final String item = command.getArgAt(1);
+        final String whom = command.getArgAt(2);
+        final Player playerToGive = currentRoom.searchForPlayer(whom);
 
         if (playerToGive == null) {
             // cannot give it if the chacter is not here
@@ -31,7 +31,7 @@ public class Give extends Functionality {
             return;
         }
         else if (actualPlayer.getInventory().hasItem(item) == false) {
-            Controller.showMessage(LocalizedText.getText("give_no_item", item));
+            Controller.showMessageAndLog(LocalizedText.getText("give_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(playerToGive.getInventory(), item);

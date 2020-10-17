@@ -17,7 +17,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Game game = Game.getGameInstance();
-        GameView implementation = new CommandLineInterfaceView();
+        GameView implementation = new RealMain();
 
         implementation.runGame(game);
     }

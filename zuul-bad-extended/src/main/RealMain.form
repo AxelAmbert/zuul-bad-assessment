@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="471a8" class="javax.swing.JButton" binding="mdrButton" default-binding="true">
+      <component id="471a8" class="javax.swing.JButton" binding="goEast">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -21,7 +21,7 @@
           <grid row="1" column="1" row-span="3" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="c7eb8" class="javax.swing.JButton" default-binding="true">
+      <component id="c7eb8" class="javax.swing.JButton" binding="goWest">
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -29,28 +29,28 @@
           <text value="go west"/>
         </properties>
       </component>
-      <component id="991b7" class="javax.swing.JButton" default-binding="true">
+      <component id="991b7" class="javax.swing.JButton" binding="goSouth">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="go "/>
+          <text value="go south"/>
         </properties>
       </component>
-      <component id="655d2" class="javax.swing.JButton" default-binding="true">
+      <component id="655d2" class="javax.swing.JButton" binding="goNorth">
         <constraints>
           <grid row="1" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="go east"/>
+          <text value="go north"/>
         </properties>
       </component>
-      <component id="f1b47" class="javax.swing.JButton" default-binding="true">
+      <component id="f1b47" class="javax.swing.JButton" binding="talk">
         <constraints>
           <grid row="2" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="go east"/>
+          <text value="talk"/>
         </properties>
       </component>
       <component id="fc9cf" class="javax.swing.JButton" default-binding="true">

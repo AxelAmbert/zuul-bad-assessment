@@ -12,15 +12,15 @@ public class Drop extends Functionality
     public void run(Command command)
     {
         String item;
-        Game game = Game.getGameInstance();
-        Player actualPlayer = game.getActualPlayer();
+        final Game game = Game.getGameInstance();
+        final Player actualPlayer = game.getActualPlayer();
 
         if (this.evaluateArgs(command, 1, "drop_arg_<1") == false) {
             return;
         }
         item = command.getArgAt(1);
         if (actualPlayer.getInventory().hasItem(item) == false) {
-            Controller.showMessage(LocalizedText.getText("drop_no_item", item));
+            Controller.showMessageAndLog(LocalizedText.getText("drop_no_item", item));
             return;
         }
         actualPlayer.getInventory().transferTo(actualPlayer.getCurrentRoom().getInventory(), item);

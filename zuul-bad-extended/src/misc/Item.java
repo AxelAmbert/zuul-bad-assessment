@@ -2,8 +2,8 @@ package misc;
 
 public class Item
 {
-    private String itemName;
-    private Integer itemWeight;
+    private final String itemName;
+    private final Integer itemWeight;
 
     public Item(String itemName, Integer itemWeight)
     {
