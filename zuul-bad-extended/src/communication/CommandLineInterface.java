@@ -4,25 +4,25 @@ import java.util.Scanner;
 
 public class CommandLineInterface implements Communication
 {
-    private final Scanner reader;
+  private final Scanner reader;
 
-    public CommandLineInterface()
-    {
-        this.reader = new Scanner(System.in);
-    }
+  public CommandLineInterface()
+  {
+    this.reader = new Scanner(System.in);
+  }
 
-    public void showMessage(String toShow)
-    {
-        System.out.print(toShow);
-    }
+  public void showMessage(String toShow)
+  {
+    System.out.print(toShow);
+  }
 
-    public void showError(String toShow)
-    {
-        System.err.print(toShow);
-    }
+  public void showError(String toShow)
+  {
+    System.err.print(toShow);
+  }
 
-    public String askUser()
-    {
-        return (reader.nextLine());
-    }
+  public String askUser()
+  {
+    return (reader.nextLine());
+  }
 }

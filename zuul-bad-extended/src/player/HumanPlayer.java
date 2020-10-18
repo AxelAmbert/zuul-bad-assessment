@@ -5,18 +5,19 @@ import main.Room;
 
 public class HumanPlayer extends Player
 {
-    private final int MAX_WEIGHT = 10;
+  private final int MAX_WEIGHT = 10;
 
-    public HumanPlayer(Room currentRoom, String playerName)
-    {
-        super(currentRoom);
-        this.inventory.setMaxWeight(this.MAX_WEIGHT);
-        this.playerName = playerName;
-    }
+  public HumanPlayer(Room currentRoom, String playerName)
+  {
+    super(currentRoom);
+    this.inventory.setMaxWeight(this.MAX_WEIGHT);
+    this.playerName = playerName;
+  }
 
-    @Override public String play()
+  @Override
+  public String play()
 
-    {
-        return (Controller.askUser());
-    }
+  {
+    return (Controller.askUser());
+  }
 }

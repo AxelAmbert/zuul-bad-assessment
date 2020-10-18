@@ -29,114 +29,115 @@ import player.Player;
 public class Game
 {
 
-    private Player actualPlayer;
-    private Room startRoom;
-    private ArrayList<Player> playerList;
-    private ArrayList<String> availableCommands;
-    private ListIterator<Player> actualPlayerIterator;
-    static Game gameInstance;
+  private Player actualPlayer;
+  private Room startRoom;
+  private ArrayList<Player> playerList;
+  private ArrayList<String> availableCommands;
+  private ListIterator<Player> actualPlayerIterator;
+  static Game gameInstance;
 
-    /**
-     * Create the game and initialise its internal map.
-     */
-    private Game()
-    {
-        this.getAvailableCommands();
-        this.createRooms();
-        this.addPlayers();
-        this.actualPlayerIterator = this.playerList.listIterator();
-        this.actualPlayer = this.actualPlayerIterator.next();
+  /**
+   * Create the game and initialise its internal map.
+   */
+  private Game()
+  {
+    this.getAvailableCommands();
+    this.createRooms();
+    this.addPlayers();
+    this.actualPlayerIterator = this.playerList.listIterator();
+    this.actualPlayer = this.actualPlayerIterator.next();
+  }
+
+  private void addPlayers()
+  {
+    this.playerList = new ArrayList<>();
+    this.playerList.add(new HumanPlayer(this.startRoom, "1"));
+  }
+
+  private void getAvailableCommands()
+  {
+    this.availableCommands = new ArrayList<>();
+    try {
+      //TODO change this
+      Scanner scanner = new Scanner(new File("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\availableCommands"));
+
+      while (scanner.hasNextLine()) {
+        this.availableCommands.add(scanner.nextLine());
+      }
+      scanner.close();
+    } catch (FileNotFoundException ex) {
+      System.err.println("Something went wrong while reading the command file");
     }
+  }
 
-    private void addPlayers()
-    {
-        this.playerList = new ArrayList<>();
-        this.playerList.add(new HumanPlayer(this.startRoom, "1"));
+
+  /**
+   * Create all the rooms and link their exits together.
+   */
+  private void createRooms()
+  {
+    RoomParser roomParser = new RoomParser();
+
+    this.startRoom = roomParser.update(System.getProperty("user.dir") + "\\rooms.json");
+  }
+
+
+  /**
+   * Print out the opening message for the player.
+   */
+  public void printWelcome()
+  {
+    StringBuilder welcomeString = new StringBuilder();
+
+    welcomeString.append(System.lineSeparator());
+    welcomeString.append(LocalizedText.getText("welcome_zuul"));
+    welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription());
+    Controller.showMessage(welcomeString);
+  }
+
+  public void printOK()
+  {
+    for (Player ok : this.playerList) {
+      System.out.println(ok.getCurrentRoom().getFullDescription());
     }
+  }
 
-    private void getAvailableCommands()
-    {
-        this.availableCommands = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(new File("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\availableCommands"));
+  public static Game getGameInstance()
+  {
+    if (gameInstance == null)
+      gameInstance = new Game();
+    return (gameInstance);
+  }
 
-            while (scanner.hasNextLine()) {
-                this.availableCommands.add(scanner.nextLine());
-            }
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            System.err.println("Something went wrong while reading the command file");
-        }
+  public ArrayList<Player> getPlayerList()
+  {
+    return playerList;
+  }
+
+  public void onPlayerQuit()
+  {
+    this.actualPlayer.exitFromRoom();
+    this.actualPlayerIterator.remove();
+    this.onPlayerTurnEnd();
+  }
+
+  public void onPlayerTurnEnd()
+  {
+    if (this.getNumberOfPlayers() == 0)
+      return;
+    if (this.actualPlayerIterator.hasNext() == false) {
+      this.actualPlayerIterator = this.playerList.listIterator();
     }
+    this.actualPlayer = this.actualPlayerIterator.next();
+  }
 
+  public int getNumberOfPlayers()
+  {
+    return (this.playerList.size());
+  }
 
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    private void createRooms()
-    {
-        RoomParser roomParser = new RoomParser();
-
-        this.startRoom = roomParser.update(System.getProperty("user.dir") + "\\rooms.json");
-    }
-
-
-    /**
-     * Print out the opening message for the player.
-     */
-    public void printWelcome()
-    {
-        StringBuilder welcomeString = new StringBuilder();
-
-        welcomeString.append(System.lineSeparator());
-        welcomeString.append(LocalizedText.getText("welcome_zuul"));
-        welcomeString.append(this.actualPlayer.getCurrentRoom().getFullDescription());
-        Controller.showMessage(welcomeString);
-    }
-
-    public void printOK()
-    {
-        for (Player ok : this.playerList) {
-            System.out.println(ok.getCurrentRoom().getFullDescription());
-        }
-    }
-
-    public static Game getGameInstance()
-    {
-        if (gameInstance == null)
-            gameInstance = new Game();
-        return (gameInstance);
-    }
-
-    public ArrayList<Player> getPlayerList()
-    {
-        return playerList;
-    }
-
-    public void onPlayerQuit()
-    {
-        this.actualPlayer.exitFromRoom();
-        this.actualPlayerIterator.remove();
-        this.onPlayerTurnEnd();
-    }
-
-    public void onPlayerTurnEnd()
-    {
-        if (this.getNumberOfPlayers() == 0)
-            return;
-        if (this.actualPlayerIterator.hasNext() == false) {
-            this.actualPlayerIterator = this.playerList.listIterator();
-        }
-        this.actualPlayer = this.actualPlayerIterator.next();
-    }
-
-    public int getNumberOfPlayers()
-    {
-        return (this.playerList.size());
-    }
-
-    public Player getActualPlayer()
-    {
-        return (this.actualPlayer);
-    }
+  public Player getActualPlayer()
+  {
+    return (this.actualPlayer);
+  }
 }
