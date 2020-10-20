@@ -2,6 +2,8 @@ package communication;
 
 import javax.swing.*;
 
+
+
 public class GUIInterface implements Communication
 {
 

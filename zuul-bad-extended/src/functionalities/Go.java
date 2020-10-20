@@ -7,6 +7,14 @@ import main.Room;
 import misc.LocalizedText;
 import player.Player;
 
+
+/**
+ * This class is called when the user execute the "go"
+ * command.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
 public class Go extends Functionality
 {
   public Go()
@@ -14,6 +22,13 @@ public class Go extends Functionality
     super();
   }
 
+  /**
+   * Move the player into another room.
+   * Check the exits in the player's current room.
+   * If the user don't specify a room, the operation abort.
+   * If the user don't specify a valid room, the operation is aborted.
+   * @param command the command the user sent to the program.
+   */
   public void run(Command command)
   {
     final Game game = Game.getGameInstance();

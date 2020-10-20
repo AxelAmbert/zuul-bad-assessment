@@ -7,8 +7,25 @@ import main.Room;
 import misc.LocalizedText;
 import player.Player;
 
+/**
+ * This class is called when the user execute the "give"
+ * command.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
 public class Give extends Functionality
 {
+
+  /**
+   * Give an object to another player in the same room.
+   * It will check if the player has the object it wants to drop.
+   * If the condition is true, the player will lose its object and
+   * give it to its current room.
+   * If the user don't specify an object, the operation is aborted.
+   * If the user don't specify another player, the operation is aborted.
+   * @param command the command the user sent to the program.
+   */
 
   @Override
   public void run(Command command)

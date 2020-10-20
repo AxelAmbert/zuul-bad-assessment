@@ -8,8 +8,24 @@ import misc.Item;
 import misc.LocalizedText;
 import player.Player;
 
+/**
+ * This class is called when the user execute the "take"
+ * command.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class Take extends Functionality
 {
+
+  /**
+   * Take an object in the room.*
+   * If the user don't specify an object, the operation is aborted.
+   * If the user don't specify a valid object, the operation is aborted.
+   * If the user don't have enough space in its inventory, the operation is aborted.
+   * @param command the command the user sent to the program.
+   */
 
   @Override
   public void run(Command command)
