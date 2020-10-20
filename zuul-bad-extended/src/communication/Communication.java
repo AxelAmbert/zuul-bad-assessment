@@ -13,12 +13,14 @@ public interface Communication
    * Show a message
    * @param toShow the message to show
    */
+
   public void showMessage(String toShow);
 
   /**
    * Show an error
    * @param toShow the error to show
    */
+
   public void showError(String toShow);
 
   /**
@@ -26,5 +28,6 @@ public interface Communication
    * the unprocessed value
    * @return The user answer
    */
+
   public String askUser();
 }

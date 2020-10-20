@@ -19,6 +19,7 @@ public class CommandLineInterface implements Communication
    * use this class to communicate with the user via
    * Command Line Interface
    */
+
   public CommandLineInterface()
   {
     this.reader = new Scanner(System.in);
@@ -29,6 +30,7 @@ public class CommandLineInterface implements Communication
    * communicate with the user
    * @param toShow the message to print
    */
+
   public void showMessage(String toShow)
   {
     System.out.print(toShow);
@@ -39,6 +41,7 @@ public class CommandLineInterface implements Communication
    * communicate with the user
    * @param toShow the error to print
    */
+
   public void showError(String toShow)
   {
     System.err.print(toShow);
@@ -49,6 +52,7 @@ public class CommandLineInterface implements Communication
    * the answer is non processed and may be null
    * @return The user answer
    */
+
   public String askUser()
   {
     return (reader.nextLine());

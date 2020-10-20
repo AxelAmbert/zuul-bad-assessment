@@ -6,6 +6,14 @@ import main.*;
 import misc.LocalizedText;
 import player.Player;
 
+/**
+ * This class is the implementation of the GameView class, it
+ * use a command line interface view for the project.
+ * Use it if you want to play the Zuul Game with CLI.
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class CommandLineInterfaceView implements GameView
 {
 
@@ -14,6 +22,10 @@ public class CommandLineInterfaceView implements GameView
   private int nbOfPlayer;
   private CommandWords commandWords;
 
+  /**
+   * Constructor of the CommandLineInterfaceView class
+   */
+
   public CommandLineInterfaceView()
   {
     this.parser = new CommandParser();
@@ -21,6 +33,12 @@ public class CommandLineInterfaceView implements GameView
     this.nbOfPlayer = 0;
     this.commandWords = new CommandWords(System.getProperty("user.dir") + "\\availableCommands");
   }
+
+  /**
+   * Main while of the program.
+   * Every action of the game happens here.
+   * @param game The game instance that we want to use.
+   */
 
   @Override
   public void runGame(Game game)
@@ -33,6 +51,15 @@ public class CommandLineInterfaceView implements GameView
       this.playerTurn(game);
     } while (game.getNumberOfPlayers() > 0);
   }
+
+  /**
+   * Handle the actual player turn.
+   * It will ask in the prompt for a command and then, if valid,
+   * execute the command.
+   * If at the end the number of player is the same (nobody quitted)
+   * inform the game about the end of turn.
+   * @param game The game instance that we want to use.
+   */
 
   public void playerTurn(Game game)
   {
