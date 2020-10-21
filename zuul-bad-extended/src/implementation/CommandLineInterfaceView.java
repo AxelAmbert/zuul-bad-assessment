@@ -70,6 +70,7 @@ public class CommandLineInterfaceView implements GameView
       Controller.showMessage(LocalizedText.getText("unknown_command"));
     }
     if (game.getNumberOfPlayers() == this.nbOfPlayer) {
+      actualPlayer.interpretGameAnswer();
       game.onPlayerTurnEnd();
     }
   }
