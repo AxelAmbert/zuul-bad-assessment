@@ -10,14 +10,46 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Class RoomParser - the parser that creates and links rooms.
+ * <p>
+ * The goal of the RoomParser is to look in a file and to recreate the
+ * scenery of the game by creating room, putting objects in the room and
+ * linking room.
+ * <p>
+ * Use it to handle your room creation in an easier way or to build a level
+ * creator for any game that implement the Room class.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class RoomParser
 {
   private HashMap<String, Room> rooms;
   private Room startRoom;
 
+
+  /**
+   * Create an instance of the RoomParser class.
+   */
   RoomParser()
   {
   }
+
+  /**
+   * Update the scenery of the game by reading a JSON file that
+   * contains every element that set up a room, then :
+   * Create every rooms;
+   * Link the rooms;
+   * Add items into rooms.
+   * <p>
+   * The JSON file must contains a "start room".
+   * Look at the default rooms.json to see the constitution of the file.
+   *
+   * @param filePath the JSON file to read to update the scenery
+   * @return the start room.
+   */
 
   public Room update(String filePath)
   {
@@ -29,6 +61,16 @@ public class RoomParser
     roomsArray.forEach(this::parseItems);
     return (startRoom);
   }
+
+  /**
+   * Get a JSONArray representing every room in the game.
+   *
+   * Look for the file at filePath and create a JSONArray
+   * containing every room in the game.
+   *
+   * @param filePath the JSON file to read to update the scenery
+   * @return the JSONArray of every room.
+   */
 
   private JSONArray getRoomArray(String filePath)
   {
@@ -46,6 +88,13 @@ public class RoomParser
     return (array);
   }
 
+  /**
+   * Create and add a specific room to the list of rooms.
+   * Use this function in a loop or a forEach to create every room.
+   *
+   * @param room the actual room to create
+   */
+
   private void createARoom(Object room)
   {
     JSONObject parsedRoom = new JSONObject(room.toString());
@@ -59,6 +108,13 @@ public class RoomParser
     this.rooms.put(roomName, newRoom);
   }
 
+  /**
+   * Parse a room and look for every other room to link.
+   * Use this function in a loop or a forEach to create every room.
+   *
+   * @param room the actual room to parse
+   */
+
   private void parseRelatedRoom(Object room)
   {
     JSONObject parsedRoom = new JSONObject(room.toString());
@@ -70,6 +126,13 @@ public class RoomParser
       this.linkARoom(parsedRoom, parsedRoomToLink);
     }
   }
+
+  /**
+   * Link a room to another room.
+   *
+   * @param mainRoom the main room.
+   * @param roomToLink the room to link to the main room.
+   */
 
   private void linkARoom(JSONObject mainRoom, JSONObject roomToLink)
   {
@@ -83,6 +146,13 @@ public class RoomParser
     }
     this.rooms.get(mainRoomName).linkARoom(roomToLinkDirection, this.rooms.get(roomToLinkName));
   }
+
+  /**
+   * Parse a room and look for every item to add.
+   * Use this function in a loop or a forEach to create every room.
+   *
+   * @param room the actual room to parse
+   */
 
   private void parseItems(Object room)
   {
@@ -101,6 +171,13 @@ public class RoomParser
 
     }
   }
+
+  /**
+   * Link a room to another room.
+   *
+   * @param parsedItem the parsed item to add.
+   * @param parsedRoom the room where to add the parsed item.
+   */
 
   private void addItems(JSONObject parsedItem, JSONObject parsedRoom)
   {

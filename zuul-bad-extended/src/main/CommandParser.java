@@ -20,6 +20,7 @@ public class CommandParser
 
   /**
    * Return a Command object thanks to a String.
+   *
    * @param toParse raw input to parse
    * @param delimiters delimiters to remove, can be a regex
    * @return the Command object filled with the input

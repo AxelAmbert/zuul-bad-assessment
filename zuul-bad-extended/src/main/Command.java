@@ -21,6 +21,7 @@ public class Command
 
   /**
    * Create a command object
+   *
    * @param command The user input, it must be separated into an array,
    *                for an example, the command "give 100% Axel"
    *                must be in this format : String[]{"give", "100%", "Axel"}
@@ -44,6 +45,7 @@ public class Command
 
   /**
    * Return the command name
+   *
    * @return the command name
    */
 
@@ -54,6 +56,7 @@ public class Command
 
   /**
    * Get the command name
+   *
    * @return the command name
    */
 
@@ -64,6 +67,7 @@ public class Command
 
   /**
    * Get the full command
+   *
    * @return the full command
    */
 
@@ -74,6 +78,7 @@ public class Command
 
   /**
    * Get the number of arguments
+   *
    * @return the number of arguments
    */
 
@@ -88,6 +93,7 @@ public class Command
    * Get a specific argument
    * Return an empty String if out of bound
    * or if there is no arguments.
+   *
    * @param argNb the nth argument to return
    * @return the nth argument
    */

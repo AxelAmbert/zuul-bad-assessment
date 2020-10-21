@@ -12,21 +12,21 @@ import java.util.Set;
 /**
  * Class Room - a room in an adventure game.
  * <p>
- * This class is part of the "World of Zuul" application.
- * "World of Zuul" is a very simple, text based adventure game.
- * <p>
  * A "Room" represents one location in the scenery of the game.  It is
- * connected to other rooms via exits.  The exits are labelled north,
- * east, south, west.  For each direction, the room stores a reference
+ * connected to other rooms via exits.  The room can have multiple exits.
+ * For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
+ * <p>
+ * Everytime a player enter or leave the room, the Room keep a track on the
+ * list of players.
  *
- * @author Michael Kolling and David J. Barnes
- * @version 2006.03.30
+ * @author Axel Ambert
+ * @version 1.0
  */
 public class Room
 {
   public final String description;
-  public HashMap<String, Room> linkedRooms;
+  private final HashMap<String, Room> linkedRooms;
   private final Inventory inventory;
   private final LinkedList<Player> playersInRoom;
 
@@ -45,10 +45,25 @@ public class Room
     this.playersInRoom = new LinkedList<>();
   }
 
+  /**
+   * Link the actual room with another Room with its direction.
+   * There can only be one room attached to a direction.
+   *
+   * @param direction The linked room direction
+   * @param roomToLink The room to link
+   */
+
   public final void linkARoom(String direction, Room roomToLink)
   {
     this.linkedRooms.put(direction, roomToLink);
   }
+
+  /**
+   * Get a specific exit on the current room.
+   * Returns null if no room is linked to a direction
+   *
+   * @param direction The direction to get
+   */
 
   public final Room getExit(String direction)
   {
@@ -63,6 +78,14 @@ public class Room
     return description;
   }
 
+  /**
+   * Get a full description of the room which contains:
+   * The list of directions;
+   * The list of items.
+   *
+   * @return The full description of the room.
+   */
+
   public String getFullDescription()
   {
     StringBuilder items = new StringBuilder();
@@ -74,15 +97,24 @@ public class Room
             "room_long_desc", getDescription(), this.getExitsDescription(), items));
   }
 
-  public Set<String> getExits()
-  {
-    return (this.linkedRooms.keySet());
-  }
+  /**
+   * Get the room's inventory
+   *
+   * @return The room's inventory
+   */
 
   public Inventory getInventory()
   {
     return (this.inventory);
   }
+
+  /**
+   * Search for a specific player in the room via its name.
+   * If found, return the player, otherwise, return null.
+   *
+   * @param name The player's name
+   * @return The found player or null
+   */
 
   public Player searchForPlayer(String name)
   {
@@ -93,15 +125,33 @@ public class Room
     return (null);
   }
 
+  /**
+   * Remove a specific player from the player list in the room.
+   *
+   * @param player The player to remove
+   */
+
   public void removeAPlayer(Player player)
   {
     this.playersInRoom.remove(player);
   }
 
+  /**
+   * Add a specific player from the player list in the room.
+   *
+   * @param player The player to add
+   */
+
   public void addAPlayer(Player player)
   {
     this.playersInRoom.add(player);
   }
+
+  /**
+   * Get every exits linked to the current room.
+   *
+   * @return The list of exits, separated by a space
+   */
 
   public String getExitsDescription()
   {
