@@ -3,6 +3,7 @@ package player;
 import main.Room;
 import misc.Inventory;
 import misc.Item;
+import misc.Observable;
 
 import java.util.Random;
 
@@ -21,7 +22,7 @@ import java.util.Random;
  * @version 1.0
  */
 
-public abstract class Player
+public abstract class Player extends Observable
 {
   private final int MAX_WEIGHT = 5;
   protected final Inventory inventory;
@@ -90,6 +91,7 @@ public abstract class Player
     }
     this.currentRoom = currentRoom;
     this.currentRoom.addAPlayer(this);
+    this.update();
   }
 
   /**

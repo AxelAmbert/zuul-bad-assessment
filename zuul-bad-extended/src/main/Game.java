@@ -6,6 +6,7 @@ import java.util.*;
 
 import communication.Controller;
 import misc.LocalizedText;
+import misc.Observable;
 import player.HumanPlayer;
 import player.Player;
 
@@ -26,7 +27,7 @@ import player.Player;
  * @author Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
-public class Game
+public class Game extends Observable
 {
 
   private Player actualPlayer;
@@ -95,23 +96,12 @@ public class Game
     Controller.showMessage(welcomeString);
   }
 
-  public void printOK()
-  {
-    for (Player ok : this.playerList) {
-      System.out.println(ok.getCurrentRoom().getFullDescription());
-    }
-  }
 
   public static Game getGameInstance()
   {
     if (gameInstance == null)
       gameInstance = new Game();
     return (gameInstance);
-  }
-
-  public ArrayList<Player> getPlayerList()
-  {
-    return playerList;
   }
 
   public void onPlayerQuit()
@@ -129,6 +119,7 @@ public class Game
       this.actualPlayerIterator = this.playerList.listIterator();
     }
     this.actualPlayer = this.actualPlayerIterator.next();
+    this.update();
   }
 
   public int getNumberOfPlayers()

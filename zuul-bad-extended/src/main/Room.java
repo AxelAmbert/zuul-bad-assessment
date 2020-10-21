@@ -3,6 +3,7 @@ package main;
 import misc.Inventory;
 import misc.Item;
 import misc.LocalizedText;
+import misc.Observable;
 import player.Player;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.Set;
  * @author Axel Ambert
  * @version 1.0
  */
-public class Room
+public class Room extends Observable
 {
   public final String description;
   private final HashMap<String, Room> linkedRooms;
@@ -128,6 +129,7 @@ public class Room
   public void removeAPlayer(Player player)
   {
     this.playersInRoom.remove(player);
+    this.update();
   }
 
   /**
@@ -138,6 +140,7 @@ public class Room
   public void addAPlayer(Player player)
   {
     this.playersInRoom.add(player);
+    this.update();
   }
 
   /**

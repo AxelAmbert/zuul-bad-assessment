@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0
  */
 
-public class Inventory
+public class Inventory extends Observable
 {
   private final LinkedList<Item> items;
   private int inventoryWeight;
