@@ -52,7 +52,6 @@ public class Room
    * @param direction The linked room direction
    * @param roomToLink The room to link
    */
-
   public final void linkARoom(String direction, Room roomToLink)
   {
     this.linkedRooms.put(direction, roomToLink);
@@ -64,7 +63,6 @@ public class Room
    *
    * @param direction The direction to get
    */
-
   public final Room getExit(String direction)
   {
     return (this.linkedRooms.get(direction));
@@ -85,7 +83,6 @@ public class Room
    *
    * @return The full description of the room.
    */
-
   public String getFullDescription()
   {
     StringBuilder items = new StringBuilder();
@@ -102,7 +99,6 @@ public class Room
    *
    * @return The room's inventory
    */
-
   public Inventory getInventory()
   {
     return (this.inventory);
@@ -115,7 +111,6 @@ public class Room
    * @param name The player's name
    * @return The found player or null
    */
-
   public Player searchForPlayer(String name)
   {
     for (Player player : this.playersInRoom) {
@@ -130,7 +125,6 @@ public class Room
    *
    * @param player The player to remove
    */
-
   public void removeAPlayer(Player player)
   {
     this.playersInRoom.remove(player);
@@ -141,7 +135,6 @@ public class Room
    *
    * @param player The player to add
    */
-
   public void addAPlayer(Player player)
   {
     this.playersInRoom.add(player);
@@ -152,7 +145,6 @@ public class Room
    *
    * @return The list of exits, separated by a space
    */
-
   public String getExitsDescription()
   {
     StringBuilder exits = new StringBuilder();

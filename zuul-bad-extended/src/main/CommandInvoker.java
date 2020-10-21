@@ -33,7 +33,6 @@ public class CommandInvoker
    * a "Go" command to respect Coding Style in classes.
    * @param command a Command object filled with the user's input
    */
-
   public void invoke(Command command)
   {
     String commandName = this.adaptCaseSensitive(command.getCommandName());
@@ -59,7 +58,6 @@ public class CommandInvoker
    * with a capital letter.
    * @param command the command name
    */
-
   private String adaptCaseSensitive(String command)
   {
     StringBuilder builder = new StringBuilder(command);

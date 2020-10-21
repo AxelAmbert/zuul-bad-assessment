@@ -26,7 +26,6 @@ public class Look extends Functionality
    * The room exits.
    * @param command the command the user sent to the program.
    */
-
   @Override
   public void run(Command command)
   {

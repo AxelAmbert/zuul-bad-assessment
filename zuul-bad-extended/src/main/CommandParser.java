@@ -25,7 +25,6 @@ public class CommandParser
    * @param delimiters delimiters to remove, can be a regex
    * @return the Command object filled with the input
    */
-
   public Command parse(String toParse, String delimiters)
   {
     String[] parsedCommand = toParse.split(delimiters);

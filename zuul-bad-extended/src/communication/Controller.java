@@ -28,7 +28,6 @@ public class Controller
    * no need to call it since its a static class
    * like System.
    */
-
   private Controller()
   {
   }
@@ -38,7 +37,6 @@ public class Controller
    * @return Communication return the communication
    * object of he Controller
    */
-
   public static Communication getCommunication()
   {
     return (Controller.communication);
@@ -50,7 +48,6 @@ public class Controller
    * object, otherwise it won't works.
    * @param communication communication object to init
    */
-
   public static void setCommunication(Communication communication)
   {
     Controller.communication = communication;
@@ -61,7 +58,6 @@ public class Controller
    * way to show a message to the user.
    * @param toShow message to show
    */
-
   public static <T> void showMessage(T toShow)
   {
     Controller.communication.showMessage(toShow.toString());
@@ -74,7 +70,6 @@ public class Controller
    * messages.
    * @param toShow message to show
    */
-
   public static <T> void showMessageAndLog(T toShow)
   {
     showMessage(toShow);
@@ -86,7 +81,6 @@ public class Controller
    * way to show an error to the user.
    * @param toShow error to show
    */
-
   public static <T> void showError(T toShow)
   {
     Controller.communication.showError(toShow.toString());
@@ -106,7 +100,6 @@ public class Controller
    * This function return the last log stored in the log list.
    * @return the last log of the log list
    */
-
   public static String getLastLog()
   {
     return (getNthLog(logs.size()));
@@ -121,7 +114,6 @@ public class Controller
    * @param nb the log number that you want to get
    * @return the nth log in the log list
    */
-
   public static String getNthLog(int nb)
   {
     if (logs.isEmpty())
@@ -139,7 +131,6 @@ public class Controller
    * way to ask the user for an input.
    * @return the user input as a String, that can be null
    */
-
   public static String askUser()
   {
     return (Controller.communication.askUser());

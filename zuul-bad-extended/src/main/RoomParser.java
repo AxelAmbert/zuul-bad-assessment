@@ -50,7 +50,6 @@ public class RoomParser
    * @param filePath the JSON file to read to update the scenery
    * @return the start room.
    */
-
   public Room update(String filePath)
   {
     JSONArray roomsArray = this.getRoomArray(filePath);
@@ -71,7 +70,6 @@ public class RoomParser
    * @param filePath the JSON file to read to update the scenery
    * @return the JSONArray of every room.
    */
-
   private JSONArray getRoomArray(String filePath)
   {
     String file = "";
@@ -94,7 +92,6 @@ public class RoomParser
    *
    * @param room the actual room to create
    */
-
   private void createARoom(Object room)
   {
     JSONObject parsedRoom = new JSONObject(room.toString());
@@ -114,7 +111,6 @@ public class RoomParser
    *
    * @param room the actual room to parse
    */
-
   private void parseRelatedRoom(Object room)
   {
     JSONObject parsedRoom = new JSONObject(room.toString());
@@ -133,7 +129,6 @@ public class RoomParser
    * @param mainRoom the main room.
    * @param roomToLink the room to link to the main room.
    */
-
   private void linkARoom(JSONObject mainRoom, JSONObject roomToLink)
   {
     String mainRoomName = mainRoom.getString("roomName");
@@ -153,7 +148,6 @@ public class RoomParser
    *
    * @param room the actual room to parse
    */
-
   private void parseItems(Object room)
   {
     JSONObject parsedRoom = new JSONObject(room.toString());
@@ -178,7 +172,6 @@ public class RoomParser
    * @param parsedItem the parsed item to add.
    * @param parsedRoom the room where to add the parsed item.
    */
-
   private void addItems(JSONObject parsedItem, JSONObject parsedRoom)
   {
     String room = parsedRoom.getString("roomName");

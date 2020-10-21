@@ -9,7 +9,6 @@ import main.Game;
  * @author Axel Ambert
  * @version 1.0
  */
-
 public interface GameView
 {
   /**

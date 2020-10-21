@@ -32,7 +32,6 @@ public class CommandWords
     this.loadCommands(path);
   }
 
-
   /**
    * Load every command in the file.
    * Every command must be separated by a ";" and must
@@ -40,7 +39,6 @@ public class CommandWords
    *
    * @param path file to open in order to load the available commands.
    */
-
   public void loadCommands(String path)
   {
     String commands = "";

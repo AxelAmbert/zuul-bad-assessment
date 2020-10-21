@@ -25,7 +25,6 @@ public class CommandLineInterfaceView implements GameView
   /**
    * Constructor of the CommandLineInterfaceView class
    */
-
   public CommandLineInterfaceView()
   {
     this.parser = new CommandParser();
@@ -39,7 +38,6 @@ public class CommandLineInterfaceView implements GameView
    * Every action of the game happens here.
    * @param game The game instance that we want to use.
    */
-
   @Override
   public void runGame(Game game)
   {
@@ -60,7 +58,6 @@ public class CommandLineInterfaceView implements GameView
    * inform the game about the end of turn.
    * @param game The game instance that we want to use.
    */
-
   public void playerTurn(Game game)
   {
     Player actualPlayer = game.getActualPlayer();

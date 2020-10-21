@@ -26,7 +26,6 @@ public class Take extends Functionality
    * If the user don't have enough space in its inventory, the operation is aborted.
    * @param command the command the user sent to the program.
    */
-
   @Override
   public void run(Command command)
   {

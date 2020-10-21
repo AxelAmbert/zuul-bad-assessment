@@ -26,7 +26,6 @@ public class Give extends Functionality
    * If the user don't specify another player, the operation is aborted.
    * @param command the command the user sent to the program.
    */
-
   @Override
   public void run(Command command)
   {

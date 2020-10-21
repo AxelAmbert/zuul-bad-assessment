@@ -23,7 +23,6 @@ public class Quit extends Functionality
    * If the user don't specify what does it want to quit, the operation is aborted.
    * @param command the command the user sent to the program.
    */
-
   @Override
   public void run(Command command)
   {

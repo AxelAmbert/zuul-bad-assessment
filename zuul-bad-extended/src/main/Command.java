@@ -48,7 +48,6 @@ public class Command
    *
    * @return the command name
    */
-
   public String getCommandName()
   {
     return this.commandName;
@@ -59,7 +58,6 @@ public class Command
    *
    * @return the command name
    */
-
   public String[] getArgs()
   {
     return Arrays.copyOf(this.args, this.args.length);
@@ -70,7 +68,6 @@ public class Command
    *
    * @return the full command
    */
-
   public String[] getFullCommand()
   {
     return this.fullCommand;
@@ -81,7 +78,6 @@ public class Command
    *
    * @return the number of arguments
    */
-
   public int getNumberOfArgs()
   {
     if (this.args == null)
@@ -97,7 +93,6 @@ public class Command
    * @param argNb the nth argument to return
    * @return the nth argument
    */
-
   public String getArgAt(int argNb)
   {
     if (this.args == null || this.args.length < argNb)
