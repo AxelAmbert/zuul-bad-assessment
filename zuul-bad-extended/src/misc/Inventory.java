@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class Inventory - a bag full of item.
@@ -152,7 +153,7 @@ public class Inventory extends Observable
    */
   public LinkedList<Item> getItems()
   {
-    return ((LinkedList<Item>) List.copyOf(this.items));
+    return ((LinkedList<Item>)this.items.clone());
   }
 
   /**

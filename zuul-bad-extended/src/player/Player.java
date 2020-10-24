@@ -113,7 +113,7 @@ public abstract class Player extends Observable
   public boolean canTake(Item item)
   {
     return (this.inventory.getInventoryWeight() + item.getItemWeight()
-               >= this.inventory.getMaxWeight());
+               < this.inventory.getMaxWeight());
   }
 
   /**
