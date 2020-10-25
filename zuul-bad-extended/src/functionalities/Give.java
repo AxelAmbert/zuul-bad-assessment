@@ -17,6 +17,11 @@ import player.Player;
 public class Give extends Functionality
 {
 
+  public Give()
+  {
+    super();
+  }
+
   /**
    * Give an object to another player in the same room.
    * It will check if the player has the object it wants to drop.

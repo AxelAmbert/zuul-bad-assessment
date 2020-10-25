@@ -17,6 +17,11 @@ import player.Player;
 public class Drop extends Functionality
 {
 
+  public Drop()
+  {
+    super();
+  }
+
   /**
    * Drop an object in the player's current room.
    * It will check if the player has the object it wants to drop.

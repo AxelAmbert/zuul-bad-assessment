@@ -19,6 +19,11 @@ import player.Player;
 public class Take extends Functionality
 {
 
+  public Take()
+  {
+    super();
+  }
+
   /**
    * Take an object in the room.*
    * If the user don't specify an object, the operation is aborted.

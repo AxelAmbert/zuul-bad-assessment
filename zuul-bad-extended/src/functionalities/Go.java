@@ -17,6 +17,7 @@ import player.Player;
  */
 public class Go extends Functionality
 {
+
   public Go()
   {
     super();

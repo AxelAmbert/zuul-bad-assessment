@@ -20,16 +20,30 @@ import misc.LocalizedText;
 public abstract class Functionality
 {
 
+  public Functionality()
+  {
+  }
+
   /**
    * This function is supposed to be called after a functionality
    * object is created.
    *
-   * @param command the command the user sent to the program.
+   * @param command the command the user sent to the program
    */
   public void run(Command command)
   {
 
   }
+
+  /**
+   * Check if the command has a certain number of arguments.
+   * If the number of argument is less than wantedArgs, print
+   * an LocalizedText error message thanks to key parameter.
+   *
+   * @param command the command the user sent to the program
+   * @param wantedArgs number of desired arguments
+   * @param key LocalizedText key to print if error
+   */
 
   public boolean evaluateArgs(Command command, int wantedArgs, String key)
   {

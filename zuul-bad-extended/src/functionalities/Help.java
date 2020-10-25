@@ -16,6 +16,11 @@ import misc.LocalizedText;
 public class Help extends Functionality
 {
 
+  public Help()
+  {
+    super();
+  }
+
   /**
    * Help the player by remembering information about:
    * Its current room;

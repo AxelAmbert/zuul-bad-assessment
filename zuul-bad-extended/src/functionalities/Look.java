@@ -17,6 +17,11 @@ import player.Player;
 public class Look extends Functionality
 {
 
+  public Look()
+  {
+    super();
+  }
+
   /**
    * Look what's inside the room.
    * It will tell the full description of its current room,

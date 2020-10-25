@@ -16,6 +16,11 @@ import misc.LocalizedText;
 public class Quit extends Functionality
 {
 
+  public Quit()
+  {
+    super();
+  }
+
   /**
    * Quit the game.
    * Remove the player from the player list.
