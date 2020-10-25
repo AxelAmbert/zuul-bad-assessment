@@ -80,7 +80,7 @@ public class Game extends Observable
   {
     RoomParser roomParser = new RoomParser();
 
-    this.startRoom = roomParser.update(System.getProperty("user.dir") + "\\rooms.json");
+    this.startRoom = roomParser.update(System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json");
   }
 
 

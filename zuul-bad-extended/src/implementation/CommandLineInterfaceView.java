@@ -30,7 +30,7 @@ public class CommandLineInterfaceView implements GameView
     this.parser = new CommandParser();
     this.invoker = new CommandInvoker();
     this.nbOfPlayer = 0;
-    this.commandWords = new CommandWords(System.getProperty("user.dir") + "\\availableCommands");
+    this.commandWords = new CommandWords(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands");
   }
 
   /**
@@ -41,7 +41,7 @@ public class CommandLineInterfaceView implements GameView
   @Override
   public void runGame(Game game)
   {
-    LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
+    LocalizedText.setLocaleTexts(System.getProperty("user.dir") + System.getProperty("file.separator") + "texts.json", "en");
     Controller.setCommunication(new CommandLineInterface());
     game.addPlayers(1);
     game.printWelcome();

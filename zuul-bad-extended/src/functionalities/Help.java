@@ -33,7 +33,7 @@ public class Help extends Functionality
   public void run(Command command)
   {
     final StringBuilder builder = new StringBuilder();
-    final CommandWords commandWords = new CommandWords(System.getProperty("user.dir") + "\\availableCommands");
+    final CommandWords commandWords = new CommandWords(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands");
 
     builder.append(LocalizedText.getText("lost"));
     builder.append(LocalizedText.getText("lost2"));
