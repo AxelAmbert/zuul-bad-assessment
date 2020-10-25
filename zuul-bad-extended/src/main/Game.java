@@ -1,13 +1,12 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 import communication.Controller;
 import misc.LocalizedText;
 import misc.Observable;
 import player.HumanPlayer;
+import player.NPC;
 import player.Player;
 
 
@@ -24,8 +23,8 @@ import player.Player;
  * creates the parser and starts the game. It also evaluates and executes the
  * commands that the parser returns.
  *
- * @author Michael Kolling and David J. Barnes
- * @version 2006.03.30
+ * @author Axel Ambert
+ * @version 1.0
  */
 public class Game extends Observable
 {
@@ -33,7 +32,6 @@ public class Game extends Observable
   private Player actualPlayer;
   private Room startRoom;
   private ArrayList<Player> playerList;
-  private ArrayList<String> availableCommands;
   private ListIterator<Player> actualPlayerIterator;
   static Game gameInstance;
 
@@ -42,38 +40,41 @@ public class Game extends Observable
    */
   private Game()
   {
-    this.getAvailableCommands();
+    this.playerList = new ArrayList<>();
     this.createRooms();
-    this.addPlayers();
+  }
+
+  /**
+   * Add new human players to the game.
+   * Every player will get an ordered name like : {1, 2, 3, ..., nb}
+   *
+   * @param nb number of human players to add.
+   */
+  public void addPlayers(int nb)
+  {
+    for (int i = 0; i < nb; i++) {
+      this.playerList.add(new HumanPlayer(this.startRoom, Integer.toString(i + 1)));
+    }
     this.actualPlayerIterator = this.playerList.listIterator();
     this.actualPlayer = this.actualPlayerIterator.next();
   }
 
-  private void addPlayers()
+  /**
+   * Add new NPC to the game.
+   *
+   * @param nb number of NPCwt to add.
+   */
+  public void addNPC(int nb)
   {
-    this.playerList = new ArrayList<>();
-    this.playerList.add(new HumanPlayer(this.startRoom, "1"));
-  }
-
-  private void getAvailableCommands()
-  {
-    this.availableCommands = new ArrayList<>();
-    try {
-      //TODO change this
-      Scanner scanner = new Scanner(new File("C:\\Users\\ImPar\\OneDrive\\Documents\\Kent\\Java\\assesement1\\zuul-bad-assessment\\zuul-bad-extended\\availableCommands"));
-
-      while (scanner.hasNextLine()) {
-        this.availableCommands.add(scanner.nextLine());
-      }
-      scanner.close();
-    } catch (FileNotFoundException ex) {
-      System.err.println("Something went wrong while reading the command file");
+    for (int i = 0; i < nb; i++) {
+      this.playerList.add(new NPC(this.startRoom));
     }
+    this.actualPlayerIterator = this.playerList.listIterator();
+    this.actualPlayer = this.actualPlayerIterator.next();
   }
-
 
   /**
-   * Create all the rooms and link their exits together.
+   * Use the RoomParser to create every room in the game.
    */
   private void createRooms()
   {
@@ -96,7 +97,11 @@ public class Game extends Observable
     Controller.showMessage(welcomeString);
   }
 
-
+  /**
+   * Since game is a Singleton, get the unique instance of Game.
+   *
+   * @return the only instance of Game
+   */
   public static Game getGameInstance()
   {
     if (gameInstance == null)
@@ -104,6 +109,10 @@ public class Game extends Observable
     return (gameInstance);
   }
 
+  /**
+   * This function is called every time a player quit the game.
+   * Feel free to add your own observers.
+   */
   public void onPlayerQuit()
   {
     this.actualPlayer.exitFromRoom();
@@ -111,6 +120,12 @@ public class Game extends Observable
     this.onPlayerTurnEnd();
   }
 
+  /**
+   * This function is called every time a player end its turn.
+   * Since quitting the game end its turn, this function is also called
+   * when the player quit.
+   * Feel free to add your own observers.
+   */
   public void onPlayerTurnEnd()
   {
     if (this.getNumberOfPlayers() == 0)
@@ -122,11 +137,21 @@ public class Game extends Observable
     this.update();
   }
 
+  /**
+   * Get the current number of players in the game.
+   *
+   * @return the current number of players.
+   */
   public int getNumberOfPlayers()
   {
     return (this.playerList.size());
   }
 
+  /**
+   * Get the player who is currently playing.
+   *
+   * @return the actual player.
+   */
   public Player getActualPlayer()
   {
     return (this.actualPlayer);

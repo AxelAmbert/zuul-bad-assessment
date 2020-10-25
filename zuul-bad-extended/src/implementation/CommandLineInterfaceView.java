@@ -43,6 +43,7 @@ public class CommandLineInterfaceView implements GameView
   {
     LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
     Controller.setCommunication(new CommandLineInterface());
+    game.addPlayers(1);
     game.printWelcome();
     do {
       Controller.showMessage("> ");
