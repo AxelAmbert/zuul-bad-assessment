@@ -1,5 +1,6 @@
 package misc;
 
+import communication.Controller;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -67,7 +68,7 @@ public class LocalizedText
       object = new JSONObject(file);
       array = object.getJSONArray("texts");
     } catch (IOException exception) {
-      System.out.println("Error while parsing rooms " + exception.toString());
+      Controller.showError("Error while parsing rooms " + exception.toString());
     }
     return (array);
   }

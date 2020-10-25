@@ -39,7 +39,6 @@ public class NPC extends Player
   public void interpretGameAnswer()
   {
     String lastLog = Controller.getLastLog();
-    System.out.println("LAST " + lastLog);
     // Interpret the game answer to your last action.
   }
 }
