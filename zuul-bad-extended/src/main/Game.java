@@ -28,10 +28,9 @@ import player.Player;
  */
 public class Game extends Observable
 {
-
   private Player actualPlayer;
   private Room startRoom;
-  private ArrayList<Player> playerList;
+  private final ArrayList<Player> playerList;
   private ListIterator<Player> actualPlayerIterator;
   static Game gameInstance;
 
@@ -80,7 +79,7 @@ public class Game extends Observable
   {
     RoomParser roomParser = new RoomParser();
 
-    this.startRoom = roomParser.update(System.getProperty("user.dir") + "\\rooms.json");
+    this.startRoom = roomParser.update(System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json");
   }
 
 

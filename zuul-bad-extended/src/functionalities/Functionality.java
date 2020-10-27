@@ -44,7 +44,6 @@ public abstract class Functionality
    * @param wantedArgs number of desired arguments
    * @param key LocalizedText key to print if error
    */
-
   public boolean evaluateArgs(Command command, int wantedArgs, String key)
   {
     if (command.getNumberOfArgs() < wantedArgs) {

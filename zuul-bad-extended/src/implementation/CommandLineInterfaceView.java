@@ -17,10 +17,10 @@ import player.Player;
 public class CommandLineInterfaceView implements GameView
 {
 
-  private CommandParser parser;
-  private CommandInvoker invoker;
+  private final CommandParser parser;
+  private final CommandInvoker invoker;
   private int nbOfPlayer;
-  private CommandWords commandWords;
+  private final CommandWords commandWords;
 
   /**
    * Constructor of the CommandLineInterfaceView class
@@ -30,18 +30,17 @@ public class CommandLineInterfaceView implements GameView
     this.parser = new CommandParser();
     this.invoker = new CommandInvoker();
     this.nbOfPlayer = 0;
-    this.commandWords = new CommandWords(System.getProperty("user.dir") + "\\availableCommands");
+    this.commandWords = new CommandWords(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands");
   }
 
   /**
-   * Main while of the program.
+   * Main loop of the program.
    * Every action of the game happens here.
    * @param game The game instance that we want to use.
    */
   @Override
   public void runGame(Game game)
   {
-    LocalizedText.setLocaleTexts(System.getProperty("user.dir") + "\\texts.json", "en");
     Controller.setCommunication(new CommandLineInterface());
     game.addPlayers(1);
     game.printWelcome();
