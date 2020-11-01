@@ -61,7 +61,7 @@ public class Game extends Observable
   /**
    * Add new NPC to the game.
    *
-   * @param nb number of NPCwt to add.
+   * @param nb number of NPC to add.
    */
   public void addNPC(int nb)
   {

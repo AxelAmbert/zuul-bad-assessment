@@ -48,6 +48,7 @@ public class CommandLineInterfaceView implements GameView
       Controller.showMessage("> ");
       this.playerTurn(game);
     } while (game.getNumberOfPlayers() > 0);
+    Controller.showMessage(LocalizedText.getText("good_bye"));
   }
 
   /**

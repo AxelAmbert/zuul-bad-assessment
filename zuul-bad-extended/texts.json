@@ -75,6 +75,10 @@
     {
       "key": "unknown_command",
       "text_en" : "I don't know what you mean...\n\r"
+    },
+    {
+      "key": "good_bye",
+      "text_en": "Thank you for playing.  Good bye.\r\n"
     }
   ]
 }

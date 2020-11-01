@@ -44,7 +44,7 @@ public class CommandInvoker
 
       fun.run(command);
     } catch (Throwable e) {
-      System.err.println(commandName + " is not a valid command " + e.toString());
+      return;
     }
   }
 

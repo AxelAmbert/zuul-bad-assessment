@@ -3,6 +3,7 @@ package main;/*
  * and open the template in the editor.
  */
 
+import communication.Controller;
 import implementation.CommandLineInterfaceView;
 import implementation.GameView;
 import misc.LocalizedText;
