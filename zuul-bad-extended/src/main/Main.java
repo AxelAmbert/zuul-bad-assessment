@@ -9,12 +9,17 @@ import implementation.GameView;
 import misc.LocalizedText;
 
 /**
- * @author rej
+ * Main class of the game.
+ *
+ * @author Axel Ambert
+ * @version 1.0
  */
 public class Main
 {
 
   /**
+   * Start the Game.
+   * Feel free to change the GameView to use e.g a GUI
    * @param args the command line arguments
    */
   public static void main(String[] args)
