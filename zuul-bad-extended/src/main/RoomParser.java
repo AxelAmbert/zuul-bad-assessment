@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 
+import communication.Controller;
 import misc.Item;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,7 +82,8 @@ public class RoomParser
       object = new JSONObject(file);
       array = object.getJSONArray("rooms");
     } catch (IOException exception) {
-      System.out.println("Error while parsing rooms " + exception.toString());
+      System.err.println("Error while parsing rooms " + exception.toString());
+      System.exit(1);
     }
     return (array);
   }

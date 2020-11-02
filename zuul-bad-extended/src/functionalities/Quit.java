@@ -33,7 +33,7 @@ public class Quit extends Functionality
   {
     final Game game = Game.getGameInstance();
 
-    if (command.getNumberOfArgs() > 1) {
+    if (command.getNumberOfArgs() >= 1) {
       Controller.showMessageAndLog(LocalizedText.getText("quit_what"));
     } else {
       game.onPlayerQuit();

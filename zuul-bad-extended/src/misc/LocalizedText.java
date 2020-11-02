@@ -68,7 +68,8 @@ public class LocalizedText
       object = new JSONObject(file);
       array = object.getJSONArray("texts");
     } catch (IOException exception) {
-      Controller.showError("Error while parsing rooms " + exception.toString());
+      Controller.showError("Error while parsing text " + exception.toString());
+      System.exit(1);
     }
     return (array);
   }

@@ -1,5 +1,7 @@
 package main;
 
+import communication.Controller;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
@@ -47,7 +49,8 @@ public class CommandWords
       commands = Files.readString(Path.of(path));
       this.validCommands = commands.split(";");
     } catch (IOException e) {
-      System.out.println(e.toString());
+      Controller.showError(e.toString());
+      System.exit(1);
     }
   }
 

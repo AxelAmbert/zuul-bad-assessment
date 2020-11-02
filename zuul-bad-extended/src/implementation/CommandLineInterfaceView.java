@@ -27,6 +27,7 @@ public class CommandLineInterfaceView implements GameView
    */
   public CommandLineInterfaceView()
   {
+    Controller.setCommunication(new CommandLineInterface());
     this.parser = new CommandParser();
     this.invoker = new CommandInvoker();
     this.nbOfPlayer = 0;
@@ -41,7 +42,7 @@ public class CommandLineInterfaceView implements GameView
   @Override
   public void runGame(Game game)
   {
-    Controller.setCommunication(new CommandLineInterface());
+    LocalizedText.setLocaleTexts(System.getProperty("user.dir") + System.getProperty("file.separator") + "texts.json", "en");
     game.addPlayers(1);
     game.printWelcome();
     do {

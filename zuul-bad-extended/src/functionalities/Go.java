@@ -30,6 +30,7 @@ public class Go extends Functionality
    * If the user don't specify a valid room, the operation is aborted.
    * @param command the command the user sent to the program.
    */
+  @Override
   public void run(Command command)
   {
     final Game game = Game.getGameInstance();
