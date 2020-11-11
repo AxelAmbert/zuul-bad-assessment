@@ -20,7 +20,6 @@ public class CommandLineInterfaceView implements GameView
   private final CommandParser parser;
   private final CommandInvoker invoker;
   private int nbOfPlayer;
-  private final CommandWords commandWords;
 
   /**
    * Constructor of the CommandLineInterfaceView class
@@ -31,7 +30,7 @@ public class CommandLineInterfaceView implements GameView
     this.parser = new CommandParser();
     this.invoker = new CommandInvoker();
     this.nbOfPlayer = 0;
-    this.commandWords = new CommandWords(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands");
+    CommandWords.update(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands.json");
   }
 
   /**
@@ -66,7 +65,7 @@ public class CommandLineInterfaceView implements GameView
     Command userCommand = parser.parse(actualPlayer.play(), " ");
 
     this.nbOfPlayer = game.getNumberOfPlayers();
-    if (this.commandWords.isCommand(userCommand.getCommandName())) {
+    if (CommandWords.isCommand(userCommand.getCommandName())) {
       this.invoker.invoke(userCommand);
     } else {
       Controller.showMessage(LocalizedText.getText("unknown_command"));

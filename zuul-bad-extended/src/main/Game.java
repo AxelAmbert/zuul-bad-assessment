@@ -5,6 +5,7 @@ import java.util.*;
 import communication.Controller;
 import misc.LocalizedText;
 import misc.Observable;
+import misc.Observer;
 import player.HumanPlayer;
 import player.NPC;
 import player.Player;
@@ -26,7 +27,7 @@ import player.Player;
  * @author Axel Ambert
  * @version 1.0
  */
-public class Game extends Observable
+public class Game implements Observable
 {
   private Player actualPlayer;
   private Room startRoom;
@@ -154,5 +155,28 @@ public class Game extends Observable
   public Player getActualPlayer()
   {
     return (this.actualPlayer);
+  }
+
+  public Room getStartRoom()
+  {
+    return (startRoom);
+  }
+
+  @Override
+  public void addObserver(Observer observerToAdd)
+  {
+
+  }
+
+  @Override
+  public void removeObserver(Observer observerToRemove)
+  {
+
+  }
+
+  @Override
+  public void update()
+  {
+
   }
 }

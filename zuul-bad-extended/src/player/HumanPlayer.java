@@ -2,6 +2,7 @@ package player;
 
 import communication.Controller;
 import main.Room;
+import misc.Observer;
 
 /**
  * Class HumanPlayer - an human wandering in the (Zuul) game.
@@ -42,4 +43,5 @@ public class HumanPlayer extends Player
   {
     return (Controller.askUser());
   }
+
 }

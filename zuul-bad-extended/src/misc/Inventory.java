@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 
-public class Inventory extends Observable
+public class Inventory implements Observable
 {
   private final LinkedList<Item> items;
   private int inventoryWeight;
@@ -164,5 +164,23 @@ public class Inventory extends Observable
   public int getInventoryWeight()
   {
     return inventoryWeight;
+  }
+
+  @Override
+  public void addObserver(Observer observerToAdd)
+  {
+
+  }
+
+  @Override
+  public void removeObserver(Observer observerToRemove)
+  {
+
+  }
+
+  @Override
+  public void update()
+  {
+
   }
 }

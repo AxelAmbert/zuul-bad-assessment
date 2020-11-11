@@ -1,0 +1,40 @@
+{
+    "commands": [
+        {
+            "name": "drop",
+            "imagePath" : "images\\take.png",
+            "description" : "Drop an object"
+
+        },
+        {
+            "name": "give",
+            "imagePath" : "images\\take.png",
+            "description" : "Give an object to someone"
+        },
+        {
+            "name": "go",
+            "imagePath" : "images\\take.png",
+            "description" : "Go somewhere"
+        },
+        {
+            "name": "help",
+            "imagePath" : "images\\take.png",
+            "description" : "Get some help"
+        },
+        {
+            "name": "look",
+            "imagePath" : "images\\take.png",
+            "description" : "Look at the room"
+        },
+        {
+            "name": "quit",
+            "imagePath" : "images\\take.png",
+            "description" : "Quit the game"
+        },
+        {
+            "name": "take",
+            "imagePath" : "images\\take.png",
+            "description" : "Take an object"
+        }
+    ]
+}

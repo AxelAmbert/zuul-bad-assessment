@@ -1,11 +1,14 @@
 package main;
 
 import communication.Controller;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -22,37 +25,10 @@ import java.nio.file.Path;
 public class CommandWords
 {
   // a constant array that holds all valid command words
-  private String[] validCommands;
+  private static String[] validCommands;
+  private static HashMap<String, CommandInfo> allCommands;
 
-  /**
-   * Create a CommandWords class, and load the available commands.
-   *
-   * @param path file to open in order to load the available commands.
-   */
-  public CommandWords(String path)
-  {
-    this.loadCommands(path);
-  }
 
-  /**
-   * Load every command in the file.
-   * Every command must be separated by a ";" and must
-   * exist as a Class in the functionalities package.
-   *
-   * @param path file to open in order to load the available commands.
-   */
-  public void loadCommands(String path)
-  {
-    String commands = "";
-
-    try {
-      commands = Files.readString(Path.of(path));
-      this.validCommands = commands.split(";");
-    } catch (IOException e) {
-      Controller.showError(e.toString());
-      System.exit(1);
-    }
-  }
 
   /**
    * Check whether a given String is a valid command word.
@@ -60,7 +36,7 @@ public class CommandWords
    * @return true if a given string is a valid command,
    * false if it isn't.
    */
-  public boolean isCommand(String aString)
+  public static boolean isCommand(String aString)
   {
 
     for (String validCommand : validCommands) {
@@ -79,16 +55,57 @@ public class CommandWords
    * @return the list of available commands as a string
    */
 
-  public String getCommandString()
+  public static String getCommandString()
   {
     StringBuilder builder = new StringBuilder();
 
-    for (int i = 0; i < this.validCommands.length; i++) {
-      builder.append(this.validCommands[i]);
-      if (i + 1 < this.validCommands.length) {
+    for (int i = 0; i < CommandWords.validCommands.length; i++) {
+      builder.append(CommandWords.validCommands[i]);
+      if (i + 1 < CommandWords.validCommands.length) {
         builder.append(" ");
       }
     }
     return (builder.toString());
+  }
+
+  public static void update(String filePath)
+  {
+    JSONArray roomsArray = CommandWords.getRoomArray(filePath);
+
+    CommandWords.allCommands = new HashMap<>();
+    roomsArray.forEach(CommandWords::createACommandInfo);
+    CommandWords.validCommands = CommandWords.allCommands.keySet().toArray(new String[0]);
+  }
+
+  private static JSONArray getRoomArray(String filePath)
+  {
+    String file = "";
+    JSONArray array = null;
+    JSONObject object = null;
+
+    try {
+      file = Files.readString(Path.of(filePath));
+      object = new JSONObject(file);
+      array = object.getJSONArray("commands");
+    } catch (IOException exception) {
+      System.err.println("Error while parsing commands " + exception.toString());
+      System.exit(1);
+    }
+    return (array);
+  }
+
+  private static void createACommandInfo(Object command)
+  {
+    JSONObject parsedCommand = new JSONObject(command.toString());
+    String name = parsedCommand.getString("name");
+    String description = parsedCommand.getString("description");
+    String imagePath = parsedCommand.getString("imagePath");
+
+    CommandWords.allCommands.put(name, new CommandInfo(name, description, imagePath));
+  }
+
+  public static ArrayList<CommandInfo> getAllCommandInfo()
+  {
+    return (new ArrayList<>(CommandWords.allCommands.values()));
   }
 }

@@ -1,9 +1,6 @@
 package main;
 
-import misc.Inventory;
-import misc.Item;
-import misc.LocalizedText;
-import misc.Observable;
+import misc.*;
 import player.Player;
 
 import java.util.HashMap;
@@ -24,7 +21,7 @@ import java.util.Set;
  * @author Axel Ambert
  * @version 1.0
  */
-public class Room extends Observable
+public class Room implements Observable
 {
   public final String description;
   private final HashMap<String, Room> linkedRooms;
@@ -156,5 +153,23 @@ public class Room extends Observable
       exits.append(exit).append(" ");
     }
     return (exits.toString());
+  }
+
+  @Override
+  public void addObserver(Observer observerToAdd)
+  {
+
+  }
+
+  @Override
+  public void removeObserver(Observer observerToRemove)
+  {
+
+  }
+
+  @Override
+  public void update()
+  {
+
   }
 }

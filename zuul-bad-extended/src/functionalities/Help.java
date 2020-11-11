@@ -33,13 +33,12 @@ public class Help extends Functionality
   public void run(Command command)
   {
     final StringBuilder builder = new StringBuilder();
-    final CommandWords commandWords = new CommandWords(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands");
 
     builder.append(LocalizedText.getText("lost"));
     builder.append(LocalizedText.getText("lost2"));
     builder.append(System.lineSeparator());
     builder.append(LocalizedText.getText("lost3"));
-    builder.append(LocalizedText.getText("lost4", commandWords.getCommandString()));
+    builder.append(LocalizedText.getText("lost4", CommandWords.getCommandString()));
     Controller.showMessageAndLog(builder);
   }
 }
