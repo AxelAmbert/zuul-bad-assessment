@@ -2,39 +2,46 @@
     "commands": [
         {
             "name": "drop",
-            "imagePath" : "images\\take.png",
-            "description" : "Drop an object"
+            "imagePath" : "images\\drop.png",
+            "description" : "Drop an object",
+            "numberOfArguments" : 1
 
         },
         {
             "name": "give",
-            "imagePath" : "images\\take.png",
-            "description" : "Give an object to someone"
+            "imagePath" : "images\\give.png",
+            "description" : "Give an object to someone",
+            "numberOfArguments" : 2
         },
         {
             "name": "go",
-            "imagePath" : "images\\take.png",
-            "description" : "Go somewhere"
+            "imagePath" : "images\\go.png",
+            "description" : "Go somewhere",
+            "numberOfArguments" : 1
         },
         {
             "name": "help",
-            "imagePath" : "images\\take.png",
-            "description" : "Get some help"
+            "imagePath" : "images\\help.png",
+            "description" : "Get some help",
+            "numberOfArguments" : 0
         },
         {
             "name": "look",
-            "imagePath" : "images\\take.png",
-            "description" : "Look at the room"
+            "imagePath" : "images\\look.png",
+            "description" : "Look at the room",
+            "numberOfArguments" : 0
         },
         {
             "name": "quit",
-            "imagePath" : "images\\take.png",
-            "description" : "Quit the game"
+            "imagePath" : "images\\quit.png",
+            "description" : "Quit the game",
+            "numberOfArguments" : 0
         },
         {
             "name": "take",
             "imagePath" : "images\\take.png",
-            "description" : "Take an object"
+            "description" : "Take an object",
+            "numberOfArguments" : 1
         }
     ]
 }

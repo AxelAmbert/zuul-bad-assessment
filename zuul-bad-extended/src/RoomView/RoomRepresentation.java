@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class RoomRepresentation extends VBox
 {
@@ -15,14 +16,21 @@ public class RoomRepresentation extends VBox
 
   public RoomRepresentation(String path)
   {
-    try {
-      System.out.println("mfdr");
-      image = new Image(new FileInputStream(path));
-    } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
-    }
+    image = this.getImageRepresentation(path);
     imageView = new ImageView(image);
     this.getChildren().add(imageView);
     this.setAlignment(Pos.CENTER);
+  }
+
+  private Image getImageRepresentation(String path)
+  {
+    Image image = null;
+
+    try {
+      image = new Image(new FileInputStream(Objects.requireNonNullElse(path, "images\\default_placeholders\\door.png")));
+    } catch (Exception e) {
+      System.out.println("Error at loading image " + Objects.requireNonNullElse(path, "null"));
+    }
+    return (image);
   }
 }

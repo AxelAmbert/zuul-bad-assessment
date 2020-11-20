@@ -100,12 +100,18 @@ public class CommandWords
     String name = parsedCommand.getString("name");
     String description = parsedCommand.getString("description");
     String imagePath = parsedCommand.getString("imagePath");
+    Integer numberOfArgs = parsedCommand.getInt("numberOfArguments");
 
-    CommandWords.allCommands.put(name, new CommandInfo(name, description, imagePath));
+    CommandWords.allCommands.put(name, new CommandInfo(name, description, imagePath, numberOfArgs));
   }
 
   public static ArrayList<CommandInfo> getAllCommandInfo()
   {
     return (new ArrayList<>(CommandWords.allCommands.values()));
+  }
+
+  public static String[] getValidCommands()
+  {
+    return (validCommands.clone());
   }
 }

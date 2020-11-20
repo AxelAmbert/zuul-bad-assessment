@@ -1,4 +1,4 @@
-package main;
+package RoomParser;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 import communication.Controller;
+import main.Room;
 import misc.Item;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * @version 1.0
  */
 
-public class RoomParser
+public class RoomParserJSON implements RoomParser
 {
   private HashMap<String, Room> rooms;
   private Room startRoom;
@@ -34,7 +35,7 @@ public class RoomParser
   /**
    * Create an instance of the RoomParser class.
    */
-  RoomParser()
+  public RoomParserJSON()
   {
   }
 
@@ -51,6 +52,7 @@ public class RoomParser
    * @param filePath the JSON file to read to update the scenery
    * @return the start room.
    */
+  @Override
   public Room update(String filePath)
   {
     JSONArray roomsArray = this.getRoomArray(filePath);
@@ -99,7 +101,8 @@ public class RoomParser
     JSONObject parsedRoom = new JSONObject(room.toString());
     String roomName = parsedRoom.getString("roomName");
     String description = parsedRoom.getString("description");
-    Room newRoom = new Room(description);
+    String visualReprensentation = parsedRoom.getString("visualRepresentation");
+    Room newRoom = new Room(description, roomName, visualReprensentation);
 
     if (parsedRoom.getBoolean("startRoom") == true) {
       this.startRoom = newRoom;
@@ -177,8 +180,15 @@ public class RoomParser
   private void addItems(JSONObject parsedItem, JSONObject parsedRoom)
   {
     String room = parsedRoom.getString("roomName");
-    Item item = new Item(parsedItem.getString("name"), parsedItem.getInt("weight"));
+    Item item;
+    String path;
 
+    try {
+      path = parsedItem.getString("visualRepresentation");
+    } catch (Exception exception) {
+      path = null;
+    }
+    item = new Item(parsedItem.getString("name"), parsedItem.getInt("weight"), path);
     this.rooms.get(room).getInventory().insertItem(item);
   }
 }

@@ -1,10 +1,14 @@
 package main;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
+import RoomParser.RoomParser;
+import RoomParser.RoomParserJSON;
+import RoomParser.RoomParserTXT;
 import communication.Controller;
+import functionalities.Functionality;
 import misc.LocalizedText;
-import misc.Observable;
 import misc.Observer;
 import player.HumanPlayer;
 import player.NPC;
@@ -27,13 +31,17 @@ import player.Player;
  * @author Axel Ambert
  * @version 1.0
  */
-public class Game implements Observable
+public class Game
 {
   private Player actualPlayer;
   private Room startRoom;
-  private final ArrayList<Player> playerList;
+  private ArrayList<Player> playerList;
   private ListIterator<Player> actualPlayerIterator;
+  private ArrayList<Observer> onRoomChangeList;
+  private ArrayList<Observer> onPlayerChangeList;
   static Game gameInstance;
+
+  private enum GameEvent {RoomChanged, PlayerChanged}
 
   /**
    * Create the game and initialise its internal map.
@@ -41,7 +49,8 @@ public class Game implements Observable
   private Game()
   {
     this.playerList = new ArrayList<>();
-    this.createRooms();
+    this.onPlayerChangeList = new ArrayList<>();
+    this.onRoomChangeList = new ArrayList<>();
   }
 
   /**
@@ -57,6 +66,17 @@ public class Game implements Observable
     }
     this.actualPlayerIterator = this.playerList.listIterator();
     this.actualPlayer = this.actualPlayerIterator.next();
+  }
+
+  public void reset(String worldPath)
+  {
+    int playerNb = this.playerList.size();
+
+    this.playerList = new ArrayList<>();
+    this.onPlayerChangeList = new ArrayList<>();
+    this.onRoomChangeList = new ArrayList<>();
+    this.createRooms(worldPath);
+    this.addPlayers(playerNb);
   }
 
   /**
@@ -76,13 +96,31 @@ public class Game implements Observable
   /**
    * Use the RoomParser to create every room in the game.
    */
-  private void createRooms()
+  public void createRooms(String path)
   {
-    RoomParser roomParser = new RoomParser();
+    Class<?> cls = null;
+    RoomParser roomParser;
 
-    this.startRoom = roomParser.update(System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json");
+    try {
+      cls = Class.forName("RoomParser.RoomParser" + this.getFileExtension(path).toUpperCase());
+      Constructor ct = cls.getConstructor();
+      roomParser = (RoomParser) ct.newInstance();
+    } catch (Exception e) {
+      roomParser = new RoomParserTXT();
+      e.printStackTrace();
+    }
+    this.startRoom = roomParser.update(path);
   }
 
+  private String getFileExtension(String fileName)
+  {
+    if (fileName.contains(".") == true) {
+      String[] array = fileName.split("\\.");
+
+      return (array[array.length - 1]);
+    }
+    return ("TXT");
+  }
 
   /**
    * Print out the opening message for the player.
@@ -134,7 +172,7 @@ public class Game implements Observable
       this.actualPlayerIterator = this.playerList.listIterator();
     }
     this.actualPlayer = this.actualPlayerIterator.next();
-    this.update();
+    this.onPlayerChangeList.stream().forEach(observer -> observer.onUpdate(this.actualPlayer));
   }
 
   /**
@@ -162,21 +200,24 @@ public class Game implements Observable
     return (startRoom);
   }
 
-  @Override
-  public void addObserver(Observer observerToAdd)
+  public void onRoomChanged()
   {
-
+    this.onRoomChangeList.stream().forEach(observer -> observer.onUpdate(this.actualPlayer.getCurrentRoom()));
   }
 
-  @Override
+  public void addObserver(Observer observerToAdd, GameEvent event)
+  {
+    if (event == GameEvent.PlayerChanged) {
+      this.onPlayerChangeList.add(observerToAdd);
+    } else {
+      this.onRoomChangeList.add(observerToAdd);
+    }
+  }
+
   public void removeObserver(Observer observerToRemove)
   {
-
+    this.onRoomChangeList.remove(observerToRemove);
+    this.onPlayerChangeList.remove(observerToRemove);
   }
 
-  @Override
-  public void update()
-  {
-
-  }
 }

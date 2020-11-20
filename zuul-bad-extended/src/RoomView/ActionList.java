@@ -9,19 +9,24 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import main.CommandInfo;
 import main.CommandWords;
+import misc.Observable;
+import misc.Observer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class ActionList extends ScrollPane
+public class ActionList extends ScrollPane implements Observable
 {
   private VBox buttonBox = new VBox();
+  private ArrayList<Observer> observersList;
+  private String chosenCommand;
 
   public ActionList()
   {
     ArrayList<CommandInfo> allCommands = CommandWords.getAllCommandInfo();
 
+    this.observersList = new ArrayList<>();
     allCommands.stream().forEach(this::addAnAction);
     this.setContent(buttonBox);
   }
@@ -34,9 +39,9 @@ public class ActionList extends ScrollPane
     Tooltip tip = this.createTooltip(commandInfo);
 
     try {
-      image = new Image(new FileInputStream(commandInfo.getCommandImagePath()));
+      image = new Image(new FileInputStream(commandInfo.getVisualRepresentation()));
       imageView = this.createImageView(image);
-      button = this.createButton(imageView, tip);
+      button = this.createButton(commandInfo, imageView, tip);
     } catch (FileNotFoundException e) {
       return;
     }
@@ -56,10 +61,14 @@ public class ActionList extends ScrollPane
     return (imageView);
   }
 
-  private Button createButton(ImageView imageView, Tooltip tip)
+  private Button createButton(CommandInfo info, ImageView imageView, Tooltip tip)
   {
     Button button = new Button("", imageView);
 
+
+    button.setOnAction((e) -> {
+      this.onButtonClick(info.getCommandName());
+    });
     button.setMaxSize(50, 50);
     button.setMinSize(50, 50);
     button.setTooltip(tip);
@@ -68,10 +77,35 @@ public class ActionList extends ScrollPane
 
   private Tooltip createTooltip(CommandInfo commandInfo)
   {
-    Tooltip tip = new Tooltip(commandInfo.getCommandDescription());
+    Tooltip tip = new Tooltip(commandInfo.getDescription());
 
     tip.setShowDelay(Duration.ZERO);
     return (tip);
+  }
+
+  private void onButtonClick(String value)
+  {
+    this.chosenCommand = value;
+    this.update();
+  }
+
+  @Override
+  public void addObserver(Observer observerToAdd)
+  {
+    this.observersList.add(observerToAdd);
+  }
+
+  @Override
+  public void removeObserver(Observer observerToRemove)
+  {
+    this.observersList.remove(observerToRemove);
+  }
+
+  @Override
+  public void update()
+  {
+    System.out.println(this.chosenCommand);
+    this.observersList.stream().forEach((observer -> observer.onUpdate(this.chosenCommand)));
   }
 }
 

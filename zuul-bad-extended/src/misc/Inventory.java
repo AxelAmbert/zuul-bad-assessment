@@ -26,6 +26,7 @@ public class Inventory implements Observable
   private final LinkedList<Item> items;
   private int inventoryWeight;
   private int maxWeight;
+  private ArrayList<Observer> observersList;
 
   /**
    * Create an Inventory instance.
@@ -38,6 +39,7 @@ public class Inventory implements Observable
     this.items = new LinkedList<>();
     this.maxWeight = maxWeight;
     this.inventoryWeight = 0;
+    this.observersList = new ArrayList<>();
   }
 
   /**
@@ -144,6 +146,7 @@ public class Inventory implements Observable
     for (Item item : this.items) {
       this.inventoryWeight += item.getItemWeight();
     }
+    this.update();
   }
 
   /**
@@ -169,18 +172,18 @@ public class Inventory implements Observable
   @Override
   public void addObserver(Observer observerToAdd)
   {
-
+    this.observersList.add(observerToAdd);
   }
 
   @Override
   public void removeObserver(Observer observerToRemove)
   {
-
+    this.observersList.remove(observerToRemove);
   }
 
   @Override
   public void update()
   {
-
+    this.observersList.stream().forEach((observer -> observer.onUpdate(this)));
   }
 }

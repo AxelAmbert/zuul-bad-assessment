@@ -5,7 +5,6 @@ import player.Player;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * Class Room - a room in an adventure game.
@@ -23,10 +22,12 @@ import java.util.Set;
  */
 public class Room implements Observable
 {
-  public final String description;
+  private final String description;
+  private final String name;
   private final HashMap<String, Room> linkedRooms;
   private final Inventory inventory;
   private final LinkedList<Player> playersInRoom;
+  private String visualRepresentation;
 
   /**
    * Create a room described "description". Initially, it has
@@ -35,13 +36,33 @@ public class Room implements Observable
    *
    * @param description The room's description.
    */
-  public Room(String description)
+  public Room(String description, String name)
   {
     this.linkedRooms = new HashMap<String, Room>();
     this.description = description;
     this.inventory = new Inventory(-1);
     this.playersInRoom = new LinkedList<>();
+    this.visualRepresentation = null;
+    this.name = name;
   }
+
+  /**
+   * Create a room described "description". Initially, it has
+   * no exits. "description" is something like "a kitchen" or
+   * "an open court yard".
+   *
+   * @param description The room's description.
+   */
+  public Room(String description, String name, String visualRepresentation)
+  {
+    this.visualRepresentation = visualRepresentation;
+    this.linkedRooms = new HashMap<String, Room>();
+    this.description = description;
+    this.inventory = new Inventory(-1);
+    this.playersInRoom = new LinkedList<>();
+    this.name = name;
+  }
+
 
   /**
    * Link the actual room with another Room with its direction.
@@ -112,7 +133,7 @@ public class Room implements Observable
   public Player searchForPlayer(String name)
   {
     for (Player player : this.playersInRoom) {
-      if (player.getPlayerName().equals(name))
+      if (player.getName().equals(name))
         return (player);
     }
     return (null);
@@ -153,6 +174,27 @@ public class Room implements Observable
       exits.append(exit).append(" ");
     }
     return (exits.toString());
+  }
+
+  public HashMap<String, Room> getExits()
+  {
+    return (HashMap<String, Room>) this.linkedRooms.clone();
+  }
+
+
+  public String getVisualRepresentation()
+  {
+    return visualRepresentation;
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public LinkedList<Player> getPlayerList()
+  {
+    return (this.playersInRoom);
   }
 
   @Override

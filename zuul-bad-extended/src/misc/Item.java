@@ -15,6 +15,7 @@ public class Item
 {
   private final String itemName;
   private final Integer itemWeight;
+  private final String itemRepresentationPath;
 
   /**
    * Create an Item instance.
@@ -26,6 +27,14 @@ public class Item
   {
     this.itemName = itemName;
     this.itemWeight = itemWeight;
+    this.itemRepresentationPath = null;
+  }
+
+  public Item(String itemName, Integer itemWeight, String representationPath)
+  {
+    this.itemName = itemName;
+    this.itemWeight = itemWeight;
+    this.itemRepresentationPath = representationPath;
   }
 
   /**
@@ -46,6 +55,16 @@ public class Item
   public Integer getItemWeight()
   {
     return itemWeight;
+  }
+
+  public String getVisualRepresentation()
+  {
+    return itemRepresentationPath;
+  }
+
+  public String getDescription()
+  {
+    return (this.itemName + ": " + this.itemWeight + "kg.");
   }
 
 }

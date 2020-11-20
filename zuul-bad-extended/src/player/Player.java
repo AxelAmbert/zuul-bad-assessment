@@ -6,6 +6,7 @@ import misc.Item;
 import misc.Observable;
 import misc.Observer;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -29,7 +30,7 @@ public abstract class Player implements Observable
   protected final Inventory inventory;
   protected Room currentRoom;
   protected String playerName;
-
+  private ArrayList<Observer> observersList;
 
   /**
    * Create an Player instance.
@@ -38,6 +39,7 @@ public abstract class Player implements Observable
    */
   public Player(Room currentRoom)
   {
+    this.observersList = new ArrayList<>();
     this.inventory = new Inventory(this.MAX_WEIGHT);
     this.setCurrentRoom(currentRoom);
     this.generateRandomPlayerName();
@@ -140,7 +142,7 @@ public abstract class Player implements Observable
    *
    * @return the Player's name
    */
-  public String getPlayerName()
+  public String getName()
   {
     return playerName;
   }
@@ -168,18 +170,28 @@ public abstract class Player implements Observable
   @Override
   public void addObserver(Observer observerToAdd)
   {
-
+    this.observersList.add(observerToAdd);
   }
 
   @Override
   public void removeObserver(Observer observerToRemove)
   {
-
+    this.observersList.remove(observerToRemove);
   }
 
   @Override
   public void update()
   {
+    this.observersList.stream().forEach(observer -> observer.onUpdate(this));
+  }
 
+  public String getDescription()
+  {
+    return (this.playerName);
+  }
+
+  public String getVisualRepresentation()
+  {
+    return ("");
   }
 }
