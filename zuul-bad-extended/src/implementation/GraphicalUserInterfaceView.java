@@ -1,20 +1,15 @@
 package implementation;
 
-import FileLoader.FileLoader;
+import WorldLoader.FileLoader;
 import communication.CommandLineInterface;
 import communication.Controller;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.*;
-import misc.CommandInterpreter;
-import misc.LocalizedText;
+import misc.*;
 import RoomView.RoomView;
-import misc.Observer;
-import misc.OneArgObjectInterface;
 
 
 public class GraphicalUserInterfaceView implements GameView
@@ -28,9 +23,12 @@ public class GraphicalUserInterfaceView implements GameView
 
   public GraphicalUserInterfaceView(Stage primaryStageToAttach)
   {
+    String defaultFilePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json";
+    CreationOptions options = new CreationOptions(defaultFilePath, null, false, false);
+
     CommandWords.update(System.getProperty("user.dir") + System.getProperty("file.separator") + "availableCommands.json");
     this.game = Game.getGameInstance();
-    this.game.createRooms(System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json");
+    this.game.createRooms(options);
     this.game.addPlayers(3);
     this.primaryStage = primaryStageToAttach;
     this.commandInterpreter = new CommandInterpreter();
@@ -82,10 +80,9 @@ public class GraphicalUserInterfaceView implements GameView
       @Override
       public void run(Object object)
       {
-        String path = (String)object;
+        CreationOptions options = (CreationOptions)object;
 
-        System.out.println("OK");
-        game.reset(path);
+        game.reset(options);
         roomView.updateView(game.getActualPlayer().getCurrentRoom(), game.getActualPlayer());
       }
     }));

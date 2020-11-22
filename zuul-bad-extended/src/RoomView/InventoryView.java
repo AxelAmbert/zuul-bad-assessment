@@ -105,7 +105,7 @@ public class InventoryView extends ScrollPane implements Observable
 
 
     button.setOnAction((e) -> {
-      this.onButtonClick(item.getItemName());
+      this.onButtonClick(item.getName());
     });
     button.setMaxSize(50, 50);
     button.setMinSize(50, 50);
@@ -115,7 +115,7 @@ public class InventoryView extends ScrollPane implements Observable
 
   private Tooltip createTooltip(Item item)
   {
-    Tooltip tip = new Tooltip("a " + item.getItemName() + " " + item.getItemWeight() + "kg");
+    Tooltip tip = new Tooltip("a " + item.getName() + " " + item.getWeight() + "kg");
 
     tip.setShowDelay(Duration.ZERO);
     return (tip);

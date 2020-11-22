@@ -48,7 +48,7 @@ public class Go extends Functionality
 
     if (nextRoom == null) {
       Controller.showMessageAndLog(LocalizedText.getText("no_door"));
-      System.out.println(command.getArgAt(1));
+      System.out.println("ARG [" + command.getArgAt(1) + "]");
     } else {
       actualPlayer.setCurrentRoom(nextRoom);
       Controller.showMessageAndLog(actualPlayer.getCurrentRoom().getFullDescription());

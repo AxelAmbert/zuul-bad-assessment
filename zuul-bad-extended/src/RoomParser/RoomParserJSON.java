@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import communication.Controller;
 import main.Room;
+import misc.CreationOptions;
 import misc.Item;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,12 +27,8 @@ import org.json.JSONObject;
  * @version 1.0
  */
 
-public class RoomParserJSON implements RoomParser
+public class RoomParserJSON extends RoomParser
 {
-  private HashMap<String, Room> rooms;
-  private Room startRoom;
-
-
   /**
    * Create an instance of the RoomParser class.
    */
@@ -53,7 +50,7 @@ public class RoomParserJSON implements RoomParser
    * @return the start room.
    */
   @Override
-  public Room update(String filePath)
+  public Room update(String filePath, CreationOptions options)
   {
     JSONArray roomsArray = this.getRoomArray(filePath);
 
@@ -61,6 +58,7 @@ public class RoomParserJSON implements RoomParser
     roomsArray.forEach(this::createARoom);
     roomsArray.forEach(this::parseRelatedRoom);
     roomsArray.forEach(this::parseItems);
+    this.applyOptions(options);
     return (startRoom);
   }
 

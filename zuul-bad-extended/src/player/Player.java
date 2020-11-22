@@ -115,7 +115,7 @@ public abstract class Player implements Observable
    */
   public boolean canTake(Item item)
   {
-    return (this.inventory.getInventoryWeight() + item.getItemWeight()
+    return (this.inventory.getInventoryWeight() + item.getWeight()
                < this.inventory.getMaxWeight());
   }
 

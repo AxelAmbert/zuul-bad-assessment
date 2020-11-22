@@ -5,6 +5,7 @@ import player.Player;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Optional;
 
 /**
  * Class Room - a room in an adventure game.
@@ -84,7 +85,17 @@ public class Room implements Observable
    */
   public final Room getExit(String direction)
   {
-    return (this.linkedRooms.get(direction));
+    Room room = this.linkedRooms.get(direction);
+
+    if (room != null)
+      return (room);
+    room = this.linkedRooms.values()
+            .stream()
+            .filter(roomToTest -> roomToTest.getName().equals(direction))
+            .findFirst()
+            .orElse(null);
+
+    return (room);
   }
 
   /**
@@ -107,7 +118,7 @@ public class Room implements Observable
     StringBuilder items = new StringBuilder();
 
     for (Item item : this.inventory.getItems()) {
-      items.append(item.getItemName()).append("(").append(item.getItemWeight()).append(")");
+      items.append(item.getName()).append("(").append(item.getWeight()).append(")");
     }
     return (LocalizedText.getText(
             "room_long_desc", getDescription(), this.getExitsDescription(), items));
@@ -181,6 +192,10 @@ public class Room implements Observable
     return (HashMap<String, Room>) this.linkedRooms.clone();
   }
 
+  public void removeExit(Room toRemove)
+  {
+    this.linkedRooms.values().remove(toRemove);
+  }
 
   public String getVisualRepresentation()
   {

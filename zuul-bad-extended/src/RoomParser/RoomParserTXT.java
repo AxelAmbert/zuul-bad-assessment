@@ -1,6 +1,7 @@
 package RoomParser;
 
 import main.Room;
+import misc.CreationOptions;
 import misc.Item;
 
 import java.io.File;
@@ -8,21 +9,19 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
-public class RoomParserTXT implements RoomParser
+public class RoomParserTXT extends RoomParser
 {
-  private HashMap<String, Room> rooms;
-  private Room startRoom;
-
   public RoomParserTXT()
   {
     this.rooms = new HashMap<>();
   }
 
   @Override
-  public Room update(String filePath)
+  public Room update(String filePath, CreationOptions options)
   {
     Stream<String> stream;
 
+    this.rooms = new HashMap<>();
     try {
       stream = getStream(filePath);
       stream.forEach(this::createARoom);
@@ -33,6 +32,8 @@ public class RoomParserTXT implements RoomParser
       System.exit(1);
       return (null);
     }
+    System.out.println("ALORS ? " + this.rooms);
+    this.applyOptions(options);
     return (startRoom);
   }
 

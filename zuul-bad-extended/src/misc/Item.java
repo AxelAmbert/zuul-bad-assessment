@@ -42,7 +42,7 @@ public class Item
    *
    * @return the item name
    */
-  public String getItemName()
+  public String getName()
   {
     return itemName;
   }
@@ -52,7 +52,7 @@ public class Item
    *
    * @return the item weight
    */
-  public Integer getItemWeight()
+  public Integer getWeight()
   {
     return itemWeight;
   }

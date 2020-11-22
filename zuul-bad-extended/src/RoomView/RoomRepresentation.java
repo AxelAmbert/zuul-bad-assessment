@@ -18,6 +18,8 @@ public class RoomRepresentation extends VBox
   {
     image = this.getImageRepresentation(path);
     imageView = new ImageView(image);
+    imageView.setFitHeight(300);
+    imageView.setFitWidth(450);
     this.getChildren().add(imageView);
     this.setAlignment(Pos.CENTER);
   }

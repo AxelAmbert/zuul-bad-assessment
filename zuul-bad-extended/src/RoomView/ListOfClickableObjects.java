@@ -28,6 +28,9 @@ public class ListOfClickableObjects<Box, Iterable>  extends ScrollPane implement
   {
     this.storedValue = "";
     this.observersList = new ArrayList<>();
+    this.setMaxSize(250, 250);
+    this.hbarPolicyProperty().setValue(ScrollBarPolicy.NEVER);
+    this.vbarPolicyProperty().setValue(ScrollBarPolicy.ALWAYS);
     this.initInstanceOfBox(constructor);
     stream.filter(filter).forEach(this::createButton);
     this.setContent((Node) this.box);
@@ -41,10 +44,8 @@ public class ListOfClickableObjects<Box, Iterable>  extends ScrollPane implement
     this.setMaxSize(250, 250);
     this.hbarPolicyProperty().setValue(ScrollBarPolicy.NEVER);
     this.vbarPolicyProperty().setValue(ScrollBarPolicy.ALWAYS);
-
     this.initInstanceOfBox(constructor);
-    stream.forEach(this::createButton);
-    this.setContent((Node) this.box);
+    this.updateView(stream);
   }
 
   private void initInstanceOfBox(Class<? extends Box> constructor)
@@ -57,7 +58,13 @@ public class ListOfClickableObjects<Box, Iterable>  extends ScrollPane implement
     }
   }
 
-
+  public void updateView(Stream<Iterable> stream)
+  {
+    ((Pane)box).getChildren().clear();
+    stream.forEach(this::createButton);
+    this.setContent((Pane) this.box);
+  }
+  
   private void createButton(Iterable toIter)
   {
     System.out.println("go!");
@@ -107,7 +114,6 @@ public class ListOfClickableObjects<Box, Iterable>  extends ScrollPane implement
     button.setMinSize(50, 50);
     button.setTooltip(this.createTooltip(usefulVariables[2]));
     button.setOnMouseClicked(mouseEvent -> {
-      System.out.println("slt " + usefulVariables[1]);
       this.storedValue = usefulVariables[1];
       this.update();
     });

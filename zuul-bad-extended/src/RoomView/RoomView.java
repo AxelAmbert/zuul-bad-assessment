@@ -1,15 +1,12 @@
 package RoomView;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import main.*;
-import misc.CommandInterpreter;
-import misc.Inventory;
-import misc.Observer;
-import misc.OneArgObjectInterface;
+import misc.*;
 import player.Player;
 
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 
@@ -17,12 +14,8 @@ public class RoomView extends BorderPane
 {
   private RoomDescription roomDescription;
   private RoomRepresentation roomRepresentation;
-  private ActionList actionList;
   private CommandInterpreter commandInterpreter;
   private HBox inventoriesView;
-  private InventoryView inventoryView;
-  private InventoryView roomInventoryView;
-  private RoomListView roomListView;
 
   private Player bindedPlayer;
   private Room bindedRoom;
@@ -31,7 +24,11 @@ public class RoomView extends BorderPane
   private Observer roomInventoryObserver;
   private Observer roomChangeObserver;
 
-  private ListOfClickableObjects<VBox, CommandInfo> actionList2;
+  private ListOfClickableObjects<VBox, CommandInfo> actionList;
+  private ListOfClickableObjects<VBox, Player> playerList;
+  private ListOfClickableObjects<HBox, Item> playerInventoryList;
+  private ListOfClickableObjects<HBox, Item> roomInventoryList;
+  private ListOfClickableObjects<HBox, Room> availableExitList;
 
   public RoomView(Room room, Player player, CommandInterpreter interpreter)
   {
@@ -43,35 +40,37 @@ public class RoomView extends BorderPane
   {
     this.bindedRoom = room;
     this.bindedPlayer = player;
-    this.actionList = new ActionList();
     this.roomDescription = new RoomDescription(room.getDescription());
     this.roomRepresentation = new RoomRepresentation(room.getVisualRepresentation());
-    this.inventoryView = new InventoryView(player.getInventory());
-    this.roomInventoryView = new InventoryView(room.getInventory());
     this.inventoriesView = new HBox();
-    this.roomListView = new RoomListView(room);
 
-    PlayerList ok = new PlayerList(this.bindedRoom);
-    this.inventoriesView.getChildren().addAll(this.inventoryView, this.roomInventoryView, roomListView);
-    HBox.setHgrow(this.inventoryView, Priority.ALWAYS);
-    HBox.setHgrow(this.roomInventoryView, Priority.ALWAYS);
-    HBox.setHgrow(this.roomListView, Priority.ALWAYS);
+    this.configureAllList();
+    this.inventoriesView.getChildren().addAll(this.playerInventoryList, this.roomInventoryList, this.availableExitList);
+    HBox.setHgrow(this.playerInventoryList, Priority.ALWAYS);
+    HBox.setHgrow(this.roomInventoryList, Priority.ALWAYS);
+    HBox.setHgrow(this.availableExitList, Priority.ALWAYS);
 
     this.configureActionList();
     this.setTop(this.roomDescription);
     this.setCenter(this.roomRepresentation);
     this.setLeft(this.actionList);
     this.setBottom(this.inventoriesView);
-    this.setRight(ok);
+    this.setRight(this.playerList);
     BorderPane.setAlignment(this.actionList, Pos.CENTER_RIGHT);
-    BorderPane.setAlignment(ok, Pos.CENTER_RIGHT);
+    BorderPane.setAlignment(this.playerList, Pos.CENTER_RIGHT);
 
     this.setObserversToChildren();
     this.addInventoryObservers();
     this.addRoomChangeObserver();
-
   }
 
+  /*
+*   private ListOfClickableObjects<VBox, CommandInfo> actionList2;
+private ListOfClickableObjects<VBox, Player> playerList;
+private ListOfClickableObjects<HBox, Item> playerInventoryList;
+private ListOfClickableObjects<HBox, Item> roomInventoryList;
+private ListOfClickableObjects<HBox, Room> availableExitList;
+* */
   private void setObserversToChildren()
   {
     Observer clickObserver = new Observer(new OneArgObjectInterface()
@@ -79,16 +78,17 @@ public class RoomView extends BorderPane
       @Override
       public void run(Object object)
       {
-        String command = (String)object;
+        String command = (String) object;
 
         commandInterpreter.addValue(command);
       }
     });
 
     this.actionList.addObserver(clickObserver);
-    this.roomListView.addObserver(clickObserver);
-    this.roomInventoryView.addObserver(clickObserver);
-    this.inventoryView.addObserver(clickObserver);
+    this.playerList.addObserver(clickObserver);
+    this.playerInventoryList.addObserver(clickObserver);
+    this.roomInventoryList.addObserver(clickObserver);
+    this.availableExitList.addObserver(clickObserver);
   }
 
   private void addInventoryObservers()
@@ -100,7 +100,7 @@ public class RoomView extends BorderPane
       {
         Inventory newInventory = (Inventory) object;
 
-        inventoryView.updateView(newInventory);
+        playerInventoryList.updateView(newInventory.getItems().stream());
       }
     });
     bindedPlayer.getInventory().addObserver(this.playerInventoryObserver);
@@ -112,7 +112,7 @@ public class RoomView extends BorderPane
       {
         Inventory newInventory = (Inventory) object;
 
-        roomInventoryView.updateView(newInventory);
+        roomInventoryList.updateView(newInventory.getItems().stream());
       }
     });
     bindedRoom.getInventory().addObserver(this.roomInventoryObserver);
@@ -145,7 +145,55 @@ public class RoomView extends BorderPane
   private void configureActionList()
   {
     Stream<CommandInfo> stream = CommandWords.getAllCommandInfo().stream();
-    this.actionList2 = new ListOfClickableObjects<>(VBox.class, stream);
+
+    this.actionList = new ListOfClickableObjects<>(VBox.class, stream);
+  }
+
+  private void configureAllList()
+  {
+    this.configureActionList();
+    this.configureAvailableExitList();
+    this.configurePlayerInventoryList();
+    this.configurePlayerList();
+    this.configureRoomInventoryList();
+  }
+
+  private void configurePlayerList()
+  {
+    Stream<Player> stream = this.bindedRoom.getPlayerList().stream();
+    Predicate<? super Player> filter = new Predicate()
+    {
+      @Override
+      public boolean test(Object o)
+      {
+        Player player = (Player) o;
+
+        return (player.getName().equals(bindedPlayer.getName()));
+      }
+    };
+
+    this.playerList = new ListOfClickableObjects<>(VBox.class, stream, filter);
+  }
+
+  private void configurePlayerInventoryList()
+  {
+    Stream<Item> stream = this.bindedPlayer.getInventory().getItems().stream();
+
+    this.playerInventoryList = new ListOfClickableObjects<>(HBox.class, stream);
+  }
+
+  private void configureRoomInventoryList()
+  {
+    Stream<Item> stream = this.bindedRoom.getInventory().getItems().stream();
+
+    this.roomInventoryList = new ListOfClickableObjects<HBox, Item>(HBox.class, stream);
+  }
+
+  private void configureAvailableExitList()
+  {
+    Stream<Room> stream = this.bindedRoom.getExits().values().stream();
+
+    this.availableExitList = new ListOfClickableObjects<HBox, Room>(HBox.class, stream);
   }
 
 }

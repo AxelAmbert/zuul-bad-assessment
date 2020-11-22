@@ -27,6 +27,10 @@
       {
         "direction": "west",
         "roomName": "pub"
+      },
+      {
+        "direction": "sauss",
+        "roomName": "here"
       }
     ]
   },
@@ -80,6 +84,15 @@
         "direction": "west",
         "roomName": "lab"
       }
+    ]
+  },
+  {
+    "startRoom" : false,
+    "roomName": "here",
+    "description" : "in a sauss lab",
+    "visualRepresentation": "images\\theatre.jpg",
+    "relatedRooms": [
+
     ]
   }
 ]

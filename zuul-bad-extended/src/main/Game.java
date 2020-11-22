@@ -4,12 +4,11 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 import RoomParser.RoomParser;
-import RoomParser.RoomParserJSON;
 import RoomParser.RoomParserTXT;
 import communication.Controller;
-import functionalities.Functionality;
 import misc.LocalizedText;
 import misc.Observer;
+import misc.CreationOptions;
 import player.HumanPlayer;
 import player.NPC;
 import player.Player;
@@ -68,16 +67,18 @@ public class Game
     this.actualPlayer = this.actualPlayerIterator.next();
   }
 
-  public void reset(String worldPath)
+  public void reset(CreationOptions options)
   {
     int playerNb = this.playerList.size();
 
     this.playerList = new ArrayList<>();
     this.onPlayerChangeList = new ArrayList<>();
     this.onRoomChangeList = new ArrayList<>();
-    this.createRooms(worldPath);
+    this.createRooms(options);
     this.addPlayers(playerNb);
   }
+
+
 
   /**
    * Add new NPC to the game.
@@ -96,10 +97,11 @@ public class Game
   /**
    * Use the RoomParser to create every room in the game.
    */
-  public void createRooms(String path)
+  public void createRooms(CreationOptions options)
   {
     Class<?> cls = null;
     RoomParser roomParser;
+    String path = options.getFilePath();
 
     try {
       cls = Class.forName("RoomParser.RoomParser" + this.getFileExtension(path).toUpperCase());
@@ -109,7 +111,7 @@ public class Game
       roomParser = new RoomParserTXT();
       e.printStackTrace();
     }
-    this.startRoom = roomParser.update(path);
+    this.startRoom = roomParser.update(path, options);
   }
 
   private String getFileExtension(String fileName)

@@ -3,8 +3,6 @@ package misc;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class Inventory - a bag full of item.
@@ -51,7 +49,7 @@ public class Inventory implements Observable
    */
   public void insertItem(Item item)
   {
-    if (this.maxWeight == -1 || this.inventoryWeight + item.getItemWeight() < maxWeight) {
+    if (this.maxWeight == -1 || this.inventoryWeight + item.getWeight() < maxWeight) {
       this.items.add(item);
       this.onUpdate();
     }
@@ -72,7 +70,7 @@ public class Inventory implements Observable
 
     while (iterator.hasNext()) {
       Item item = iterator.next();
-      if (item.getItemName().equals(itemName)) {
+      if (item.getName().equals(itemName)) {
         iterator.remove();
         this.onUpdate();
         return (item);
@@ -108,7 +106,7 @@ public class Inventory implements Observable
   public boolean hasItem(String itemName)
   {
     for (Item item : this.items) {
-      if (item.getItemName().equals(itemName)) {
+      if (item.getName().equals(itemName)) {
         return (true);
       }
     }
@@ -144,7 +142,7 @@ public class Inventory implements Observable
     this.inventoryWeight = 0;
 
     for (Item item : this.items) {
-      this.inventoryWeight += item.getItemWeight();
+      this.inventoryWeight += item.getWeight();
     }
     this.update();
   }
