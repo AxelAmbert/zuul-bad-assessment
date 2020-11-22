@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 
-public class RoomView extends BorderPane
+public class RoomInfos extends BorderPane
 {
   private RoomDescription roomDescription;
   private RoomRepresentation roomRepresentation;
@@ -26,6 +26,7 @@ public class RoomView extends BorderPane
   private Observer playerInventoryObserver;
   private Observer roomInventoryObserver;
   private Observer roomChangeObserver;
+  private Observer updatedValueObserver;
 
   private ListOfClickableObjects<VBox, CommandInfo> actionList;
   private ListOfClickableObjects<VBox, Player> playerList;
@@ -33,7 +34,7 @@ public class RoomView extends BorderPane
   private ListOfClickableObjects<HBox, Item> roomInventoryList;
   private ListOfClickableObjects<HBox, Room> availableExitList;
 
-  public RoomView(Room room, Player player, CommandInterpreter interpreter)
+  public RoomInfos(Room room, Player player, CommandInterpreter interpreter)
   {
     this.commandInterpreter = interpreter;
     this.updateView(room, player);
@@ -46,22 +47,22 @@ public class RoomView extends BorderPane
     this.roomDescription = new RoomDescription(room.getDescription());
     this.roomRepresentation = new RoomRepresentation(room.getVisualRepresentation());
     this.inventoriesView = new HBox();
-
+    this.setUpdatedValueObserver();
     this.configureAllList();
-    this.inventoriesView.getChildren().addAll(this.playerInventoryList, this.roomInventoryList, this.availableExitList);
-    HBox.setHgrow(this.playerInventoryList, Priority.ALWAYS);
+    this.inventoriesView.getChildren().addAll(this.configurePlayerInventoryList(), this.configureRoomInventoryList(), this.configureAvailableExitList());
+    /*HBox.setHgrow(this.playerInventoryList, Priority.ALWAYS);
     HBox.setHgrow(this.roomInventoryList, Priority.ALWAYS);
     HBox.setHgrow(this.availableExitList, Priority.ALWAYS);
-
-    this.configureActionList();
+*/
+    //this.configureActionList();
     this.setTop(this.roomDescription);
     this.setCenter(this.roomRepresentation);
-    this.setLeft(this.test());
+    this.setLeft(this.configureActionList());
     this.setBottom(this.inventoriesView);
-    this.setRight(this.playerList);
-    BorderPane.setAlignment(this.actionList, Pos.CENTER_RIGHT);
+    this.setRight(this.configurePlayerList());
+    /*BorderPane.setAlignment(this.actionList, Pos.CENTER_RIGHT);
     BorderPane.setAlignment(this.playerList, Pos.CENTER_RIGHT);
-
+*/
     this.setObserversToChildren();
     this.addInventoryObservers();
     this.addRoomChangeObserver();
@@ -74,24 +75,13 @@ public class RoomView extends BorderPane
     ListOfClickableObjectsView<VBox, CommandInfo> view = new ListOfClickableObjectsView<>(VBox.class, controller, model);
 
     model.updateModel(CommandWords.getAllCommandInfo().stream());
-    controller.addObserver(new Observer(object -> {
-      String value = (String)object;
-
-      //this.commandInterpreter.addValue(value);
-    }));
+    controller.addObserver(this.updatedValueObserver);
     return (view);
   }
 
-  /*
-*   private ListOfClickableObjects<VBox, CommandInfo> actionList2;
-private ListOfClickableObjects<VBox, Player> playerList;
-private ListOfClickableObjects<HBox, Item> playerInventoryList;
-private ListOfClickableObjects<HBox, Item> roomInventoryList;
-private ListOfClickableObjects<HBox, Room> availableExitList;
-* */
   private void setObserversToChildren()
   {
-    Observer clickObserver = new Observer(new OneArgObjectInterface()
+  /*  Observer clickObserver = new Observer(new OneArgObjectInterface()
     {
       @Override
       public void run(Object object)
@@ -106,7 +96,7 @@ private ListOfClickableObjects<HBox, Room> availableExitList;
     this.playerList.addObserver(clickObserver);
     this.playerInventoryList.addObserver(clickObserver);
     this.roomInventoryList.addObserver(clickObserver);
-    this.availableExitList.addObserver(clickObserver);
+    this.availableExitList.addObserver(clickObserver);*/
   }
 
   private void addInventoryObservers()
@@ -159,14 +149,6 @@ private ListOfClickableObjects<HBox, Room> availableExitList;
     this.bindedPlayer.removeObserver(this.roomChangeObserver);
   }
 
-
-  private void configureActionList()
-  {
-    Stream<CommandInfo> stream = CommandWords.getAllCommandInfo().stream();
-
-    this.actionList = new ListOfClickableObjects<>(VBox.class, stream);
-  }
-
   private void configureAllList()
   {
     this.configureActionList();
@@ -176,42 +158,75 @@ private ListOfClickableObjects<HBox, Room> availableExitList;
     this.configureRoomInventoryList();
   }
 
-  private void configurePlayerList()
+  private ListOfClickableObjectsView configureActionList()
   {
-    Stream<Player> stream = this.bindedRoom.getPlayerList().stream();
-    Predicate<? super Player> filter = new Predicate()
-    {
-      @Override
-      public boolean test(Object o)
-      {
-        Player player = (Player) o;
+    Stream<CommandInfo> stream = CommandWords.getAllCommandInfo().stream();
+    ListOfClickableObjectsModel<CommandInfo> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<CommandInfo> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<HBox, CommandInfo> view = new ListOfClickableObjectsView<>(HBox.class, controller, model);
 
-        return (player.getName().equals(bindedPlayer.getName()));
-      }
-    };
-
-    this.playerList = new ListOfClickableObjects<>(VBox.class, stream, filter);
+    model.updateModel(stream);
+    controller.addObserver(this.updatedValueObserver);
+    return (view);
   }
 
-  private void configurePlayerInventoryList()
+
+
+  private ListOfClickableObjectsView configurePlayerList()
+  {
+    Stream<Player> stream = this.bindedRoom.getPlayerList().stream().filter(player -> !player.getName().equals(this.bindedPlayer.getName()));
+    ListOfClickableObjectsModel<Player> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<Player> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<HBox, Player> view = new ListOfClickableObjectsView<>(HBox.class, controller, model);
+
+    model.updateModel(stream);
+    controller.addObserver(this.updatedValueObserver);
+    return (view);
+  }
+
+  private ListOfClickableObjectsView configurePlayerInventoryList()
   {
     Stream<Item> stream = this.bindedPlayer.getInventory().getItems().stream();
+    ListOfClickableObjectsModel<Item> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<Item> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<HBox, Item> view = new ListOfClickableObjectsView<>(HBox.class, controller, model);
 
-    this.playerInventoryList = new ListOfClickableObjects<>(HBox.class, stream);
+    model.updateModel(stream);
+    controller.addObserver(this.updatedValueObserver);
+    return (view);
+
   }
 
-  private void configureRoomInventoryList()
+  private ListOfClickableObjectsView configureRoomInventoryList()
   {
     Stream<Item> stream = this.bindedRoom.getInventory().getItems().stream();
+    ListOfClickableObjectsModel<Item> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<Item> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<HBox, Item> view = new ListOfClickableObjectsView<>(HBox.class, controller, model);
 
-    this.roomInventoryList = new ListOfClickableObjects<HBox, Item>(HBox.class, stream);
+    model.updateModel(stream);
+    controller.addObserver(this.updatedValueObserver);
+    return (view);
   }
 
-  private void configureAvailableExitList()
+  private ListOfClickableObjectsView configureAvailableExitList()
   {
     Stream<Room> stream = this.bindedRoom.getExits().values().stream();
+    ListOfClickableObjectsModel<Room> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<Room> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<HBox, Room> view = new ListOfClickableObjectsView<>(HBox.class, controller, model);
 
-    this.availableExitList = new ListOfClickableObjects<HBox, Room>(HBox.class, stream);
+    model.updateModel(stream);
+    controller.addObserver(this.updatedValueObserver);
+    return (view);
   }
 
+  private void setUpdatedValueObserver()
+  {
+    this.updatedValueObserver = new Observer(value -> {
+      String command = (String) value;
+
+      this.commandInterpreter.addValue(command);
+    });
+  }
 }

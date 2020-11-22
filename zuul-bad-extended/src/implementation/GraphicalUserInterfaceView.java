@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.*;
 import misc.*;
-import RoomView.RoomView;
+import RoomView.RoomInfos;
 
 
 public class GraphicalUserInterfaceView implements GameView
@@ -19,7 +19,7 @@ public class GraphicalUserInterfaceView implements GameView
   private final CommandInterpreter commandInterpreter;
   private final Game game;
   private final CommandInvoker invoker;
-  private RoomView roomView;
+  private RoomInfos roomInfos;
 
   public GraphicalUserInterfaceView(Stage primaryStageToAttach)
   {
@@ -42,15 +42,15 @@ public class GraphicalUserInterfaceView implements GameView
   private void setupScene()
   {
     VBox vertical = new VBox();
-    this.roomView = new RoomView(this.game.getStartRoom(), this.game.getActualPlayer(), commandInterpreter);
+    this.roomInfos = new RoomInfos(this.game.getStartRoom(), this.game.getActualPlayer(), commandInterpreter);
     FileLoader loader = new FileLoader(this.primaryStage);
 
 
     vertical.setFillWidth(true);
-    vertical.getChildren().addAll(loader, roomView);
+    vertical.getChildren().addAll(loader, roomInfos);
 
     this.setMenuObservers(loader);
-    VBox.setVgrow(roomView, Priority.ALWAYS);
+    VBox.setVgrow(roomInfos, Priority.ALWAYS);
     primaryStage.setTitle("Zuul - GUI");
     primaryStage.setScene(new Scene(vertical, 700, 500));
     primaryStage.setMinHeight(500);
@@ -83,7 +83,7 @@ public class GraphicalUserInterfaceView implements GameView
         CreationOptions options = (CreationOptions)object;
 
         game.reset(options);
-        roomView.updateView(game.getActualPlayer().getCurrentRoom(), game.getActualPlayer());
+        roomInfos.updateView(game.getActualPlayer().getCurrentRoom(), game.getActualPlayer());
       }
     }));
   }
