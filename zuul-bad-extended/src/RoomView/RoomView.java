@@ -1,5 +1,8 @@
 package RoomView;
 
+import RoomView.controller.ListOfClickableObjectsController;
+import RoomView.model.ListOfClickableObjectsModel;
+import RoomView.view.ListOfClickableObjectsView;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import main.*;
@@ -53,7 +56,7 @@ public class RoomView extends BorderPane
     this.configureActionList();
     this.setTop(this.roomDescription);
     this.setCenter(this.roomRepresentation);
-    this.setLeft(this.actionList);
+    this.setLeft(this.test());
     this.setBottom(this.inventoriesView);
     this.setRight(this.playerList);
     BorderPane.setAlignment(this.actionList, Pos.CENTER_RIGHT);
@@ -62,6 +65,21 @@ public class RoomView extends BorderPane
     this.setObserversToChildren();
     this.addInventoryObservers();
     this.addRoomChangeObserver();
+  }
+
+  private ListOfClickableObjectsView test()
+  {
+    ListOfClickableObjectsModel<CommandInfo> model = new ListOfClickableObjectsModel<>();
+    ListOfClickableObjectsController<CommandInfo> controller = new ListOfClickableObjectsController<>(model);
+    ListOfClickableObjectsView<VBox, CommandInfo> view = new ListOfClickableObjectsView<>(VBox.class, controller, model);
+
+    model.updateModel(CommandWords.getAllCommandInfo().stream());
+    controller.addObserver(new Observer(object -> {
+      String value = (String)object;
+
+      //this.commandInterpreter.addValue(value);
+    }));
+    return (view);
   }
 
   /*
