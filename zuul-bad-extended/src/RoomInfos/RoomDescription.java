@@ -1,20 +1,19 @@
-package RoomView;
+package RoomInfos;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.Room;
 
 public class RoomDescription extends VBox
 {
-  private Label roomName;
-  private Label roomDesc;
+  private final Label roomName;
+  private final Label roomDesc;
 
-
-  public RoomDescription(String description)
+  public RoomDescription(Room room)
   {
-    this.roomName = new Label("The room");
-    this.roomDesc = new Label(description);
+    this.roomName = new Label(room.getName());
+    this.roomDesc = new Label(room.getDescription());
     this.roomName.setMaxWidth(Double.MAX_VALUE);
     this.roomName.setAlignment(Pos.CENTER);
     this.roomDesc.setMaxWidth(Double.MAX_VALUE);

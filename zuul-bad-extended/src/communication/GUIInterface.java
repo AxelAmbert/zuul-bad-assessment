@@ -1,12 +1,13 @@
 package communication;
 
-import javax.swing.*;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
+import javax.swing.*;
 
 
 public class GUIInterface implements Communication
 {
-
   public GUIInterface()
   {
   }
@@ -14,18 +15,26 @@ public class GUIInterface implements Communication
   @Override
   public void showMessage(String toShow)
   {
-    JOptionPane.showMessageDialog(null, toShow);
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+    alert.setTitle("Information");
+    alert.setContentText(toShow);
+    alert.showAndWait();
   }
 
   @Override
   public void showError(String toShow)
   {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
 
+    alert.setTitle("Error");
+    alert.setContentText(toShow);
+    alert.showAndWait();
   }
 
   @Override
   public String askUser()
   {
-    return (JOptionPane.showInputDialog("What do you have to say?"));
+    return "";
   }
 }

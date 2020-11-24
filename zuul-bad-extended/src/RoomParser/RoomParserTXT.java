@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 public class RoomParserTXT extends RoomParser
 {
+  private final short NORMAL_FORMAT_SIZE = 7;
+
   public RoomParserTXT()
   {
     this.rooms = new HashMap<>();
@@ -30,9 +32,7 @@ public class RoomParserTXT extends RoomParser
     } catch (Exception e) {
       e.printStackTrace();
       System.exit(1);
-      return (null);
     }
-    System.out.println("ALORS ? " + this.rooms);
     this.applyOptions(options);
     return (startRoom);
   }
@@ -46,7 +46,7 @@ public class RoomParserTXT extends RoomParser
               .map(String::trim)
               .filter(s -> !s.isEmpty());
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("Error while parsing configuration file. " + e.getMessage());
     }
     return (stream);
   }
@@ -54,10 +54,17 @@ public class RoomParserTXT extends RoomParser
   private void createARoom(String line)
   {
     String[] infos = line.split(", ");
-    String name = infos[0];
-    String description = infos[0];
-    Room room =  new Room(name, description);
+    String name;
+    String description;
+    Room room;
 
+    if (infos.length < this.NORMAL_FORMAT_SIZE) {
+      System.err.println("Wrong format of file.");
+      System.exit(1);
+    }
+    name = infos[0];
+    description = infos[0];
+    room = new Room(name, description);
     if (this.startRoom == null)
       this.startRoom = room;
     this.rooms.put(name, room);

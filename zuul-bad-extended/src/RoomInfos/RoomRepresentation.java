@@ -1,4 +1,4 @@
-package RoomView;
+package RoomInfos;
 
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Objects;
 
 public class RoomRepresentation extends VBox

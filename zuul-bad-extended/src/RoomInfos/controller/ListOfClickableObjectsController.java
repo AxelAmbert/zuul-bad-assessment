@@ -1,6 +1,6 @@
-package RoomView.controller;
+package RoomInfos.controller;
 
-import RoomView.model.ListOfClickableObjectsModel;
+import RoomInfos.model.ListOfClickableObjectsModel;
 import misc.Observable;
 import misc.Observer;
 

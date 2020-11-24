@@ -81,7 +81,7 @@ public class RoomParserJSON extends RoomParser
       file = Files.readString(Path.of(filePath));
       object = new JSONObject(file);
       array = object.getJSONArray("rooms");
-    } catch (IOException exception) {
+    } catch (Exception exception) {
       System.err.println("Error while parsing rooms " + exception.toString());
       System.exit(1);
     }

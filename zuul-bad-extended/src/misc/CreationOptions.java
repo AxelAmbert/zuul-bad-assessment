@@ -10,6 +10,7 @@ public class CreationOptions
 
   public CreationOptions(String filePath, Item item, boolean noExit, boolean noItem)
   {
+    this.addItem = item != null;
     this.filePath = filePath;
     this.baseItem = item;
     this.removeNoExit = noExit;

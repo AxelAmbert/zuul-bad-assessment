@@ -1,8 +1,6 @@
 package WorldLoader;
 
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -15,9 +13,11 @@ import misc.Observer;
 import java.io.File;
 import java.util.ArrayList;
 
+//TODO add default world
 public class FileLoader extends MenuBar implements Observable
 {
-  private final MenuItem loadWorld;
+  private  MenuItem loadWorld;
+  private  MenuItem defaultWorld;
   private final Menu world;
   private final FileChooser fileChooser;
   private final ArrayList<Observer> observersList;
@@ -30,12 +30,11 @@ public class FileLoader extends MenuBar implements Observable
     this.mainStage = mainStage;
     this.chosenFile = "";
     this.observersList = new ArrayList<>();
-    this.loadWorld = new MenuItem("Load new world");
-    this.world = new Menu("World");
+    this.world = new Menu("World Loader");
+    this.setupLoadWorld();
+    this.setupLoadDefault();
+    this.defaultWorld = new MenuItem("Load default world");
     this.fileChooser = this.createFileChooser();
-
-    this.setClickObserver(this.mainStage);
-    this.world.getItems().add(this.loadWorld);
     this.getMenus().add(this.world);
   }
 
@@ -44,35 +43,51 @@ public class FileLoader extends MenuBar implements Observable
     FileChooser chooser = new FileChooser();
 
     chooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Text Files", "*.txt"),
             new FileChooser.ExtensionFilter("Json Files", "*.json"),
+            new FileChooser.ExtensionFilter("Text Files", "*.txt"),
             new FileChooser.ExtensionFilter("All Files", "*.*"));
     chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
     return (chooser);
   }
 
-  private void setClickObserver(Stage mainStage)
+  private void setLoadWorldObserver(Stage mainStage)
   {
-    this.loadWorld.setOnAction(new EventHandler<ActionEvent>()
+    this.loadWorld.setOnAction(t ->
     {
-      public void handle(ActionEvent t)
-      {
-        fileChooser.setTitle("Open Resource File");
-        File selectedFile = fileChooser.showOpenDialog(mainStage);
-        if (selectedFile != null) {
-          chosenFile = selectedFile.toString();
-          WorldChooserParametersForm form = new WorldChooserParametersForm(mainStage, chosenFile);
-
-          form.addObserver(new Observer(object -> {
-            options = (CreationOptions) object;
-
-            options.setFilePath(chosenFile);
-            update();
-          }));
-          form.showDialog();
-        }
-      }
+      fileChooser.setTitle("Open Resource File");
+      File selectedFile = fileChooser.showOpenDialog(mainStage);
+      if (selectedFile == null)
+        return;
+      chosenFile = selectedFile.toString();
+      WorldChooserParametersForm form = new WorldChooserParametersForm(mainStage, chosenFile);
+      form.addObserver(new Observer(object -> {
+        options = (CreationOptions) object;
+        options.setFilePath(chosenFile);
+        update();
+      }));
+      form.showDialog();
     });
+  }
+
+  private void setupLoadWorld()
+  {
+    this.loadWorld = new MenuItem("Load new world");
+    this.world.getItems().add(this.loadWorld);
+    this.setLoadWorldObserver(this.mainStage);
+  }
+
+  private void setupLoadDefault()
+  {
+    this.defaultWorld = new MenuItem("Load default world");
+    this.defaultWorld.setOnAction(t -> {
+      String userDir = System.getProperty("user.dir");
+      String fileSeparator = System.getProperty("file.separator");
+      String filePath = userDir + fileSeparator + "rooms.json";
+
+      this.options = new CreationOptions(filePath, null, false, false);
+      this.update();
+    });
+    this.world.getItems().add(this.defaultWorld);
   }
 
   @Override

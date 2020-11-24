@@ -1,7 +1,7 @@
-package RoomView.view;
+package RoomInfos.view;
 
-import RoomView.controller.ListOfClickableObjectsController;
-import RoomView.model.ListOfClickableObjectsModel;
+import RoomInfos.controller.ListOfClickableObjectsController;
+import RoomInfos.model.ListOfClickableObjectsModel;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
@@ -13,13 +13,12 @@ import misc.Observer;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
-public class ListOfClickableObjectsView<Box, Iterable>   extends ScrollPane
+public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
 {
-  ListOfClickableObjectsController<Iterable> controller;
-  ListOfClickableObjectsModel<Iterable> model;
-  Box box;
+  private final ListOfClickableObjectsController<Iterable> controller;
+  private final ListOfClickableObjectsModel<Iterable> model;
+  private Box box;
 
   public ListOfClickableObjectsView(Class<? extends Box> constructor,
                                     ListOfClickableObjectsController<Iterable> controller,
@@ -27,11 +26,15 @@ public class ListOfClickableObjectsView<Box, Iterable>   extends ScrollPane
   {
     this.controller = controller;
     this.model = model;
-    this.setMaxSize(250, 250);
-    this.hbarPolicyProperty().setValue(ScrollBarPolicy.NEVER);
-    this.vbarPolicyProperty().setValue(ScrollBarPolicy.ALWAYS);
+    this.setMaxSize(500, 250);
     this.initInstanceOfBox(constructor);
     this.setModelObserver();
+  }
+
+  public void setBarPolicy(ScrollBarPolicy h, ScrollBarPolicy v)
+  {
+    this.hbarPolicyProperty().setValue(h);
+    this.vbarPolicyProperty().setValue(v);
   }
 
   private void initInstanceOfBox(Class<? extends Box> constructor)
@@ -42,13 +45,25 @@ public class ListOfClickableObjectsView<Box, Iterable>   extends ScrollPane
       System.out.println("Error while initialisation of Box");
       System.exit(1);
     }
+
   }
 
   public void updateView(ArrayList<String[]> infos)
   {
     ((Pane)box).getChildren().clear();
+    this.caseEmpty(infos);
     infos.stream().forEach(this::createButton);
     this.setContent((Pane) this.box);
+  }
+
+  private void caseEmpty(ArrayList<String[]> infos)
+  {
+    String fileSeparator = System.getProperty("file.separator");
+    String userDir = System.getProperty("user.dir");
+
+    if (infos.size() != 0)
+      return;
+    infos.add(new String[]{userDir + fileSeparator + "images" + fileSeparator + "empty.png", "empty", "empty list"});
   }
 
   private void createButton(String[] usefulVariables)

@@ -1,4 +1,4 @@
-package RoomView;
+package RoomInfos;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -42,8 +42,8 @@ public class ListOfClickableObjects<Box, Iterable>  extends ScrollPane implement
     this.storedValue = "";
     this.observersList = new ArrayList<>();
     this.setMaxSize(250, 250);
-    this.hbarPolicyProperty().setValue(ScrollBarPolicy.NEVER);
-    this.vbarPolicyProperty().setValue(ScrollBarPolicy.ALWAYS);
+    this.hbarPolicyProperty().setValue(ScrollBarPolicy.AS_NEEDED);
+    this.vbarPolicyProperty().setValue(ScrollBarPolicy.AS_NEEDED);
     this.initInstanceOfBox(constructor);
     this.updateView(stream);
   }

@@ -1,15 +1,13 @@
-package RoomView.model;
+package RoomInfos.model;
 
 import misc.Observable;
 import misc.Observer;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class ListOfClickableObjectsModel<Iterable> implements Observable
 {
-  private ListOfClickableObjectsModel listOfClickableObjectsModel;
   private ArrayList<String[]> infos;
   private ArrayList<Observer> observers;
 
@@ -21,6 +19,7 @@ public class ListOfClickableObjectsModel<Iterable> implements Observable
 
   public void updateModel(Stream<Iterable> stream)
   {
+    this.infos.clear();
     stream.forEach(this::getUsefulVariables);
     this.update();
   }
