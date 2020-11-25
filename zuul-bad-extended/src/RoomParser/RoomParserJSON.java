@@ -34,6 +34,7 @@ public class RoomParserJSON extends RoomParser
    */
   public RoomParserJSON()
   {
+    this.startRoom = null;
   }
 
   /**

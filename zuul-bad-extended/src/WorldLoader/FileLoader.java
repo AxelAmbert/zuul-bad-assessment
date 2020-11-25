@@ -33,9 +33,13 @@ public class FileLoader extends MenuBar implements Observable
     this.world = new Menu("World Loader");
     this.setupLoadWorld();
     this.setupLoadDefault();
-    this.defaultWorld = new MenuItem("Load default world");
     this.fileChooser = this.createFileChooser();
-    this.getMenus().add(this.world);
+    this.getMenus().addAll(this.world, new Tutorial(mainStage));
+  }
+
+  private void setupTutorial()
+  {
+
   }
 
   private FileChooser createFileChooser()

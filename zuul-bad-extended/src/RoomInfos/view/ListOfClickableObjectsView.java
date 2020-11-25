@@ -14,12 +14,28 @@ import misc.Observer;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
+/**
+ * Class ListOfClickableObjectController - the view of a list of clickable objects.
+ * This class is the view of the ListOfClickableObject object
+ * which is a list of clickable objects
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
 {
   private final ListOfClickableObjectsController<Iterable> controller;
   private final ListOfClickableObjectsModel<Iterable> model;
   private Box box;
 
+
+  /**
+   * Constructor of the ListOfClickableObjectsView class
+   * @param constructor constructor of the template Box
+   * @param controller related MVC controller
+   * @param model related MVC model
+   */
   public ListOfClickableObjectsView(Class<? extends Box> constructor,
                                     ListOfClickableObjectsController<Iterable> controller,
                                     ListOfClickableObjectsModel<Iterable> model)
@@ -31,12 +47,21 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     this.setModelObserver();
   }
 
+  /**
+   * Set the bar policies of the Box ScrollPane
+   * @param h bar policy
+   * @param v bar policy
+   */
   public void setBarPolicy(ScrollBarPolicy h, ScrollBarPolicy v)
   {
     this.hbarPolicyProperty().setValue(h);
     this.vbarPolicyProperty().setValue(v);
   }
 
+  /**
+   * Init thanks to reflection the instance of box dynamically
+   * @param constructor on which reflect
+   */
   private void initInstanceOfBox(Class<? extends Box> constructor)
   {
     try {
@@ -48,6 +73,10 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
 
   }
 
+  /**
+   * Update the view thanks to infos of the Iterable object
+   * @param infos get from the Iterable object
+   */
   public void updateView(ArrayList<String[]> infos)
   {
     ((Pane)box).getChildren().clear();
@@ -56,6 +85,10 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     this.setContent((Pane) this.box);
   }
 
+  /**
+   * Handle the case where infos is empty, with a default placeholder.
+   * @param infos to test if it is empty
+   */
   private void caseEmpty(ArrayList<String[]> infos)
   {
     String fileSeparator = System.getProperty("file.separator");
@@ -66,6 +99,10 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     infos.add(new String[]{userDir + fileSeparator + "images" + fileSeparator + "empty.png", "empty", "empty list"});
   }
 
+  /**
+   * Create a button in the list thanks to the useful variables
+   * @param usefulVariables used to create the button (contains image, name and description)
+   */
   private void createButton(String[] usefulVariables)
   {
     ImageView imageView = this.getImageView(usefulVariables[0]);
@@ -74,6 +111,11 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     ((Pane)this.box).getChildren().add(button);
   }
 
+  /**
+   * Create an image view
+   * @param path of the image
+   * @return the ImageView created
+   */
   private ImageView getImageView(String path)
   {
     ImageView view = null;
@@ -88,6 +130,12 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     return (view);
   }
 
+  /**
+   * Create the button with the generated variables
+   * @param view image view to apply to the button
+   * @param usefulVariables useful variables like the image path, name and description
+   * @return the created Button
+   */
   private Button setupButton(ImageView view, String[] usefulVariables)
   {
     Button button = new Button("", view);
@@ -101,6 +149,11 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     return (button);
   }
 
+  /**
+   * Create the tooltip for the button.
+   * @param description to add in the tooltip
+   * @return the created Tooltip
+   */
   private Tooltip createTooltip(String description)
   {
     Tooltip tip = new Tooltip();
@@ -110,6 +163,9 @@ public class ListOfClickableObjectsView<Box, Iterable> extends ScrollPane
     return (tip);
   }
 
+  /**
+   * Set the button's observer to know when it's clicked on.
+   */
   private void setModelObserver()
   {
     this.model.addObserver(new Observer(object -> {

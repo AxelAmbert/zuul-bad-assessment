@@ -6,17 +6,33 @@ import misc.Observer;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/**
+ * Class ListOfClickableObjectController - the model of a list of clickable objects.
+ * This class is the model of the ListOfClickableObject object
+ * which is a list of clickable objects
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class ListOfClickableObjectsModel<Iterable> implements Observable
 {
   private ArrayList<String[]> infos;
   private ArrayList<Observer> observers;
 
+  /**
+   * Constructor of the ListOfClickableObjectsModel
+   */
   public ListOfClickableObjectsModel()
   {
     this.observers = new ArrayList<>();
     this.infos = new ArrayList<>();
   }
 
+  /**
+   * Update the Model thanks to a stream.
+   * @param stream that will update the model
+   */
   public void updateModel(Stream<Iterable> stream)
   {
     this.infos.clear();
@@ -24,6 +40,10 @@ public class ListOfClickableObjectsModel<Iterable> implements Observable
     this.update();
   }
 
+  /**
+   * Get all the useful variables in the Iterable object thanks to reflection.
+   * @param toIter object to iterate on.
+   */
   private void getUsefulVariables(Iterable toIter)
   {
     String visualRepresentation = null;
@@ -41,6 +61,10 @@ public class ListOfClickableObjectsModel<Iterable> implements Observable
     this.infos.add(new String[]{visualRepresentation, name, description});
   }
 
+  /**
+   * Get the infos variable
+   * @return the infos variable
+   */
   public ArrayList<String[]> getInfos()
   {
     return (this.infos);

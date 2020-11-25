@@ -19,6 +19,14 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Class RoomInfoModel -
+ * This class is the model of a view that shows room information and enable
+ * interaction with it.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
 public class RoomInfoModel implements Observable
 {
 
@@ -35,7 +43,10 @@ public class RoomInfoModel implements Observable
   ArrayList<Observer> observers;
   private Observer updatedValueObserver;
 
-
+  /**
+   * Constructor of the RoomInfoModel class.
+   * @param interpreter command interpreter to trigger when a user input is done
+   */
   public RoomInfoModel(CommandInterpreter interpreter)
   {
     this.observers = new ArrayList<>();
@@ -45,10 +56,14 @@ public class RoomInfoModel implements Observable
       String value = (String)object;
 
       this.commandInterpreter.addValue(value);
-      System.out.println("GO " + value);
     });
   }
 
+  /**
+   * Update the model with new value.
+   * @param bindedRoom to update the model with
+   * @param bindedPlayer to update the model with
+   */
   public void updateModel(Room bindedRoom, Player bindedPlayer)
   {
     Predicate<Player> filter = player -> !player.getName().equals(bindedPlayer.getName());
@@ -62,6 +77,15 @@ public class RoomInfoModel implements Observable
     this.update();
   }
 
+  /**
+   * Create a list of clickable object thanks to various parameters.
+   * @param constructor of the Box we want to create with reflection
+   * @param stream to iterate on to create the buttons
+   * @param filter to apply to the stream, can be null
+   * @param <Box> either a HBox or a VBox, or something that inherit one of thoses
+   * @param <Iter> an objetc that has description, a visual representation and a name.
+   * @return the created list
+   */
   private <Box, Iter> ListOfClickableObjectsView<Box, Iter> configureAList(Class<? extends Box> constructor,
                                                                           Stream<Iter> stream,
                                                                           Predicate<Iter> filter)
@@ -76,6 +100,9 @@ public class RoomInfoModel implements Observable
     return (view);
   }
 
+  /**
+   * Setup the views map thanks to every lists.
+   */
   private void setupViewMap()
   {
     views.clear();
@@ -86,6 +113,10 @@ public class RoomInfoModel implements Observable
     views.put("exitList", this.exitList);
   }
 
+  /**
+   * Get the views map
+   * @return the views map
+   */
   public HashMap<String, ListOfClickableObjectsView> getViews()
   {
     return (this.views);

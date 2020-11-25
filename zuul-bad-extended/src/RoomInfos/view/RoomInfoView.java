@@ -15,6 +15,15 @@ import misc.Observer;
 
 import java.util.HashMap;
 
+/**
+ * Class RoomInfoView -
+ * This class is the view of a view that shows room information and enable
+ * interaction with it.
+ *
+ * @author Axel Ambert
+ * @version 1.0
+ */
+
 public class RoomInfoView extends BorderPane
 {
   private final RoomInfoController controller;
@@ -29,7 +38,11 @@ public class RoomInfoView extends BorderPane
 
   private HashMap<String, ListOfClickableObjectsView> views;
 
-
+  /**
+   * Constructor of the RoomInfoView class
+   * @param controller related MVC controller
+   * @param model related MVC model
+   */
   public RoomInfoView(RoomInfoController controller, RoomInfoModel model)
   {
     this.controller = controller;
@@ -41,6 +54,10 @@ public class RoomInfoView extends BorderPane
     this.downView.setSpacing(10);
   }
 
+  /**
+   * Set the HGrow inside every boxes of the view
+   * @param boxes
+   */
   private void setHgrow(VBox[] boxes)
   {
     for (VBox box : boxes) {
@@ -48,6 +65,9 @@ public class RoomInfoView extends BorderPane
     }
   }
 
+  /**
+   * Set the inventory view name on top of each list
+   */
   private void setInventoriesView()
   {
     Label[] names = new Label[]{new Label("Player's inventory"), new Label("Room's inventory"), new Label("Available Exits")};
@@ -64,6 +84,9 @@ public class RoomInfoView extends BorderPane
     this.setHgrow(boxes);
   }
 
+  /**
+   * Put every list on the inherited BorderPane
+   */
   private void setBorderPane()
   {
     this.setTop(this.roomDescription);
@@ -77,6 +100,10 @@ public class RoomInfoView extends BorderPane
     VBox.setVgrow(this.rightView, Priority.ALWAYS);
   }
 
+  /**
+   * Update the view with new data.
+   * @param viewList the new lists to update the view with
+   */
   public void updateView(HashMap<String, ListOfClickableObjectsView> viewList)
   {
     this.views = viewList;
@@ -88,6 +115,9 @@ public class RoomInfoView extends BorderPane
     this.setBarPolicy();
   }
 
+  /**
+   * Set an update observer on the model to know when to update.
+   */
   private void setUpdateObserver()
   {
     this.model.addObserver(new Observer(object -> {
@@ -97,6 +127,9 @@ public class RoomInfoView extends BorderPane
     }));
   }
 
+  /**
+   * Set the Bar policy on every ListOfClickableObjects
+   */
   private void setBarPolicy()
   {
     this.views.get("playerInventoryList").setBarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED, ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -106,6 +139,9 @@ public class RoomInfoView extends BorderPane
     this.views.get("playerList").setBarPolicy(ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS);
   }
 
+  /**
+   * Set a description test on top of ActionList and PlayerList
+   */
   private void setTextToList()
   {
 
@@ -124,11 +160,19 @@ public class RoomInfoView extends BorderPane
 
   }
 
+  /**
+   * Get the MVC related controller
+   * @return the MVC related controller
+   */
   public RoomInfoController getController()
   {
     return controller;
   }
 
+  /**
+   * Get the MVC related model
+   * @return the MVC related model
+   */
   public RoomInfoModel getModel()
   {
     return model;

@@ -5,6 +5,7 @@ import java.util.*;
 
 import RoomParser.RoomParser;
 import RoomParser.RoomParserTXT;
+import communication.Communication;
 import communication.Controller;
 import misc.LocalizedText;
 import misc.Observer;
@@ -74,8 +75,9 @@ public class Game
     this.playerList = new ArrayList<>();
     this.onPlayerChangeList = new ArrayList<>();
     this.onRoomChangeList = new ArrayList<>();
-    this.createRooms(options);
-    this.addPlayers(playerNb);
+    if (this.createRooms(options) == true) {
+      this.addPlayers(playerNb);
+    }
   }
 
 
@@ -97,23 +99,49 @@ public class Game
   /**
    * Use the RoomParser to create every room in the game.
    */
-  public void createRooms(CreationOptions options)
+  public boolean createRooms(CreationOptions options)
   {
     Class<?> cls = null;
     RoomParser roomParser;
     String path = options.getFilePath();
+    Room tmpRoom = null;
 
     try {
       cls = Class.forName("RoomParser.RoomParser" + this.getFileExtension(path).toUpperCase());
       Constructor ct = cls.getConstructor();
       roomParser = (RoomParser) ct.newInstance();
     } catch (Exception e) {
+      System.out.println("error");
       roomParser = new RoomParserTXT();
-      e.printStackTrace();
     }
-    this.startRoom = roomParser.update(path, options);
+    tmpRoom = roomParser.update(path, options);
+    return (this.handleStartRoomErrors(tmpRoom));
   }
 
+  /**
+   * Handle the error that can happen in the room creation process
+   * @param tmpRoom room that was created
+   * @return if the room creation worked well
+   */
+  private boolean handleStartRoomErrors(Room tmpRoom)
+  {
+    if (tmpRoom == null && this.startRoom == null) {
+      Controller.showError("Error while loading configuration file. Quitting");
+      System.exit(1);
+    } else if (tmpRoom == null){
+      Controller.showError("Error while loading configuration file. Game won't change.");
+    } else {
+      this.startRoom = tmpRoom;
+      return (true);
+    }
+    return (false);
+  }
+
+  /**
+   * Get the file extension of a file.
+   * @param fileName the file name
+   * @return the file extension (.json, .txt, etc...)
+   */
   private String getFileExtension(String fileName)
   {
     if (fileName.contains(".") == true) {
@@ -202,6 +230,9 @@ public class Game
     return (startRoom);
   }
 
+  /**
+   * Called when the current room is changed
+   */
   public void onRoomChanged()
   {
     this.onRoomChangeList.stream().forEach(observer -> observer.onUpdate(this.actualPlayer.getCurrentRoom()));

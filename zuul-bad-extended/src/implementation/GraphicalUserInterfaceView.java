@@ -4,7 +4,6 @@ import RoomInfos.controller.RoomInfoController;
 import RoomInfos.model.RoomInfoModel;
 import RoomInfos.view.RoomInfoView;
 import WorldLoader.FileLoader;
-import communication.CommandLineInterface;
 import communication.Controller;
 import communication.GUIInterface;
 import javafx.scene.Scene;
@@ -20,12 +19,25 @@ public class GraphicalUserInterfaceView implements GameView
 {
 
   private final Stage primaryStage;
-  private final CommandInterpreter commandInterpreter;
-  private final Game game;
-  private final CommandInvoker invoker;
+  private CommandInterpreter commandInterpreter;
+  private Game game;
+  private CommandInvoker invoker;
   private RoomInfoView roomInfos;
 
+  /**
+   * Constructor of the GraphicalUserInterfaceView class
+   */
   public GraphicalUserInterfaceView(Stage primaryStageToAttach)
+  {
+    this.primaryStage = primaryStageToAttach;
+    this.setupGUIView();
+  }
+
+
+  /**
+   * Setup every variables of the GUI view
+   */
+  private void setupGUIView()
   {
     String defaultFilePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "rooms.json";
     CreationOptions options = new CreationOptions(defaultFilePath, null, false, false);
@@ -34,7 +46,6 @@ public class GraphicalUserInterfaceView implements GameView
     this.game = Game.getGameInstance();
     this.game.createRooms(options);
     this.game.addPlayers(3);
-    this.primaryStage = primaryStageToAttach;
     this.commandInterpreter = new CommandInterpreter();
     this.invoker = new CommandInvoker();
     Controller.setCommunication(new GUIInterface());
@@ -43,24 +54,31 @@ public class GraphicalUserInterfaceView implements GameView
     this.runGame(this.game);
   }
 
+  /**
+   * Setup the scene of the GUI view
+   * Setup its menus and main view
+   */
   private void setupScene()
   {
     VBox vertical = new VBox();
-    //this.roomInfos = new RoomInfos(this.game.getStartRoom(), this.game.getActualPlayer(), commandInterpreter);
-    this.roomInfos = this.setupRoomInfoView();
     FileLoader loader = new FileLoader(this.primaryStage);
+
+    this.roomInfos = this.setupRoomInfoView();
     vertical.setFillWidth(true);
     vertical.getChildren().addAll(loader, this.roomInfos);
-
     this.setMenuObservers(loader);
     VBox.setVgrow(roomInfos, Priority.ALWAYS);
-    primaryStage.setTitle("Zuul - GUI");
-    primaryStage.setScene(new Scene(vertical, 700, 500));
-    primaryStage.setMinHeight(500);
-    primaryStage.setMinWidth(500);
-    primaryStage.show();
+    this.primaryStage.setTitle("Zuul - GUI");
+    this.primaryStage.setScene(new Scene(vertical, 700, 500));
+    this.primaryStage.setMinHeight(500);
+    this.primaryStage.setMinWidth(500);
+    this.primaryStage.show();
   }
 
+
+  /**
+   * Create the MVC of the RoomInfo main view
+   */
   private RoomInfoView setupRoomInfoView()
   {
     RoomInfoModel model = new RoomInfoModel(this.commandInterpreter);
@@ -71,6 +89,10 @@ public class GraphicalUserInterfaceView implements GameView
     return (view);
   }
 
+
+  /**
+   * Setup the command interpreter that handle commands
+   */
   private void setupCommandInterpreter()
   {
     commandInterpreter.addObserver(new Observer(new OneArgObjectInterface()
@@ -86,6 +108,11 @@ public class GraphicalUserInterfaceView implements GameView
     }));
   }
 
+  /**
+   * Setup the observer on the FileLoader to refresh the main view
+   * when a new world is loaded.
+   * @param loader the FileLoader menu
+   */
   private void setMenuObservers(FileLoader loader)
   {
     loader.addObserver(new Observer(new OneArgObjectInterface()
@@ -101,6 +128,10 @@ public class GraphicalUserInterfaceView implements GameView
     }));
   }
 
+  /**
+   * Run the game.
+   * @param game the game instance.
+   */
   @Override
   public void runGame(Game game)
   {

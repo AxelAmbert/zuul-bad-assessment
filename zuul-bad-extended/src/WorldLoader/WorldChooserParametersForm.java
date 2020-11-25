@@ -82,7 +82,7 @@ public class WorldChooserParametersForm extends Stage implements Observable
 
   private void setupConfirm()
   {
-    this.confirm = new Button();
+    this.confirm = new Button("Confirm");
 
     this.confirm.setOnMouseClicked(mouseEvent -> {
       int itemNameLength = itemName.getLength();

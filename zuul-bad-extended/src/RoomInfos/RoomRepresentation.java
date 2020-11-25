@@ -8,11 +8,18 @@ import javafx.scene.layout.VBox;
 import java.io.FileInputStream;
 import java.util.Objects;
 
+/**
+ * RoomRepresentation - A Graphical representation of the room
+ */
 public class RoomRepresentation extends VBox
 {
   private Image image;
   private ImageView imageView;
 
+  /**
+   * Constructor of the RoomRepresentation class
+   * @param path to load the image with
+   */
   public RoomRepresentation(String path)
   {
     image = this.getImageRepresentation(path);
@@ -23,6 +30,11 @@ public class RoomRepresentation extends VBox
     this.setAlignment(Pos.CENTER);
   }
 
+  /**
+   * Create the image representation
+   * @param path to load the image with
+   * @return the created image
+   */
   private Image getImageRepresentation(String path)
   {
     Image image = null;

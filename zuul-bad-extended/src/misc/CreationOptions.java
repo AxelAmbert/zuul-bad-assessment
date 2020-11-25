@@ -1,5 +1,12 @@
 package misc;
 
+
+/**
+ * Class to handle the World Loading options
+ * No logic is performed, it's only purpose is to store data.
+ * @author Axel Ambert
+ * @version 1.0
+ */
 public class CreationOptions
 {
   private Item baseItem;

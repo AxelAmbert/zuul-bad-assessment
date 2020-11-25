@@ -5,6 +5,7 @@ import misc.CreationOptions;
 import misc.Item;
 
 import java.io.File;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -15,6 +16,7 @@ public class RoomParserTXT extends RoomParser
 
   public RoomParserTXT()
   {
+    this.startRoom = null;
     this.rooms = new HashMap<>();
   }
 
@@ -30,8 +32,7 @@ public class RoomParserTXT extends RoomParser
       stream = getStream(filePath);
       stream.forEach(this::setRoomsVariables);
     } catch (Exception e) {
-      e.printStackTrace();
-      System.exit(1);
+      System.out.println(e.getMessage());
     }
     this.applyOptions(options);
     return (startRoom);

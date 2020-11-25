@@ -12,6 +12,11 @@ public class GUIInterface implements Communication
   {
   }
 
+
+  /**
+   * Show an Alert of Information to the user.
+   * @param toShow the message to print
+   */
   @Override
   public void showMessage(String toShow)
   {
@@ -22,6 +27,11 @@ public class GUIInterface implements Communication
     alert.showAndWait();
   }
 
+
+  /**
+   * Show an Alert of Error to the user.
+   * @param toShow the message to print
+   */
   @Override
   public void showError(String toShow)
   {
@@ -32,6 +42,10 @@ public class GUIInterface implements Communication
     alert.showAndWait();
   }
 
+  /**
+   * Ask for the user's input
+   * @return the user's input
+   */
   @Override
   public String askUser()
   {

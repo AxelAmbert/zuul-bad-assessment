@@ -7,12 +7,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+
+/**
+ * Handle the command in a new way.
+ * Send it the user input via String
+ * And it will detect which are commands or parameters.
+ * And execute the command when it's fully formatted.
+ * @author Axel Ambert
+ * @version 1.0
+ */
 public class CommandInterpreter implements Observable
 {
   private final ArrayList<String> actionWords;
   private final ArrayList<Observer> observersList;
   private final String[] listOfCommand;
 
+  /**
+   * Constructor of the CommandInterpreter class
+   */
   public CommandInterpreter()
   {
     this.listOfCommand = CommandWords.getValidCommands();
@@ -20,11 +32,18 @@ public class CommandInterpreter implements Observable
     this.observersList = new ArrayList<>();
   }
 
+  /**
+   * Reset the command list
+   */
   public void reset()
   {
     this.actionWords.clear();
   }
 
+  /**
+   * Add a value to the command interpreter and analyze it.
+   * @param value to add
+   */
   public void addValue(String value)
   {
     boolean isACommand = Arrays.stream(this.listOfCommand)
@@ -36,6 +55,10 @@ public class CommandInterpreter implements Observable
     this.onUpdate();
   }
 
+
+  /**
+   * Function called everytime an input is done.
+   */
   public void onUpdate()
   {
     ArrayList<CommandInfo> commandInfos;
@@ -66,6 +89,9 @@ public class CommandInterpreter implements Observable
     this.observersList.remove(observerToRemove);
   }
 
+  /**
+   * Function called every time a command is ready.
+   */
   @Override
   public void update()
   {
