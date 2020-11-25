@@ -3,7 +3,7 @@ package implementation;
 import RoomInfos.controller.RoomInfoController;
 import RoomInfos.model.RoomInfoModel;
 import RoomInfos.view.RoomInfoView;
-import WorldLoader.FileLoader;
+import WorldLoader.MainMenu;
 import communication.Controller;
 import communication.GUIInterface;
 import javafx.scene.Scene;
@@ -61,7 +61,7 @@ public class GraphicalUserInterfaceView implements GameView
   private void setupScene()
   {
     VBox vertical = new VBox();
-    FileLoader loader = new FileLoader(this.primaryStage);
+    MainMenu loader = new MainMenu(this.primaryStage);
 
     this.roomInfos = this.setupRoomInfoView();
     vertical.setFillWidth(true);
@@ -113,7 +113,7 @@ public class GraphicalUserInterfaceView implements GameView
    * when a new world is loaded.
    * @param loader the FileLoader menu
    */
-  private void setMenuObservers(FileLoader loader)
+  private void setMenuObservers(MainMenu loader)
   {
     loader.addObserver(new Observer(new OneArgObjectInterface()
     {

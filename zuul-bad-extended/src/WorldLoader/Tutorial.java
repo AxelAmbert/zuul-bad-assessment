@@ -6,10 +6,18 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+/**
+ * Tutorial - this class let the user see a little YouTube tutorial
+ * in a WebView to understand how to play the game.
+ */
 public class Tutorial extends Menu
 {
   private final MenuItem item;
 
+  /**
+   * Constructor of the Tutorial class
+   * @param stage
+   */
   public Tutorial(Stage stage)
   {
     super("Tutorial");

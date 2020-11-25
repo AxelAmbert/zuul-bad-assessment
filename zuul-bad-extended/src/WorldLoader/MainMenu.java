@@ -13,8 +13,15 @@ import misc.Observer;
 import java.io.File;
 import java.util.ArrayList;
 
-//TODO add default world
-public class FileLoader extends MenuBar implements Observable
+
+/**
+ * MainMenu - This class handle the MenuBar on top of the game
+ * It contains:
+ * A file loader to choose a new world
+ * A default world loader option
+ * A tutorial
+ */
+public class MainMenu extends MenuBar implements Observable
 {
   private  MenuItem loadWorld;
   private  MenuItem defaultWorld;
@@ -25,7 +32,11 @@ public class FileLoader extends MenuBar implements Observable
   private Stage mainStage;
   private CreationOptions options;
 
-  public FileLoader(Stage mainStage)
+  /**
+   * Constructor of the MainMenu class
+   * @param mainStage main Stage of the application
+   */
+  public MainMenu(Stage mainStage)
   {
     this.mainStage = mainStage;
     this.chosenFile = "";
@@ -37,11 +48,11 @@ public class FileLoader extends MenuBar implements Observable
     this.getMenus().addAll(this.world, new Tutorial(mainStage));
   }
 
-  private void setupTutorial()
-  {
 
-  }
-
+  /**
+   * Create the FileChooser, with *., *.json, *.txt options
+   * @return the file chooser
+   */
   private FileChooser createFileChooser()
   {
     FileChooser chooser = new FileChooser();
@@ -54,6 +65,10 @@ public class FileLoader extends MenuBar implements Observable
     return (chooser);
   }
 
+  /**
+   * Set observers on the File chooser
+   * @param mainStage main Stage of the application
+   */
   private void setLoadWorldObserver(Stage mainStage)
   {
     this.loadWorld.setOnAction(t ->
@@ -63,7 +78,7 @@ public class FileLoader extends MenuBar implements Observable
       if (selectedFile == null)
         return;
       chosenFile = selectedFile.toString();
-      WorldChooserParametersForm form = new WorldChooserParametersForm(mainStage, chosenFile);
+      WorldChooserParametersForm form = new WorldChooserParametersForm(mainStage);
       form.addObserver(new Observer(object -> {
         options = (CreationOptions) object;
         options.setFilePath(chosenFile);
@@ -73,6 +88,9 @@ public class FileLoader extends MenuBar implements Observable
     });
   }
 
+  /**
+   * Setup the load world button
+   */
   private void setupLoadWorld()
   {
     this.loadWorld = new MenuItem("Load new world");
@@ -80,6 +98,9 @@ public class FileLoader extends MenuBar implements Observable
     this.setLoadWorldObserver(this.mainStage);
   }
 
+  /**
+   * Setup the load default world button
+   */
   private void setupLoadDefault()
   {
     this.defaultWorld = new MenuItem("Load default world");

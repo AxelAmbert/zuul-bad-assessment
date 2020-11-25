@@ -15,20 +15,27 @@ import misc.Observer;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+/**
+ * WorldChooserParametersForm - This class let the user chose between some options
+ * while loading a world
+ */
 public class WorldChooserParametersForm extends Stage implements Observable
 {
-  TextField itemName;
-  TextField itemWeight;
-  CheckBox destroyNoExits;
-  CheckBox destroyNoItems;
-  Button confirm;
-  Stage dialog;
+  private TextField itemName;
+  private TextField itemWeight;
+  private CheckBox destroyNoExits;
+  private CheckBox destroyNoItems;
+  private Button confirm;
+  private final Stage dialog;
   private final ArrayList<Observer> observersList;
   private CreationOptions options;
 
-  public WorldChooserParametersForm(Stage primaryStage, String filePath)
+  /**
+   * Constructor of the WorldChooserParametersForm
+   * @param primaryStage main stage of the application
+   */
+  public WorldChooserParametersForm(Stage primaryStage)
   {
-
     VBox dialogVbox = new VBox(20);
 
     this.observersList = new ArrayList<>();
@@ -41,11 +48,18 @@ public class WorldChooserParametersForm extends Stage implements Observable
     dialog.setScene(dialogScene);
   }
 
+  /**
+   * Show the dialog
+   */
   public void showDialog()
   {
     this.dialog.show();
   }
 
+  /**
+   * Setup add items textfields
+   * @return add item VBox
+   */
   private VBox addItems()
   {
     VBox addItemBox = new VBox();
@@ -60,6 +74,10 @@ public class WorldChooserParametersForm extends Stage implements Observable
     return (addItemBox);
   }
 
+  /**
+   * Setup destroy room without exit checkbox
+   * @return destroy empty room HBox
+   */
   private HBox destroyEmptyRoom()
   {
     HBox box = new HBox();
@@ -70,6 +88,10 @@ public class WorldChooserParametersForm extends Stage implements Observable
     return (box);
   }
 
+  /**
+   * Setup destroy room without items checkbox
+   * @return destroy empty room HBox
+   */
   private HBox destroyNoItemsRoom()
   {
     HBox box = new HBox();
@@ -80,10 +102,12 @@ public class WorldChooserParametersForm extends Stage implements Observable
     return (box);
   }
 
+  /**
+   * Setup the confirm button
+   */
   private void setupConfirm()
   {
     this.confirm = new Button("Confirm");
-
     this.confirm.setOnMouseClicked(mouseEvent -> {
       int itemNameLength = itemName.getLength();
       int itemWeightLength = itemWeight.getLength();
@@ -107,6 +131,10 @@ public class WorldChooserParametersForm extends Stage implements Observable
     });
   }
 
+  /**
+   * Generate the Item with the given input
+   * @return the generated input, or null
+   */
   private Item generateItem()
   {
     if (this.itemName.getLength() == 0 || this.itemWeight.getLength() == 0)
@@ -114,6 +142,11 @@ public class WorldChooserParametersForm extends Stage implements Observable
     return new Item(this.itemName.getText(), Integer.parseInt(this.itemWeight.getText()));
   }
 
+  /**
+   * Create an alert in case of bad input
+   * @param text to show
+   * @return the created alert
+   */
   private Alert createAlert(String text)
   {
     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -122,6 +155,10 @@ public class WorldChooserParametersForm extends Stage implements Observable
     return (alert);
   }
 
+  /**
+   * Test if an input is numerical
+   * @return whether or not the input is numerical
+   */
   private boolean testNumerical()
   {
     if (this.itemWeight.getLength() == 0)

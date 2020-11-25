@@ -14,9 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Class RoomParser - the parser that creates and links rooms.
+ * Class RoomParserJSON - the parser that creates and links rooms.
+ * Load only JSON files.
  * <p>
- * The goal of the RoomParser is to look in a file and to recreate the
+ * The goal of the RoomParserJSON is to look in a file and to recreate the
  * scenery of the game by creating room, putting objects in the room and
  * linking room.
  * <p>
