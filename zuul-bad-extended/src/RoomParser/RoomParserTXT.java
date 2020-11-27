@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 
 public class RoomParserTXT extends RoomParser
 {
-  private final short NORMAL_FORMAT_SIZE = 7;
+  private final short NORMAL_FORMAT_SIZE = 6;
 
   public RoomParserTXT()
   {
@@ -94,8 +94,8 @@ public class RoomParserTXT extends RoomParser
       System.exit(1);
     }
     name = infos[0];
-    description = infos[0];
-    room = new Room(name, description);
+    description = infos[1];
+    room = new Room(description, name);
     if (this.startRoom == null)
       this.startRoom = room;
     this.rooms.put(name, room);
@@ -112,7 +112,6 @@ public class RoomParserTXT extends RoomParser
 
 
     if (room == null) {
-      System.out.println("ciao " + infos[0]);
       return;
     }
     try {

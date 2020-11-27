@@ -4,6 +4,7 @@ package WorldLoader;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import misc.CreationOptions;
@@ -100,6 +101,7 @@ public class MainMenu extends MenuBar implements Observable
 
   /**
    * Setup the load default world button
+   * and update to trigger the observers.
    */
   private void setupLoadDefault()
   {

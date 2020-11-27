@@ -3,16 +3,16 @@
     "startRoom" : true,
     "roomName": "outside",
     "description" : "outside the main entrance of the university",
-    "visualRepresentation": "images\\door.png",
+    "visualRepresentation": "images\\outside.jpg",
     "items" : [
       {
         "name" : "notebook",
         "weight" : 2,
-        "visualRepresentation": "images\\sword.png"
+        "visualRepresentation": "images\\notebook.png"
       },{
         "name" : "notebooka",
         "weight" : 2,
-        "visualRepresentation": "images\\sword.png"
+        "visualRepresentation": "images\\notebook.png"
       }
     ],
     "relatedRooms": [
@@ -38,31 +38,51 @@
     "startRoom" : false,
     "roomName": "theatre",
     "description" : "in a lecture theatre",
-    "visualRepresentation": "images\\door.png",
+    "visualRepresentation": "images\\theatre.jpg",
     "relatedRooms": [
       {
         "direction": "west",
         "roomName": "outside"
       }
-    ]
+    ],"items" : [
+    {
+      "name" : "notebook",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    },{
+      "name" : "notebooka",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    }
+  ]
   },
   {
     "startRoom" : false,
     "roomName": "pub",
     "description" : "in the campus pub",
-    "visualRepresentation": "images\\theatre.jpg",
+    "visualRepresentation": "images\\pub.jpg",
     "relatedRooms": [
       {
         "direction": "east",
         "roomName": "outside"
       }
-    ]
+    ],"items" : [
+    {
+      "name" : "notebook",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    },{
+      "name" : "notebooka",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    }
+  ]
   },
   {
     "startRoom" : false,
     "roomName": "lab",
     "description" : "in a computing lab",
-    "visualRepresentation": "images\\theatre.jpg",
+    "visualRepresentation": "images\\lab.jpg",
     "relatedRooms": [
       {
         "direction": "north",
@@ -78,22 +98,23 @@
     "startRoom" : false,
     "roomName": "office",
     "description" : "in the computing admin office",
-    "visualRepresentation": "images\\door.png",
+    "visualRepresentation": "images\\office.jpg",
     "relatedRooms": [
       {
         "direction": "west",
         "roomName": "lab"
       }
-    ]
-  },
-  {
-    "startRoom" : false,
-    "roomName": "here",
-    "description" : "in a sauss lab",
-    "visualRepresentation": "images\\theatre.jpg",
-    "relatedRooms": [
-
-    ]
+    ],"items" : [
+    {
+      "name" : "notebook",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    },{
+      "name" : "notebooka",
+      "weight" : 2,
+      "visualRepresentation": "images\\notebook.png"
+    }
+  ]
   }
 ]
 }

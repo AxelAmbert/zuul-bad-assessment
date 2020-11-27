@@ -16,7 +16,9 @@ public class Tutorial extends Menu
 
   /**
    * Constructor of the Tutorial class
-   * @param stage
+   * The tutorial class is a WebView that opens a YouTube video
+   * To help the user play the game
+   * @param stage main stage to bind
    */
   public Tutorial(Stage stage)
   {
@@ -26,9 +28,7 @@ public class Tutorial extends Menu
     this.getItems().add(item);
     this.item.setOnAction(actionEvent -> {
       WebView webview = new WebView();
-      webview.getEngine().load(
-              "https://www.youtube.com/watch?v=EoDCyVIRW7A"
-      );
+      webview.getEngine().load("https://www.youtube.com/watch?v=EoDCyVIRW7A");
       webview.setPrefSize(640, 500);
       Stage newStage = new Stage();
       newStage.setScene(new Scene(webview));

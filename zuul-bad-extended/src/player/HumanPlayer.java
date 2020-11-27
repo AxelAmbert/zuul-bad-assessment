@@ -44,4 +44,9 @@ public class HumanPlayer extends Player
     return (Controller.askUser());
   }
 
+  @Override
+  public String getVisualRepresentation()
+  {
+    return ("images" + System.getProperty("file.separator") + "player.png");
+  }
 }

@@ -1,9 +1,10 @@
 package implementation;
 
-import RoomInfos.controller.RoomInfoController;
-import RoomInfos.model.RoomInfoModel;
-import RoomInfos.view.RoomInfoView;
+import MainView.controller.RoomInfoController;
+import MainView.model.RoomInfoModel;
+import MainView.view.RoomInfoView;
 import WorldLoader.MainMenu;
+import com.sun.glass.ui.Size;
 import communication.Controller;
 import communication.GUIInterface;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.*;
 import misc.*;
-
+import player.Player;
 
 
 public class GraphicalUserInterfaceView implements GameView
@@ -52,6 +53,7 @@ public class GraphicalUserInterfaceView implements GameView
     this.setupScene();
     this.setupCommandInterpreter();
     this.runGame(this.game);
+    this.handlePlayerChange();
   }
 
   /**
@@ -73,6 +75,7 @@ public class GraphicalUserInterfaceView implements GameView
     this.primaryStage.setMinHeight(500);
     this.primaryStage.setMinWidth(500);
     this.primaryStage.show();
+
   }
 
 
@@ -126,6 +129,18 @@ public class GraphicalUserInterfaceView implements GameView
         roomInfos.getController().updateController(game.getActualPlayer().getCurrentRoom(), game.getActualPlayer());
       }
     }));
+  }
+
+  /**
+   * Add an observer on the Game to know when a player quited.
+   * Reload the view when it happens.
+   */
+  private void handlePlayerChange()
+  {
+    Game.getGameInstance().addObserver(new Observer(object -> {
+      roomInfos.getController().updateController(game.getActualPlayer().getCurrentRoom(), game.getActualPlayer());
+    }), Game.GameEvent.PlayerChanged);
+
   }
 
   /**

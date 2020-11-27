@@ -40,8 +40,9 @@ public class Game
   private ArrayList<Observer> onRoomChangeList;
   private ArrayList<Observer> onPlayerChangeList;
   static Game gameInstance;
+  private final int DEFAULT_NB_PLAYERS = 3;
 
-  private enum GameEvent {RoomChanged, PlayerChanged}
+  public enum GameEvent {RoomChanged, PlayerChanged}
 
   /**
    * Create the game and initialise its internal map.
@@ -70,17 +71,12 @@ public class Game
 
   public void reset(CreationOptions options)
   {
-    int playerNb = this.playerList.size();
-
-    this.playerList = new ArrayList<>();
-    this.onPlayerChangeList = new ArrayList<>();
-    this.onRoomChangeList = new ArrayList<>();
-    if (this.createRooms(options) == true) {
-      this.addPlayers(playerNb);
+    if (this.createRooms(options) == false) {
+      return;
     }
+    this.playerList = new ArrayList<>();
+    this.addPlayers(this.DEFAULT_NB_PLAYERS);
   }
-
-
 
   /**
    * Add new NPC to the game.
@@ -111,7 +107,6 @@ public class Game
       Constructor ct = cls.getConstructor();
       roomParser = (RoomParser) ct.newInstance();
     } catch (Exception e) {
-      System.out.println("error");
       roomParser = new RoomParserTXT();
     }
     tmpRoom = roomParser.update(path, options);
@@ -196,8 +191,9 @@ public class Game
    */
   public void onPlayerTurnEnd()
   {
-    if (this.getNumberOfPlayers() == 0)
-      return;
+    if (this.getNumberOfPlayers() == 0) {
+      System.exit(1);
+    }
     if (this.actualPlayerIterator.hasNext() == false) {
       this.actualPlayerIterator = this.playerList.listIterator();
     }
